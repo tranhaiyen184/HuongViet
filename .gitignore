@@ -1,0 +1,25 @@
+# Ignore Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build folders
+[Bb]in/
+[Oo]bj/
+Debug/
+Release/
+
+# Ignore system files
+*.vsidx
+*.log
+*.tmp
+
+# Ignore others
+*.dbmdl
+*.cache
+*.sqlite
+
+# Env
+.env
