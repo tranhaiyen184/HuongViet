@@ -1,3 +1,4 @@
+```cmd
 -- ============================
 -- 1. DEPARTMENTS
 -- ============================
@@ -86,6 +87,6 @@ CREATE TABLE users (
     CONSTRAINT fk_user_role FOREIGN KEY (RoleID)
         REFERENCES roles(RoleID)
 );
-
+```
 Tạo role: ADMIN
 Tạo User: admin|Admin@123
