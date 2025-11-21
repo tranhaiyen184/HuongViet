@@ -304,26 +304,43 @@ namespace HuongViet.DAL
         }
 
         // Lấy danh sách user với thông tin chi tiết (join với bảng khác)
-        public PagedResult<User> GetUsersWithDetails(SearchCriteria criteria)
+        public PagedResult<User> GetUsersWithDetails(SearchCriteria criteria, string positionId = null, UserStatus? status = null)
         {
             try
             {
                 // Tạo điều kiện WHERE
                 string whereClause = "";
                 List<MySqlParameter> parameters = new List<MySqlParameter>();
+                List<string> conditions = new List<string>();
 
+                // Điều kiện cơ bản
+                conditions.Add("u.DeletedAt IS NULL");
+
+                // Tìm kiếm keyword
                 if (!string.IsNullOrEmpty(criteria.SearchTerm))
                 {
-                    whereClause = @"WHERE (u.LastName LIKE @searchTerm OR u.FirstName LIKE @searchTerm OR 
+                    conditions.Add(@"(u.LastName LIKE @searchTerm OR u.FirstName LIKE @searchTerm OR 
                                    u.UserName LIKE @searchTerm OR u.PhoneNumber LIKE @searchTerm OR
                                    p.PositionName LIKE @searchTerm OR r.RoleName LIKE @searchTerm OR
-                                   d.DepartmentName LIKE @searchTerm) AND u.DeletedAt IS NULL";
+                                   d.DepartmentName LIKE @searchTerm)");
                     parameters.Add(new MySqlParameter("@searchTerm", $"%{criteria.SearchTerm}%"));
                 }
-                else
+
+                // Filter theo PositionID
+                if (!string.IsNullOrEmpty(positionId))
                 {
-                    whereClause = "WHERE u.DeletedAt IS NULL";
+                    conditions.Add("u.PositionID = @positionId");
+                    parameters.Add(new MySqlParameter("@positionId", positionId));
                 }
+
+                // Filter theo Status
+                if (status.HasValue)
+                {
+                    conditions.Add("u.Status = @status");
+                    parameters.Add(new MySqlParameter("@status", status.Value.ToString()));
+                }
+
+                whereClause = "WHERE " + string.Join(" AND ", conditions);
 
                 // Tạo ORDER BY
                 string orderBy = "";

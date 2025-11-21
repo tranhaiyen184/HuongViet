@@ -317,12 +317,66 @@ namespace HuongViet.GUI
             btnPositionSub.Click += BtnPositionSub_Click;
             ApplyModernButtonStyle(btnPositionSub, true);
             
+            // Create User (Nhân viên) sub-item
+            IconButton btnUser = new IconButton();
+            btnUser.Name = "btnUser";
+            btnUser.Text = "Nhân viên";
+            btnUser.Tag = "Nhân viên";
+            btnUser.IconChar = IconChar.Circle;
+            btnUser.IconColor = MenuItemText;
+            btnUser.IconFont = IconFont.Auto;
+            btnUser.IconSize = 6;
+            btnUser.FlatAppearance.BorderSize = 0;
+            btnUser.FlatStyle = FlatStyle.Flat;
+            btnUser.UseVisualStyleBackColor = false; // Important!
+            btnUser.ForeColor = MenuItemText;
+            btnUser.BackColor = SubMenuItemBackground;
+            btnUser.TextAlign = ContentAlignment.MiddleLeft;
+            btnUser.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUser.Padding = new Padding(48, 10, 16, 10);
+            btnUser.Margin = new Padding(0, 4, 0, 0);
+            btnUser.Height = 40;
+            btnUser.Width = 224;
+            btnUser.Dock = DockStyle.Top;
+            btnUser.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUser.Font = new Font("Segoe UI", 9F);
+            btnUser.Click += BtnUser_Click;
+            ApplyModernButtonStyle(btnUser, true);
+            
+            // Create Role (Vai trò) sub-item
+            IconButton btnRole = new IconButton();
+            btnRole.Name = "btnRole";
+            btnRole.Text = "Vai trò";
+            btnRole.Tag = "Vai trò";
+            btnRole.IconChar = IconChar.Circle;
+            btnRole.IconColor = MenuItemText;
+            btnRole.IconFont = IconFont.Auto;
+            btnRole.IconSize = 6;
+            btnRole.FlatAppearance.BorderSize = 0;
+            btnRole.FlatStyle = FlatStyle.Flat;
+            btnRole.UseVisualStyleBackColor = false; // Important!
+            btnRole.ForeColor = MenuItemText;
+            btnRole.BackColor = SubMenuItemBackground;
+            btnRole.TextAlign = ContentAlignment.MiddleLeft;
+            btnRole.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRole.Padding = new Padding(48, 10, 16, 10);
+            btnRole.Margin = new Padding(0, 4, 0, 0);
+            btnRole.Height = 40;
+            btnRole.Width = 224;
+            btnRole.Dock = DockStyle.Top;
+            btnRole.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnRole.Font = new Font("Segoe UI", 9F);
+            btnRole.Click += BtnRole_Click;
+            ApplyModernButtonStyle(btnRole, true);
+            
             // Add sub-items to panel (in reverse order for Dock.Top)
+            subMenuPanel.Controls.Add(btnRole);
+            subMenuPanel.Controls.Add(btnUser);
             subMenuPanel.Controls.Add(btnPositionSub);
             subMenuPanel.Controls.Add(btnDepartment);
             
             // Calculate total height (including margins)
-            subMenuPanel.Height = btnDepartment.Height + btnPositionSub.Height + 8; // 8 for margins
+            subMenuPanel.Height = btnDepartment.Height + btnPositionSub.Height + btnUser.Height + btnRole.Height + 16; // 16 for margins
             
             // Find btnStaff in navContainer and insert sub-menu after it
             int staffIndex = navContainer.Controls.IndexOf(btnStaff);
@@ -368,6 +422,34 @@ namespace HuongViet.GUI
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi mở form quản lý vị trí: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnUser_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmUser(), "Quản lý nhân viên", "user");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý nhân viên: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnRole_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmRole(), "Quản lý vai trò", "role");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý vai trò: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -873,13 +955,13 @@ namespace HuongViet.GUI
         {
             try
             {
-                // TODO: Implement Tables management form
-                MessageBox.Show("Tính năng quản lý bàn sẽ được triển khai sau.", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetActiveMenuItem(btnTables);
+                LoadChildFormInTab(new FrmTable(), "Quản lý bàn", "table");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi mở form quản lý bàn: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

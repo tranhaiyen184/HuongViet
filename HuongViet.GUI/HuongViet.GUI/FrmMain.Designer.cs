@@ -362,6 +362,7 @@
             this.btnTables.Text = "Mặt bàn";
             this.btnTables.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTables.UseVisualStyleBackColor = true;
+            this.btnTables.Click += new System.EventHandler(this.btnTables_Click);
             this.btnTables.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
             this.btnTables.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
             // 
