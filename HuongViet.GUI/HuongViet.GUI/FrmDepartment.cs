@@ -59,6 +59,27 @@ namespace HuongViet.GUI
             dgvDepartments.AllowUserToDeleteRows = false;
             dgvDepartments.ReadOnly = true;
             dgvDepartments.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
+            // Force refresh to apply styles
+            dgvDepartments.SuspendLayout();
+            
+            // Header styles
+            dgvDepartments.EnableHeadersVisualStyles = false;
+            dgvDepartments.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dgvDepartments.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvDepartments.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvDepartments.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvDepartments.ColumnHeadersHeight = 40;
+            dgvDepartments.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            
+            // Row styles
+            dgvDepartments.RowTemplate.Height = 35;
+            dgvDepartments.DefaultCellStyle.Font = new Font("Segoe UI", 12F);
+            dgvDepartments.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dgvDepartments.DefaultCellStyle.SelectionForeColor = Color.Black;
+            
+            dgvDepartments.ResumeLayout(true);
+            dgvDepartments.Refresh();
         }
 
 
@@ -414,7 +435,14 @@ namespace HuongViet.GUI
 
         private void FrmDepartment_Load(object sender, EventArgs e)
         {
-            // Form is already initialized in constructor
+            // Ensure DataGridView styling is applied
+            SetupDataGridView();
+            
+            // Refresh to ensure proper display
+            if (dgvDepartments.DataSource != null)
+            {
+                dgvDepartments.Refresh();
+            }
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -565,5 +593,15 @@ namespace HuongViet.GUI
         {
 
         }
-    }
+
+		private void dgvDepartments_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
+
+		private void lblTitle_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }

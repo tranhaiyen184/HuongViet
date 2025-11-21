@@ -61,6 +61,21 @@ namespace HuongViet.GUI
             dgvPositions.AllowUserToDeleteRows = false;
             dgvPositions.ReadOnly = true;
             dgvPositions.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
+            // Header styles
+            dgvPositions.EnableHeadersVisualStyles = false;
+            dgvPositions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dgvPositions.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvPositions.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvPositions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvPositions.ColumnHeadersHeight = 40;
+            dgvPositions.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            
+            // Row styles
+            dgvPositions.RowTemplate.Height = 35;
+            dgvPositions.DefaultCellStyle.Font = new Font("Segoe UI", 12F);
+            dgvPositions.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dgvPositions.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
 

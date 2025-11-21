@@ -953,6 +953,16 @@ namespace HuongViet.GUI
             // Redirect to sub-menu item
             BtnPositionSub_Click(sender, e);
         }
-    }
+
+		private void lblPlaceholderHint_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnTables_Click_1(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
 
