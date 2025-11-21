@@ -43,7 +43,12 @@
   <ItemGroup>
     <Compile Include="AuthBLL.cs" />
     <Compile Include="DepartmentBLL.cs" /> 
+    <Compile Include="FloorBLL.cs" />
     <Compile Include="PositionBLL.cs" /> 
+    <Compile Include="RoleBLL.cs" />
+    <Compile Include="RoomBLL.cs" />
+    <Compile Include="TableBLL.cs" />
+    <Compile Include="UserBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

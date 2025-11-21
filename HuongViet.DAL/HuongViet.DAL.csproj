@@ -94,8 +94,11 @@
     <Compile Include="UserDAL.cs" />
     <Compile Include="PositionDAL.cs" />
     <Compile Include="DepartmentDAL.cs" />
+    <Compile Include="FloorDAL.cs" />
     <Compile Include="RoleDAL.cs" />
     <Compile Include="PermissionDAL.cs" />
+    <Compile Include="RoomDAL.cs" />
+    <Compile Include="TableDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
