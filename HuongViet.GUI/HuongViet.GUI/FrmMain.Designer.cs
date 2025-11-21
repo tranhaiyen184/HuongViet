@@ -27,85 +27,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.headerPanel = new System.Windows.Forms.Panel();
-            this.userPanel = new System.Windows.Forms.Panel();
-            this.userContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuItemProfile = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemPassword = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuItemLogout = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnUserMenu = new FontAwesome.Sharp.IconButton();
-            this.lblUserRole = new System.Windows.Forms.Label();
-            this.lblUserName = new System.Windows.Forms.Label();
-            this.avatarPictureBox = new System.Windows.Forms.PictureBox();
-            this.searchPanel = new System.Windows.Forms.Panel();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.iconSearch = new FontAwesome.Sharp.IconPictureBox();
-            this.lblSectionTitle = new System.Windows.Forms.Label();
-            this.btnToggleSidebar = new FontAwesome.Sharp.IconButton();
-            this.sidebarPanel = new System.Windows.Forms.Panel();
-            this.navContainer = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnDashboard = new FontAwesome.Sharp.IconButton();
-            this.btnInvoices = new FontAwesome.Sharp.IconButton();
-            this.btnTables = new FontAwesome.Sharp.IconButton();
-            this.btnMenu = new FontAwesome.Sharp.IconButton();
-            this.btnOrders = new FontAwesome.Sharp.IconButton();
-            this.btnCombo = new FontAwesome.Sharp.IconButton();
-            this.btnStaff = new FontAwesome.Sharp.IconButton();
-            this.btnPosition = new FontAwesome.Sharp.IconButton();
-            this.btnCustomers = new FontAwesome.Sharp.IconButton();
-            this.btnSettings = new FontAwesome.Sharp.IconButton();
-            this.btnRestaurant = new FontAwesome.Sharp.IconButton();
-            this.contentPanel = new System.Windows.Forms.Panel();
-            this.placeholderPanel = new System.Windows.Forms.Panel();
-            this.lblPlaceholderHint = new System.Windows.Forms.Label();
-            this.lblPlaceholderTitle = new System.Windows.Forms.Label();
-            this.logoPictureBox = new System.Windows.Forms.PictureBox();
-            this.headerPanel.SuspendLayout();
-            this.userPanel.SuspendLayout();
-            this.userContextMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).BeginInit();
-            this.searchPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iconSearch)).BeginInit();
-            this.sidebarPanel.SuspendLayout();
-            this.navContainer.SuspendLayout();
-            this.contentPanel.SuspendLayout();
-            this.placeholderPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // headerPanel
-            // 
-            this.headerPanel.Controls.Add(this.logoPictureBox);
-            this.headerPanel.Controls.Add(this.userPanel);
-            this.headerPanel.Controls.Add(this.searchPanel);
-            this.headerPanel.Controls.Add(this.lblSectionTitle);
-            this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.headerPanel.Location = new System.Drawing.Point(0, 0);
-            this.headerPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.headerPanel.Name = "headerPanel";
-            this.headerPanel.Padding = new System.Windows.Forms.Padding(18, 13, 18, 13);
-            this.headerPanel.Size = new System.Drawing.Size(1024, 72);
-            this.headerPanel.TabIndex = 0;
-            // 
-            // userPanel
-            // 
-            this.userPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.userPanel.ContextMenuStrip = this.userContextMenu;
-            this.userPanel.Controls.Add(this.btnUserMenu);
-            this.userPanel.Controls.Add(this.lblUserRole);
-            this.userPanel.Controls.Add(this.lblUserName);
-            this.userPanel.Controls.Add(this.avatarPictureBox);
-            this.userPanel.Location = new System.Drawing.Point(784, 13);
-            this.userPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.userPanel.Name = "userPanel";
-            this.userPanel.Size = new System.Drawing.Size(222, 46);
-            this.userPanel.TabIndex = 4;
-            // 
-            // userContextMenu
-            // 
-            this.userContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.userContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
+			this.headerPanel = new System.Windows.Forms.Panel();
+			this.logoPictureBox = new System.Windows.Forms.PictureBox();
+			this.userPanel = new System.Windows.Forms.Panel();
+			this.userContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.menuItemProfile = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemPassword = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemLogout = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnUserMenu = new FontAwesome.Sharp.IconButton();
+			this.lblUserRole = new System.Windows.Forms.Label();
+			this.lblUserName = new System.Windows.Forms.Label();
+			this.avatarPictureBox = new System.Windows.Forms.PictureBox();
+			this.btnToggleSidebar = new FontAwesome.Sharp.IconButton();
+			this.sidebarPanel = new System.Windows.Forms.Panel();
+			this.navContainer = new System.Windows.Forms.FlowLayoutPanel();
+			this.btnDashboard = new FontAwesome.Sharp.IconButton();
+			this.btnInvoices = new FontAwesome.Sharp.IconButton();
+			this.btnTables = new FontAwesome.Sharp.IconButton();
+			this.btnMenu = new FontAwesome.Sharp.IconButton();
+			this.btnOrders = new FontAwesome.Sharp.IconButton();
+			this.btnCombo = new FontAwesome.Sharp.IconButton();
+			this.btnStaff = new FontAwesome.Sharp.IconButton();
+			this.btnPosition = new FontAwesome.Sharp.IconButton();
+			this.btnCustomers = new FontAwesome.Sharp.IconButton();
+			this.btnSettings = new FontAwesome.Sharp.IconButton();
+			this.btnRestaurant = new FontAwesome.Sharp.IconButton();
+			this.contentPanel = new System.Windows.Forms.Panel();
+			this.placeholderPanel = new System.Windows.Forms.Panel();
+			this.lblPlaceholderHint = new System.Windows.Forms.Label();
+			this.lblPlaceholderTitle = new System.Windows.Forms.Label();
+			this.headerPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).BeginInit();
+			this.userPanel.SuspendLayout();
+			this.userContextMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).BeginInit();
+			this.sidebarPanel.SuspendLayout();
+			this.navContainer.SuspendLayout();
+			this.contentPanel.SuspendLayout();
+			this.placeholderPanel.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// headerPanel
+			// 
+			this.headerPanel.Controls.Add(this.logoPictureBox);
+			this.headerPanel.Controls.Add(this.userPanel);
+			this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.headerPanel.Location = new System.Drawing.Point(0, 0);
+			this.headerPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.headerPanel.Name = "headerPanel";
+			this.headerPanel.Padding = new System.Windows.Forms.Padding(24, 16, 24, 16);
+			this.headerPanel.Size = new System.Drawing.Size(1365, 106);
+			this.headerPanel.TabIndex = 0;
+			// 
+			// logoPictureBox
+			// 
+			this.logoPictureBox.BackColor = System.Drawing.Color.Transparent;
+			this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
+			this.logoPictureBox.Location = new System.Drawing.Point(-12, -9);
+			this.logoPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.logoPictureBox.Name = "logoPictureBox";
+			this.logoPictureBox.Size = new System.Drawing.Size(327, 124);
+			this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.logoPictureBox.TabIndex = 5;
+			this.logoPictureBox.TabStop = false;
+			// 
+			// userPanel
+			// 
+			this.userPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.userPanel.ContextMenuStrip = this.userContextMenu;
+			this.userPanel.Controls.Add(this.btnUserMenu);
+			this.userPanel.Controls.Add(this.lblUserRole);
+			this.userPanel.Controls.Add(this.lblUserName);
+			this.userPanel.Controls.Add(this.avatarPictureBox);
+			this.userPanel.Location = new System.Drawing.Point(1057, 18);
+			this.userPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.userPanel.Name = "userPanel";
+			this.userPanel.Size = new System.Drawing.Size(296, 57);
+			this.userPanel.TabIndex = 4;
+			// 
+			// userContextMenu
+			// 
+			this.userContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+			this.userContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuItemProfile,
             this.menuItemPassword,
             this.menuItemLogout});
@@ -605,10 +610,6 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.PictureBox avatarPictureBox;
         private FontAwesome.Sharp.IconButton btnUserMenu;
-        private System.Windows.Forms.Panel searchPanel;
-        private System.Windows.Forms.TextBox txtSearch;
-        private FontAwesome.Sharp.IconPictureBox iconSearch;
-        private System.Windows.Forms.Label lblSectionTitle;
         private System.Windows.Forms.PictureBox logoPictureBox;
         private FontAwesome.Sharp.IconButton btnToggleSidebar;
         private System.Windows.Forms.FlowLayoutPanel navContainer;
