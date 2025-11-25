@@ -103,11 +103,6 @@ namespace HuongViet.GUI
 
         }
 
-		private void FrmLogin_Load(object sender, EventArgs e)
-		{
-
-		}
-
 		private void pictureLogo_Click(object sender, EventArgs e)
 		{
 

@@ -28,6 +28,7 @@ namespace HuongViet.GUI
         /// </summary>
         private void InitializeComponent()
         {
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
 			this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
 			this.logoPanel = new System.Windows.Forms.Panel();
 			this.pictureLogo = new System.Windows.Forms.PictureBox();
@@ -75,13 +76,12 @@ namespace HuongViet.GUI
 			// 
 			// pictureLogo
 			// 
-			this.pictureLogo.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureLogo.Location = new System.Drawing.Point(0, 0);
+			this.pictureLogo.Image = ((System.Drawing.Image)(resources.GetObject("pictureLogo.Image")));
+			this.pictureLogo.Location = new System.Drawing.Point(0, 72);
 			this.pictureLogo.Margin = new System.Windows.Forms.Padding(24, 25, 24, 25);
 			this.pictureLogo.Name = "pictureLogo";
-			this.pictureLogo.Padding = new System.Windows.Forms.Padding(48);
-			this.pictureLogo.Size = new System.Drawing.Size(467, 540);
-			this.pictureLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+			this.pictureLogo.Size = new System.Drawing.Size(528, 377);
+			this.pictureLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.pictureLogo.TabIndex = 0;
 			this.pictureLogo.TabStop = false;
 			this.pictureLogo.Click += new System.EventHandler(this.pictureLogo_Click);
