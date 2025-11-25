@@ -44,6 +44,7 @@
     <Compile Include="AuthBLL.cs" />
     <Compile Include="DepartmentBLL.cs" /> 
     <Compile Include="FloorBLL.cs" />
+    <Compile Include="AreaBLL.cs" />
     <Compile Include="PositionBLL.cs" /> 
     <Compile Include="RoleBLL.cs" />
     <Compile Include="RoomBLL.cs" />

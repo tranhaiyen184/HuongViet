@@ -9,14 +9,14 @@ using HuongViet.Models;
 namespace HuongViet.GUI
 {
     // Helper class for ComboBox display
-    public class FloorDisplayItem
+    public class AreaDisplayItem
     {
-        public string FloorID { get; set; }
+        public string AreaID { get; set; }
         public string DisplayText { get; set; }
         
-        public FloorDisplayItem(string floorId, string displayText)
+        public AreaDisplayItem(string areaId, string displayText)
         {
-            FloorID = floorId;
+            AreaID = areaId;
             DisplayText = displayText;
         }
         
@@ -29,10 +29,10 @@ namespace HuongViet.GUI
     public partial class FrmTable : Form
     {
         private readonly TableBLL tableBLL;
-        private readonly FloorBLL floorBLL;
+        private readonly AreaBLL areaBLL;
         private readonly RoomBLL roomBLL;
         private List<Table> tables;
-        private List<Floor> floors;
+        private List<Area> areas;
         private Table selectedTable;
         private bool isEditing = false;
         
@@ -42,17 +42,17 @@ namespace HuongViet.GUI
         private int totalRecords = 0;
         private int totalPages = 0;
         private string currentSearchTerm = string.Empty;
-        private string currentFloorFilter = null;
+        private string currentAreaFilter = null;
         private TableStatus? currentStatusFilter = null;
 
         public FrmTable()
         {
             InitializeComponent();
             tableBLL = new TableBLL();
-            floorBLL = new FloorBLL();
+            areaBLL = new AreaBLL();
             roomBLL = new RoomBLL();
             InitializeForm();
-            LoadFloors();
+            LoadAreas();
             LoadTables();
         }
 
@@ -88,56 +88,56 @@ namespace HuongViet.GUI
 
         private void SetupFilters()
         {
-            // Setup Floor filter - will be populated in LoadFloors()
+            // Setup Area filter - will be populated in LoadAreas()
             cmbFilterFloor.DisplayMember = "DisplayText";
-            cmbFilterFloor.ValueMember = "FloorID";
+            cmbFilterFloor.ValueMember = "AreaID";
             
             // Setup Status filter
-            cmbFilterStatus.Items.AddRange(new object[] { "Tất cả", "Available", "Occupied", "Cleaning", "Unavailable" });
+            cmbFilterStatus.Items.AddRange(new object[] { "Tất cả", "Trống", "Đang sử dụng", "Đang dọn dẹp", "Không khả dụng" });
             cmbFilterStatus.SelectedIndex = 0;
         }
 
-        private void LoadFloors()
+        private void LoadAreas()
         {
             try
             {
-                floors = tableBLL.GetAllFloors();
+                areas = tableBLL.GetAllAreas();
                 
-                // Setup Floor filter ComboBox
+                // Setup Area filter ComboBox
                 cmbFilterFloor.DataSource = null;
                 cmbFilterFloor.Items.Clear();
                 
-                // Create list with "Tất cả" option and all floors
-                var floorFilterList = new List<FloorDisplayItem>();
-                floorFilterList.Add(new FloorDisplayItem("", "Tất cả"));
+                // Create list with "Tất cả" option and all areas
+                var areaFilterList = new List<AreaDisplayItem>();
+                areaFilterList.Add(new AreaDisplayItem("", "Tất cả"));
                 
-                foreach (var floor in floors)
+                foreach (var area in areas)
                 {
-                    floorFilterList.Add(new FloorDisplayItem(floor.FloorID, $"Tầng {floor.FloorNumber}"));
+                    areaFilterList.Add(new AreaDisplayItem(area.AreaID, area.AreaName));
                 }
                 
-                cmbFilterFloor.DataSource = floorFilterList;
+                cmbFilterFloor.DataSource = areaFilterList;
                 cmbFilterFloor.DisplayMember = "DisplayText";
-                cmbFilterFloor.ValueMember = "FloorID";
+                cmbFilterFloor.ValueMember = "AreaID";
                 cmbFilterFloor.SelectedIndex = 0;
                 
-                // Setup Floor ComboBox in form
+                // Setup Area ComboBox in form
                 cmbFloor.DataSource = null;
                 cmbFloor.DisplayMember = "DisplayText";
-                cmbFloor.ValueMember = "FloorID";
+                cmbFloor.ValueMember = "AreaID";
                 
-                var floorFormList = new List<FloorDisplayItem>();
-                foreach (var floor in floors)
+                var areaFormList = new List<AreaDisplayItem>();
+                foreach (var area in areas)
                 {
-                    floorFormList.Add(new FloorDisplayItem(floor.FloorID, $"Tầng {floor.FloorNumber}"));
+                    areaFormList.Add(new AreaDisplayItem(area.AreaID, area.AreaName));
                 }
                 
-                cmbFloor.DataSource = floorFormList;
+                cmbFloor.DataSource = areaFormList;
                 cmbFloor.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách tầng: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách khu vực: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -168,11 +168,11 @@ namespace HuongViet.GUI
                     PageSize = pageSize
                 };
 
-                string floorId = currentFloorFilter;
-                if (floorId == "")
-                    floorId = null;
+                string areaId = currentAreaFilter;
+                if (areaId == "")
+                    areaId = null;
 
-                var result = tableBLL.SearchTables(criteria, floorId, currentStatusFilter);
+                var result = tableBLL.SearchTables(criteria, areaId, currentStatusFilter);
                 tables = result.Data ?? new List<Table>();
                 totalRecords = result.TotalRecords;
                 totalPages = result.TotalPages;
@@ -210,8 +210,7 @@ namespace HuongViet.GUI
                 {
                     TableID = t.TableID,
                     TableName = t.TableName,
-                    FloorNumber = t.Floor?.FloorNumber ?? 0,
-                    FloorDisplay = t.Floor != null ? $"Tầng {t.Floor.FloorNumber}" : "Chưa xác định",
+                    AreaDisplay = t.Area != null ? t.Area.AreaName : "Chưa xác định",
                     TableStatus = GetStatusDisplayText(t.TableStatus),
                     Capacity = t.Capacity,
                     CurrentOrderID = t.CurrentOrderID ?? "",
@@ -223,16 +222,14 @@ namespace HuongViet.GUI
                 if (dgvTables.Columns.Count > 0)
                 {
                     dgvTables.Columns["TableID"].Visible = false;
-                    dgvTables.Columns["FloorNumber"].Visible = false;
                     dgvTables.Columns["TableName"].HeaderText = "Tên bàn";
-                    dgvTables.Columns["FloorDisplay"].HeaderText = "Tầng";
+                    dgvTables.Columns["AreaDisplay"].HeaderText = "Khu vực";
                     dgvTables.Columns["TableStatus"].HeaderText = "Trạng thái";
                     dgvTables.Columns["Capacity"].HeaderText = "Sức chứa";
-                    dgvTables.Columns["CurrentOrderID"].HeaderText = "Order hiện tại";
                     dgvTables.Columns["CreatedAt"].HeaderText = "Ngày tạo";
                     
                     dgvTables.Columns["TableName"].FillWeight = 20;
-                    dgvTables.Columns["FloorDisplay"].FillWeight = 15;
+                    dgvTables.Columns["AreaDisplay"].FillWeight = 15;
                     dgvTables.Columns["TableStatus"].FillWeight = 15;
                     dgvTables.Columns["Capacity"].FillWeight = 10;
                     dgvTables.Columns["CurrentOrderID"].FillWeight = 20;
@@ -340,8 +337,8 @@ namespace HuongViet.GUI
                 {
                     txtTableName.Text = selectedTable.TableName;
                     
-                    if (!string.IsNullOrEmpty(selectedTable.FloorID))
-                        cmbFloor.SelectedValue = selectedTable.FloorID;
+                    if (!string.IsNullOrEmpty(selectedTable.AreaID))
+                        cmbFloor.SelectedValue = selectedTable.AreaID;
                     else
                         cmbFloor.SelectedIndex = -1;
                     
@@ -446,7 +443,7 @@ namespace HuongViet.GUI
 
                 Table table = selectedTable ?? new Table();
                 table.TableName = txtTableName.Text.Trim();
-                table.FloorID = cmbFloor.SelectedValue?.ToString();
+                table.AreaID = cmbFloor.SelectedValue?.ToString();
                 table.Capacity = (int)nudCapacity.Value;
                 
                 // Get status from combo box
@@ -494,8 +491,8 @@ namespace HuongViet.GUI
             {
                 txtTableName.Text = selectedTable.TableName;
                 
-                if (!string.IsNullOrEmpty(selectedTable.FloorID))
-                    cmbFloor.SelectedValue = selectedTable.FloorID;
+                if (!string.IsNullOrEmpty(selectedTable.AreaID))
+                    cmbFloor.SelectedValue = selectedTable.AreaID;
                 else
                     cmbFloor.SelectedIndex = -1;
                 
@@ -551,20 +548,20 @@ namespace HuongViet.GUI
                 currentPage = 1;
                 
                 // Get filter values
-                if (cmbFilterFloor.SelectedItem is FloorDisplayItem selectedItem)
+                if (cmbFilterFloor.SelectedItem is AreaDisplayItem selectedItem)
                 {
-                    if (string.IsNullOrEmpty(selectedItem.FloorID))
+                    if (string.IsNullOrEmpty(selectedItem.AreaID))
                     {
-                        currentFloorFilter = null; // "Tất cả"
+                        currentAreaFilter = null; // "Tất cả"
                     }
                     else
                     {
-                        currentFloorFilter = selectedItem.FloorID;
+                        currentAreaFilter = selectedItem.AreaID;
                     }
                 }
                 else
                 {
-                    currentFloorFilter = null;
+                    currentAreaFilter = null;
                 }
                 
                 if (cmbFilterStatus.SelectedIndex == 0)
@@ -594,7 +591,7 @@ namespace HuongViet.GUI
             cmbFilterFloor.SelectedIndex = 0;
             cmbFilterStatus.SelectedIndex = 0;
             currentSearchTerm = string.Empty;
-            currentFloorFilter = null;
+            currentAreaFilter = null;
             currentStatusFilter = null;
             currentPage = 1;
             LoadTables();
@@ -687,7 +684,7 @@ namespace HuongViet.GUI
                 return "Tên bàn không được vượt quá 20 ký tự!";
 
             if (cmbFloor.SelectedIndex < 0)
-                return "Vui lòng chọn tầng!";
+                return "Vui lòng chọn khu vực!";
 
             if (nudCapacity.Value <= 0)
                 return "Sức chứa phải lớn hơn 0!";
@@ -716,23 +713,23 @@ namespace HuongViet.GUI
             }
         }
 
-        #region Floor Management
+        #region Area Management
 
         private void btnManageFloors_Click(object sender, EventArgs e)
         {
             try
             {
-                using (var form = new FrmFloorManagement())
+                using (var form = new FrmAreaManagement())
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
-                        LoadFloors(); // Reload floors after changes
+                        LoadAreas(); // Reload areas after changes
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi mở form quản lý tầng: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi mở form quản lý khu vực: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

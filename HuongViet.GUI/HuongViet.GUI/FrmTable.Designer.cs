@@ -318,7 +318,7 @@ namespace HuongViet.GUI
             this.lblFloor.Name = "lblFloor";
             this.lblFloor.Size = new System.Drawing.Size(40, 15);
             this.lblFloor.TabIndex = 1;
-            this.lblFloor.Text = "Tầng:";
+            this.lblFloor.Text = "Khu vực:";
             // 
             // txtTableName
             // 
@@ -508,7 +508,7 @@ namespace HuongViet.GUI
             this.lblFilterFloor.Name = "lblFilterFloor";
             this.lblFilterFloor.Size = new System.Drawing.Size(40, 15);
             this.lblFilterFloor.TabIndex = 4;
-            this.lblFilterFloor.Text = "Tầng:";
+            this.lblFilterFloor.Text = "Khu vực:";
             // 
             // btnRefresh
             // 
@@ -571,7 +571,7 @@ namespace HuongViet.GUI
             this.btnManageFloors.Name = "btnManageFloors";
             this.btnManageFloors.Size = new System.Drawing.Size(100, 30);
             this.btnManageFloors.TabIndex = 3;
-            this.btnManageFloors.Text = "Quản lý tầng";
+            this.btnManageFloors.Text = "Quản lý khu vực";
             this.btnManageFloors.UseVisualStyleBackColor = true;
             this.btnManageFloors.Click += new System.EventHandler(this.btnManageFloors_Click);
             // 

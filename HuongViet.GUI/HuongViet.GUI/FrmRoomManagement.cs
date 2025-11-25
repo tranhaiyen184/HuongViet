@@ -11,7 +11,7 @@ namespace HuongViet.GUI
     {
         private readonly RoomBLL roomBLL;
         private List<Room> rooms;
-        private List<Floor> floors;
+        private List<Area> areas;
         private Room selectedRoom;
         private bool isEditing = false;
 
@@ -20,7 +20,7 @@ namespace HuongViet.GUI
             InitializeComponent();
             roomBLL = new RoomBLL();
             InitializeForm();
-            LoadFloors();
+            LoadAreas();
             LoadRooms();
         }
 
@@ -41,27 +41,27 @@ namespace HuongViet.GUI
             dgvRooms.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        private void LoadFloors()
+        private void LoadAreas()
         {
             try
             {
-                floors = roomBLL.GetAllFloors();
+                areas = roomBLL.GetAllAreas();
                 
                 cmbFloor.DataSource = null;
-                var floorList = new List<FloorDisplayItem>();
-                foreach (var floor in floors)
+                var areaList = new List<AreaDisplayItem>();
+                foreach (var area in areas)
                 {
-                    floorList.Add(new FloorDisplayItem(floor.FloorID, $"Tầng {floor.FloorNumber}"));
+                    areaList.Add(new AreaDisplayItem(area.AreaID, area.AreaName));
                 }
                 
-                cmbFloor.DataSource = floorList;
+                cmbFloor.DataSource = areaList;
                 cmbFloor.DisplayMember = "DisplayText";
-                cmbFloor.ValueMember = "FloorID";
+                cmbFloor.ValueMember = "AreaID";
                 cmbFloor.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách tầng: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách khu vực: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -71,15 +71,15 @@ namespace HuongViet.GUI
             try
             {
                 rooms = roomBLL.GetAllRooms();
-                // Load Floor information for each room
+                // Load Area information for each room
                 foreach (var room in rooms)
                 {
-                    if (!string.IsNullOrEmpty(room.FloorID))
+                    if (!string.IsNullOrEmpty(room.AreaID))
                     {
-                        var floor = floors?.FirstOrDefault(f => f.FloorID == room.FloorID);
-                        if (floor != null)
+                        var area = areas?.FirstOrDefault(a => a.AreaID == room.AreaID);
+                        if (area != null)
                         {
-                            room.Floor = floor;
+                            room.Area = area;
                         }
                     }
                 }
@@ -102,12 +102,11 @@ namespace HuongViet.GUI
                 {
                     RoomID = r.RoomID,
                     RoomName = r.RoomName,
-                    FloorDisplay = r.Floor != null ? $"Tầng {r.Floor.FloorNumber}" : "Chưa xác định",
+                    AreaDisplay = r.Area != null ? r.Area.AreaName : "Chưa xác định",
                     RoomType = GetRoomTypeDisplayText(r.RoomType),
                     RoomStatus = GetRoomStatusDisplayText(r.RoomStatus),
                     PricePerHour = r.PricePerHour,
-                    Capacity = r.Capacity,
-                    CreatedAt = r.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                    Capacity = r.Capacity
                 }).ToList();
 
                 dgvRooms.DataSource = displayData;
@@ -116,12 +115,11 @@ namespace HuongViet.GUI
                 {
                     dgvRooms.Columns["RoomID"].Visible = false;
                     dgvRooms.Columns["RoomName"].HeaderText = "Tên phòng";
-                    dgvRooms.Columns["FloorDisplay"].HeaderText = "Tầng";
+                    dgvRooms.Columns["AreaDisplay"].HeaderText = "Khu vực";
                     dgvRooms.Columns["RoomType"].HeaderText = "Loại phòng";
                     dgvRooms.Columns["RoomStatus"].HeaderText = "Trạng thái";
                     dgvRooms.Columns["PricePerHour"].HeaderText = "Giá/giờ";
                     dgvRooms.Columns["Capacity"].HeaderText = "Sức chứa";
-                    dgvRooms.Columns["CreatedAt"].HeaderText = "Ngày tạo";
                 }
             }
         }
@@ -212,8 +210,8 @@ namespace HuongViet.GUI
                 {
                     txtRoomName.Text = selectedRoom.RoomName;
                     
-                    if (!string.IsNullOrEmpty(selectedRoom.FloorID))
-                        cmbFloor.SelectedValue = selectedRoom.FloorID;
+                    if (!string.IsNullOrEmpty(selectedRoom.AreaID))
+                        cmbFloor.SelectedValue = selectedRoom.AreaID;
                     else
                         cmbFloor.SelectedIndex = -1;
                     
@@ -292,7 +290,6 @@ namespace HuongViet.GUI
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadRooms();
                         ClearForm();
-                        this.DialogResult = DialogResult.OK;
                     }
                     else
                     {
@@ -322,7 +319,7 @@ namespace HuongViet.GUI
 
                 Room room = selectedRoom ?? new Room();
                 room.RoomName = txtRoomName.Text.Trim();
-                room.FloorID = cmbFloor.SelectedValue?.ToString();
+                room.AreaID = cmbFloor.SelectedValue?.ToString();
                 room.RoomType = (RoomType)cmbRoomType.SelectedIndex;
                 
                 // Map ComboBox index to RoomStatus enum
@@ -367,7 +364,6 @@ namespace HuongViet.GUI
                     LoadRooms();
                     ClearForm();
                     EnableEditMode(false);
-                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
@@ -386,8 +382,8 @@ namespace HuongViet.GUI
             {
                 txtRoomName.Text = selectedRoom.RoomName;
                 
-                if (!string.IsNullOrEmpty(selectedRoom.FloorID))
-                    cmbFloor.SelectedValue = selectedRoom.FloorID;
+                if (!string.IsNullOrEmpty(selectedRoom.AreaID))
+                    cmbFloor.SelectedValue = selectedRoom.AreaID;
                 else
                     cmbFloor.SelectedIndex = -1;
                 
@@ -433,7 +429,7 @@ namespace HuongViet.GUI
                 return "Tên phòng không được vượt quá 30 ký tự!";
 
             if (cmbFloor.SelectedValue == null)
-                return "Vui lòng chọn tầng!";
+                return "Vui lòng chọn khu vực!";
 
             if (nudPricePerHour.Value < 0)
                 return "Giá mỗi giờ phải lớn hơn hoặc bằng 0!";

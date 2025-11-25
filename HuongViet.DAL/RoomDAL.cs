@@ -25,7 +25,7 @@ namespace HuongViet.DAL
                 RoomType = (RoomType)Enum.Parse(typeof(RoomType), row["RoomType"].ToString()),
                 PricePerHour = Convert.ToDecimal(row["PricePerHour"]),
                 Capacity = Convert.ToInt32(row["Capacity"]),
-                FloorID = row["FloorID"].ToString(),
+                AreaID = row["AreaID"].ToString(),
                 CreatedAt = Convert.ToDateTime(row["CreatedAt"]),
                 UpdatedAt = Convert.ToDateTime(row["UpdatedAt"])
             };
@@ -33,19 +33,19 @@ namespace HuongViet.DAL
 
         public List<Room> GetAll()
         {
-            string query = @"SELECT r.*, f.FloorNumber 
+            string query = @"SELECT r.*, a.AreaName 
                            FROM rooms r 
-                           LEFT JOIN floors f ON r.FloorID = f.FloorID 
-                           ORDER BY f.FloorNumber, r.RoomName";
+                           LEFT JOIN areas a ON r.AreaID = a.AreaID 
+                           ORDER BY a.AreaName, r.RoomName";
             DataTable dt = dbHelper.ExecuteQuery(query);
             return ConvertDataTableToList(dt);
         }
 
         public Room GetById(string id)
         {
-            string query = @"SELECT r.*, f.FloorNumber 
+            string query = @"SELECT r.*, a.AreaName 
                            FROM rooms r 
-                           LEFT JOIN floors f ON r.FloorID = f.FloorID 
+                           LEFT JOIN areas a ON r.AreaID = a.AreaID 
                            WHERE r.RoomID = @id";
             MySqlParameter[] parameters = { new MySqlParameter("@id", id) };
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
@@ -53,12 +53,12 @@ namespace HuongViet.DAL
             if (dt.Rows.Count > 0)
             {
                 var room = MapDataRowToEntity(dt.Rows[0]);
-                if (!dt.Rows[0].IsNull("FloorNumber"))
+                if (!dt.Rows[0].IsNull("AreaName"))
                 {
-                    room.Floor = new Floor
+                    room.Area = new Area
                     {
-                        FloorID = room.FloorID,
-                        FloorNumber = Convert.ToInt32(dt.Rows[0]["FloorNumber"])
+                        AreaID = room.AreaID,
+                        AreaName = dt.Rows[0]["AreaName"].ToString()
                     };
                 }
                 return room;
@@ -66,10 +66,10 @@ namespace HuongViet.DAL
             return null;
         }
 
-        public List<Room> GetByFloorId(string floorId)
+        public List<Room> GetByAreaId(string areaId)
         {
-            string query = "SELECT * FROM rooms WHERE FloorID = @floorId ORDER BY RoomName";
-            MySqlParameter[] parameters = { new MySqlParameter("@floorId", floorId) };
+            string query = "SELECT * FROM rooms WHERE AreaID = @areaId ORDER BY RoomName";
+            MySqlParameter[] parameters = { new MySqlParameter("@areaId", areaId) };
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
             return ConvertDataTableToList(dt);
         }
@@ -79,9 +79,9 @@ namespace HuongViet.DAL
             try
             {
                 string query = @"INSERT INTO rooms (RoomID, RoomName, RoomStatus, RoomType, PricePerHour, 
-                               Capacity, FloorID, CreatedAt, UpdatedAt) 
+                               Capacity, AreaID, CreatedAt, UpdatedAt) 
                                VALUES (@RoomID, @RoomName, @RoomStatus, @RoomType, @PricePerHour, 
-                               @Capacity, @FloorID, @CreatedAt, @UpdatedAt)";
+                               @Capacity, @AreaID, @CreatedAt, @UpdatedAt)";
                 
                 MySqlParameter[] parameters = 
                 {
@@ -91,7 +91,7 @@ namespace HuongViet.DAL
                     new MySqlParameter("@RoomType", room.RoomType.ToString()),
                     new MySqlParameter("@PricePerHour", room.PricePerHour),
                     new MySqlParameter("@Capacity", room.Capacity),
-                    new MySqlParameter("@FloorID", room.FloorID),
+                    new MySqlParameter("@AreaID", room.AreaID),
                     new MySqlParameter("@CreatedAt", room.CreatedAt),
                     new MySqlParameter("@UpdatedAt", room.UpdatedAt)
                 };
@@ -111,7 +111,7 @@ namespace HuongViet.DAL
             {
                 string query = @"UPDATE rooms SET RoomName = @RoomName, RoomStatus = @RoomStatus, 
                                RoomType = @RoomType, PricePerHour = @PricePerHour, Capacity = @Capacity,
-                               FloorID = @FloorID, UpdatedAt = @UpdatedAt WHERE RoomID = @RoomID";
+                               AreaID = @AreaID, UpdatedAt = @UpdatedAt WHERE RoomID = @RoomID";
                 
                 MySqlParameter[] parameters = 
                 {
@@ -121,7 +121,7 @@ namespace HuongViet.DAL
                     new MySqlParameter("@RoomType", room.RoomType.ToString()),
                     new MySqlParameter("@PricePerHour", room.PricePerHour),
                     new MySqlParameter("@Capacity", room.Capacity),
-                    new MySqlParameter("@FloorID", room.FloorID),
+                    new MySqlParameter("@AreaID", room.AreaID),
                     new MySqlParameter("@UpdatedAt", DateTime.Now)
                 };
                 
@@ -157,13 +157,13 @@ namespace HuongViet.DAL
             return count > 0;
         }
 
-        public bool IsRoomNameExists(string roomName, string floorId, string excludeRoomId = null)
+        public bool IsRoomNameExists(string roomName, string areaId, string excludeRoomId = null)
         {
-            string query = "SELECT COUNT(*) FROM rooms WHERE RoomName = @roomName AND FloorID = @floorId";
+            string query = "SELECT COUNT(*) FROM rooms WHERE RoomName = @roomName AND AreaID = @areaId";
             List<MySqlParameter> parameters = new List<MySqlParameter>
             {
                 new MySqlParameter("@roomName", roomName),
-                new MySqlParameter("@floorId", floorId)
+                new MySqlParameter("@areaId", areaId)
             };
 
             if (!string.IsNullOrEmpty(excludeRoomId))
@@ -182,12 +182,12 @@ namespace HuongViet.DAL
             foreach (DataRow row in dt.Rows)
             {
                 var room = MapDataRowToEntity(row);
-                if (!row.IsNull("FloorNumber"))
+                if (!row.IsNull("AreaName"))
                 {
-                    room.Floor = new Floor
+                    room.Area = new Area
                     {
-                        FloorID = room.FloorID,
-                        FloorNumber = Convert.ToInt32(row["FloorNumber"])
+                        AreaID = room.AreaID,
+                        AreaName = row["AreaName"].ToString()
                     };
                 }
                 list.Add(room);

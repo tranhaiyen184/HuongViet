@@ -265,7 +265,7 @@ namespace HuongViet.GUI
             this.lblFloor.Name = "lblFloor";
             this.lblFloor.Size = new System.Drawing.Size(40, 15);
             this.lblFloor.TabIndex = 2;
-            this.lblFloor.Text = "Tầng:";
+            this.lblFloor.Text = "Khu vực:";
             // 
             // txtRoomName
             // 

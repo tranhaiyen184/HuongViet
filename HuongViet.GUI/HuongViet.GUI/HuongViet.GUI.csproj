@@ -156,6 +156,12 @@
     <Compile Include="FrmRoomManagement.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmAreaManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAreaManagement.Designer.cs">
+      <DependentUpon>FrmAreaManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmRoomManagement.Designer.cs">
       <DependentUpon>FrmRoomManagement.cs</DependentUpon>
     </Compile>
