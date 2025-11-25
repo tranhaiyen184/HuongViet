@@ -28,11 +28,11 @@ namespace HuongViet.GUI
         /// </summary>
         private void InitializeComponent()
         {
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.pnlMain = new System.Windows.Forms.Panel();
 			this.pnlContent = new System.Windows.Forms.Panel();
 			this.dgvDepartments = new System.Windows.Forms.DataGridView();
@@ -103,50 +103,50 @@ namespace HuongViet.GUI
 			// 
 			this.dgvDepartments.AllowUserToAddRows = false;
 			this.dgvDepartments.AllowUserToDeleteRows = false;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dgvDepartments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dgvDepartments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
 			this.dgvDepartments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dgvDepartments.BackgroundColor = System.Drawing.Color.White;
 			this.dgvDepartments.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.dgvDepartments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.LightGray;
-			dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightBlue;
-			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvDepartments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle12.BackColor = System.Drawing.Color.LightGray;
+			dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle12.SelectionBackColor = System.Drawing.Color.LightBlue;
+			dataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvDepartments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
 			this.dgvDepartments.ColumnHeadersHeight = 40;
 			this.dgvDepartments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-			this.dgvDepartments.EnableHeadersVisualStyles = false;
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LightBlue;
-			dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvDepartments.DefaultCellStyle = dataGridViewCellStyle3;
+			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle13.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.LightBlue;
+			dataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvDepartments.DefaultCellStyle = dataGridViewCellStyle13;
 			this.dgvDepartments.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dgvDepartments.EnableHeadersVisualStyles = false;
 			this.dgvDepartments.Location = new System.Drawing.Point(0, 12);
 			this.dgvDepartments.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvDepartments.MultiSelect = false;
 			this.dgvDepartments.Name = "dgvDepartments";
 			this.dgvDepartments.ReadOnly = true;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-			this.dgvDepartments.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Control;
+			dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.WindowText;
+			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+			this.dgvDepartments.RowHeadersDefaultCellStyle = dataGridViewCellStyle14;
 			this.dgvDepartments.RowHeadersVisible = false;
 			this.dgvDepartments.RowHeadersWidth = 51;
 			this.dgvDepartments.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-			dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.dgvDepartments.RowsDefaultCellStyle = dataGridViewCellStyle5;
+			dataGridViewCellStyle15.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.dgvDepartments.RowsDefaultCellStyle = dataGridViewCellStyle15;
 			this.dgvDepartments.RowTemplate.Height = 35;
 			this.dgvDepartments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dgvDepartments.Size = new System.Drawing.Size(920, 545);
@@ -292,13 +292,13 @@ namespace HuongViet.GUI
 			// 
 			this.txtDepartmentName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDepartmentName.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtDepartmentName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDepartmentName.Location = new System.Drawing.Point(24, 75);
 			this.txtDepartmentName.Margin = new System.Windows.Forms.Padding(4);
 			this.txtDepartmentName.MaxLength = 30;
 			this.txtDepartmentName.Name = "txtDepartmentName";
 			this.txtDepartmentName.ReadOnly = true;
-			this.txtDepartmentName.Size = new System.Drawing.Size(326, 34);
+			this.txtDepartmentName.Size = new System.Drawing.Size(326, 30);
 			this.txtDepartmentName.TabIndex = 1;
 			this.txtDepartmentName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDepartmentName_KeyPress);
 			// 
@@ -410,7 +410,7 @@ namespace HuongViet.GUI
 			this.lblStatus.AutoSize = true;
 			this.lblStatus.Font = new System.Drawing.Font("Times New Roman", 10F);
 			this.lblStatus.ForeColor = System.Drawing.Color.Gray;
-			this.lblStatus.Location = new System.Drawing.Point(4, 77);
+			this.lblStatus.Location = new System.Drawing.Point(4, 83);
 			this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(153, 19);
@@ -436,7 +436,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblTitleDepart.AutoSize = true;
 			this.lblTitleDepart.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTitleDepart.Location = new System.Drawing.Point(536, -4);
+			this.lblTitleDepart.Location = new System.Drawing.Point(536, -2);
 			this.lblTitleDepart.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblTitleDepart.Name = "lblTitleDepart";
 			this.lblTitleDepart.Size = new System.Drawing.Size(320, 32);
@@ -474,7 +474,7 @@ namespace HuongViet.GUI
 			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSearch.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.txtSearch.Location = new System.Drawing.Point(3, 39);
+			this.txtSearch.Location = new System.Drawing.Point(3, 45);
 			this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.txtSearch.Name = "txtSearch";
 			this.txtSearch.Size = new System.Drawing.Size(917, 30);
@@ -485,7 +485,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblSearch.AutoSize = true;
 			this.lblSearch.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblSearch.Location = new System.Drawing.Point(4, 10);
+			this.lblSearch.Location = new System.Drawing.Point(4, 17);
 			this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblSearch.Name = "lblSearch";
 			this.lblSearch.Size = new System.Drawing.Size(91, 22);

@@ -64,7 +64,7 @@ namespace HuongViet.GUI
             
             // Header styles
             dgvPositions.EnableHeadersVisualStyles = false;
-            dgvPositions.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dgvPositions.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
             dgvPositions.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dgvPositions.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             dgvPositions.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -73,7 +73,7 @@ namespace HuongViet.GUI
             
             // Row styles
             dgvPositions.RowTemplate.Height = 35;
-            dgvPositions.DefaultCellStyle.Font = new Font("Segoe UI", 12F);
+            dgvPositions.DefaultCellStyle.Font = new Font("Times New Roman", 12F);
             dgvPositions.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
             dgvPositions.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
@@ -88,7 +88,7 @@ namespace HuongViet.GUI
 
         private void LoadDepartments()
         {
-            try
+			try
             {
                 departments = positionBLL.GetAllDepartments();
                 
@@ -107,8 +107,8 @@ namespace HuongViet.GUI
         }
 
         private void LoadPositions()
-        {
-            try
+        { 
+			try
             {
                 LoadPositionsWithPaging();
             }
@@ -174,8 +174,8 @@ namespace HuongViet.GUI
                     PositionID = p.PositionID,
                     PositionName = p.PositionName,
                     DepartmentName = p.Department?.DepartmentName ?? "Chưa xác định",
-                    CreatedAt = p.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
-                    UpdatedAt = p.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
+                   // CreatedAt = p.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
+                   // UpdatedAt = p.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
                 }).ToList();
 
                 dgvPositions.DataSource = displayData;
@@ -186,15 +186,15 @@ namespace HuongViet.GUI
                     dgvPositions.Columns["PositionID"].HeaderText = "Mã vị trí";
                     dgvPositions.Columns["PositionName"].HeaderText = "Tên vị trí";
                     dgvPositions.Columns["DepartmentName"].HeaderText = "Phòng ban";
-                    dgvPositions.Columns["CreatedAt"].HeaderText = "Ngày tạo";
-                    dgvPositions.Columns["UpdatedAt"].HeaderText = "Ngày cập nhật";
+                    //dgvPositions.Columns["CreatedAt"].HeaderText = "Ngày tạo";
+                   // dgvPositions.Columns["UpdatedAt"].HeaderText = "Ngày cập nhật";
                     
                     // Set column widths
                     dgvPositions.Columns["PositionID"].FillWeight = 15;
                     dgvPositions.Columns["PositionName"].FillWeight = 25;
                     dgvPositions.Columns["DepartmentName"].FillWeight = 25;
-                    dgvPositions.Columns["CreatedAt"].FillWeight = 17.5f;
-                    dgvPositions.Columns["UpdatedAt"].FillWeight = 17.5f;
+                    //dgvPositions.Columns["CreatedAt"].FillWeight = 17.5f;
+                    //dgvPositions.Columns["UpdatedAt"].FillWeight = 17.5f;
                 }
             }
         }
@@ -490,6 +490,7 @@ namespace HuongViet.GUI
 
         private void FrmPosition_KeyDown(object sender, KeyEventArgs e)
         {
+
             // Handle keyboard shortcuts
             if (e.Control)
             {
@@ -571,7 +572,7 @@ namespace HuongViet.GUI
                 if (newPageSize != pageSize)
                 {
                     pageSize = newPageSize;
-                    currentPage = 1; // Reset to first page when changing page size
+                    currentPage = 1; 
                     LoadPositionsWithPaging();
                     ClearForm();
                 }
@@ -586,7 +587,7 @@ namespace HuongViet.GUI
         {
             string positionName = txtPositionName.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(positionName))
+			if (string.IsNullOrWhiteSpace(positionName))
             {
                 return "Vui lòng nhập tên vị trí!";
             }

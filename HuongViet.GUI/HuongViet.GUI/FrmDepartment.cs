@@ -65,7 +65,7 @@ namespace HuongViet.GUI
             
             // Header styles
             dgvDepartments.EnableHeadersVisualStyles = false;
-            dgvDepartments.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dgvDepartments.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
             dgvDepartments.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dgvDepartments.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
             dgvDepartments.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -74,11 +74,10 @@ namespace HuongViet.GUI
             
             // Row styles
             dgvDepartments.RowTemplate.Height = 35;
-            dgvDepartments.DefaultCellStyle.Font = new Font("Segoe UI", 12F);
+            dgvDepartments.DefaultCellStyle.Font = new Font("Times New Roman", 12F);
             dgvDepartments.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
             dgvDepartments.DefaultCellStyle.SelectionForeColor = Color.Black;
-            
-            dgvDepartments.ResumeLayout(true);
+      		dgvDepartments.ResumeLayout(true);
             dgvDepartments.Refresh();
         }
 
@@ -158,8 +157,8 @@ namespace HuongViet.GUI
                 {
                     DepartmentID = d.DepartmentID,
                     DepartmentName = d.DepartmentName,
-                    CreatedAt = d.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
-                    UpdatedAt = d.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
+                   // CreatedAt = d.CreatedAt.ToString("dd/MM/yyyy HH:mm"),
+                    //UpdatedAt = d.UpdatedAt.ToString("dd/MM/yyyy HH:mm")
                 }).ToList();
 
                 dgvDepartments.DataSource = displayData;
@@ -169,14 +168,14 @@ namespace HuongViet.GUI
                 {
                     dgvDepartments.Columns["DepartmentID"].HeaderText = "Mã phòng ban";
                     dgvDepartments.Columns["DepartmentName"].HeaderText = "Tên phòng ban";
-                    dgvDepartments.Columns["CreatedAt"].HeaderText = "Ngày tạo";
-                    dgvDepartments.Columns["UpdatedAt"].HeaderText = "Ngày cập nhật";
+                    //dgvDepartments.Columns["CreatedAt"].HeaderText = "Ngày tạo";
+                   // dgvDepartments.Columns["UpdatedAt"].HeaderText = "Ngày cập nhật";
                     
                     // Set column widths
                     dgvDepartments.Columns["DepartmentID"].FillWeight = 20;
                     dgvDepartments.Columns["DepartmentName"].FillWeight = 40;
-                    dgvDepartments.Columns["CreatedAt"].FillWeight = 20;
-                    dgvDepartments.Columns["UpdatedAt"].FillWeight = 20;
+                   // dgvDepartments.Columns["CreatedAt"].FillWeight = 20;
+                   // dgvDepartments.Columns["UpdatedAt"].FillWeight = 20;
                 }
             }
         }

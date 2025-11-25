@@ -210,20 +210,20 @@ namespace HuongViet.GUI
 			// 
 			// lblPageInfo
 			// 
-			this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPageInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblPageInfo.AutoSize = true;
 			this.lblPageInfo.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPageInfo.Location = new System.Drawing.Point(537, 16);
+			this.lblPageInfo.Location = new System.Drawing.Point(350, 16);
 			this.lblPageInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPageInfo.Name = "lblPageInfo";
-			this.lblPageInfo.Size = new System.Drawing.Size(162, 20);
+			this.lblPageInfo.Size = new System.Drawing.Size(200, 20);
 			this.lblPageInfo.TabIndex = 6;
-			this.lblPageInfo.Text = "Trang 1 / 1 (Tổng: 0)";
+			this.lblPageInfo.Text = "Trang 1 / 1  (Tổng: 0)";
 			this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// cmbPageSize
 			// 
-			this.cmbPageSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.cmbPageSize.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.cmbPageSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbPageSize.Font = new System.Drawing.Font("Times New Roman", 10.8F);
 			this.cmbPageSize.FormattingEnabled = true;
@@ -232,24 +232,24 @@ namespace HuongViet.GUI
             "20",
             "50",
             "100"});
-			this.cmbPageSize.Location = new System.Drawing.Point(828, 13);
+			this.cmbPageSize.Location = new System.Drawing.Point(750, 13);
 			this.cmbPageSize.Margin = new System.Windows.Forms.Padding(4);
 			this.cmbPageSize.Name = "cmbPageSize";
-			this.cmbPageSize.Size = new System.Drawing.Size(70, 28);
+			this.cmbPageSize.Size = new System.Drawing.Size(60, 28);
 			this.cmbPageSize.TabIndex = 5;
 			this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
 			// 
 			// lblPageSize
 			// 
-			this.lblPageSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPageSize.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblPageSize.AutoSize = true;
 			this.lblPageSize.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPageSize.Location = new System.Drawing.Point(713, 16);
+			this.lblPageSize.Location = new System.Drawing.Point(620, 16);
 			this.lblPageSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPageSize.Name = "lblPageSize";
 			this.lblPageSize.Size = new System.Drawing.Size(113, 20);
 			this.lblPageSize.TabIndex = 4;
-			this.lblPageSize.Text = "Số dòng/trang:";
+			this.lblPageSize.Text = "Số dòng/trang:   ";
 			// 
 			// pnlForm
 			// 
@@ -285,12 +285,12 @@ namespace HuongViet.GUI
 			this.cmbDepartment.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cmbDepartment.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbDepartment.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.cmbDepartment.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.cmbDepartment.FormattingEnabled = true;
 			this.cmbDepartment.Location = new System.Drawing.Point(24, 155);
 			this.cmbDepartment.Margin = new System.Windows.Forms.Padding(4);
 			this.cmbDepartment.Name = "cmbDepartment";
-			this.cmbDepartment.Size = new System.Drawing.Size(326, 34);
+			this.cmbDepartment.Size = new System.Drawing.Size(326, 30);
 			this.cmbDepartment.TabIndex = 3;
 			this.cmbDepartment.SelectedIndexChanged += new System.EventHandler(this.cmbDepartment_SelectedIndexChanged);
 			// 
@@ -309,12 +309,12 @@ namespace HuongViet.GUI
 			// 
 			this.txtPositionName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPositionName.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtPositionName.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtPositionName.Location = new System.Drawing.Point(24, 73);
 			this.txtPositionName.Margin = new System.Windows.Forms.Padding(4);
 			this.txtPositionName.MaxLength = 50;
 			this.txtPositionName.Name = "txtPositionName";
-			this.txtPositionName.Size = new System.Drawing.Size(326, 34);
+			this.txtPositionName.Size = new System.Drawing.Size(326, 30);
 			this.txtPositionName.TabIndex = 1;
 			this.txtPositionName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPositionName_KeyPress);
 			// 
@@ -419,7 +419,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblTitle.AutoSize = true;
 			this.lblTitle.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTitle.Location = new System.Drawing.Point(557, 2);
+			this.lblTitle.Location = new System.Drawing.Point(557, -1);
 			this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblTitle.Name = "lblTitle";
 			this.lblTitle.Size = new System.Drawing.Size(233, 32);
@@ -444,7 +444,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblSearch.AutoSize = true;
 			this.lblSearch.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblSearch.Location = new System.Drawing.Point(4, 10);
+			this.lblSearch.Location = new System.Drawing.Point(4, 16);
 			this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblSearch.Name = "lblSearch";
 			this.lblSearch.Size = new System.Drawing.Size(91, 22);
@@ -470,7 +470,7 @@ namespace HuongViet.GUI
 			this.lblStatus.AutoSize = true;
 			this.lblStatus.Font = new System.Drawing.Font("Times New Roman", 10F);
 			this.lblStatus.ForeColor = System.Drawing.Color.Gray;
-			this.lblStatus.Location = new System.Drawing.Point(4, 77);
+			this.lblStatus.Location = new System.Drawing.Point(4, 83);
 			this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblStatus.Name = "lblStatus";
 			this.lblStatus.Size = new System.Drawing.Size(117, 19);
@@ -492,13 +492,11 @@ namespace HuongViet.GUI
 			// 
 			// txtSearch
 			// 
-			this.txtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F);
-			this.txtSearch.Location = new System.Drawing.Point(3, 39);
+			this.txtSearch.Location = new System.Drawing.Point(100, 45);
 			this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(916, 32);
+			this.txtSearch.Size = new System.Drawing.Size(830, 32);
 			this.txtSearch.TabIndex = 1;
 			this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
 			this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
@@ -562,9 +560,9 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Label lblPageSize;
 		private System.Windows.Forms.Label lblSearch;
 		private System.Windows.Forms.GroupBox grpPositionInfo;
-		private System.Windows.Forms.ComboBox cmbDepartment;
 		private System.Windows.Forms.Label lblDepartment;
 		private System.Windows.Forms.TextBox txtPositionName;
 		private System.Windows.Forms.Label lblPositionName;
+		private System.Windows.Forms.ComboBox cmbDepartment;
 	}
 }
