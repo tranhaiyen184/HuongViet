@@ -13,6 +13,11 @@ namespace HuongViet.DAL
         private readonly string connectionString =
             "server=localhost;port=3306;database=huongviet;uid=root;pwd=root;";
 
+        public string GetConnectionString()
+        {
+            return connectionString;
+        }
+
         public DataTable ExecuteQuery(string query, params MySqlParameter[] parameters)
         {
             using (var conn = new MySqlConnection(connectionString))

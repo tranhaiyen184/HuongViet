@@ -41,9 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccumulatedPoints.cs" />
+    <Compile Include="Area.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Customer.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Floor.cs" />
-    <Compile Include="Area.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="ItemPrice.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderDetail.cs" />
+    <Compile Include="PagedResult.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Permission.cs" />
@@ -51,9 +60,9 @@
     <Compile Include="Room.cs" />
     <Compile Include="RoomStatus.cs" />
     <Compile Include="RoomType.cs" />
-    <Compile Include="PagedResult.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TableStatus.cs" />
+    <Compile Include="Unit.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

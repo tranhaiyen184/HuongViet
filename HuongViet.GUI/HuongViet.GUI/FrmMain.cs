@@ -71,6 +71,9 @@ namespace HuongViet.GUI
             // Initialize sub-menu for Staff
             InitializeStaffSubMenu();
             
+            // Initialize sub-menu for Menu
+            InitializeMenuSubMenu();
+            
             UpdateSidebarState(force: true);
             
             // Initialize tab control
@@ -249,6 +252,207 @@ namespace HuongViet.GUI
                 bool isSubItem = _subMenuPanels.Values.Any(panel => panel.Controls.Contains(btn));
                 btn.BackColor = isSubItem ? SubMenuItemBackground : MenuItemBackground;
                 btn.Invalidate(); // Force redraw
+            }
+        }
+        
+        private void InitializeMenuSubMenu()
+        {
+            // Create sub-menu panel for Menu
+            Panel subMenuPanel = new Panel();
+            subMenuPanel.Name = "subMenuFood";
+            subMenuPanel.Height = 0; // Start collapsed
+            subMenuPanel.Visible = false;
+            subMenuPanel.Margin = new Padding(8, 0, 8, 0);
+            subMenuPanel.Padding = new Padding(0);
+            subMenuPanel.AutoSize = false;
+            subMenuPanel.Width = 240;
+            subMenuPanel.BackColor = SidebarBackground;
+            
+            // Create Category sub-item
+            IconButton btnCategory = new IconButton();
+            btnCategory.Name = "btnCategory";
+            btnCategory.Text = "Thể loại";
+            btnCategory.Tag = "Thể loại";
+            btnCategory.IconChar = IconChar.Circle;
+            btnCategory.IconColor = MenuItemText;
+            btnCategory.IconFont = IconFont.Auto;
+            btnCategory.IconSize = 6;
+            btnCategory.FlatAppearance.BorderSize = 0;
+            btnCategory.FlatStyle = FlatStyle.Flat;
+            btnCategory.UseVisualStyleBackColor = false;
+            btnCategory.ForeColor = MenuItemText;
+            btnCategory.BackColor = SubMenuItemBackground;
+            btnCategory.TextAlign = ContentAlignment.MiddleLeft;
+            btnCategory.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCategory.Padding = new Padding(48, 10, 16, 10);
+            btnCategory.Margin = new Padding(0, 4, 0, 0);
+            btnCategory.Height = 40;
+            btnCategory.Width = 224;
+            btnCategory.Dock = DockStyle.Top;
+            btnCategory.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCategory.Font = new Font("Segoe UI", 9F);
+            btnCategory.Click += BtnCategory_Click;
+            ApplyModernButtonStyle(btnCategory, true);
+            
+            // Create Unit sub-item
+            IconButton btnUnit = new IconButton();
+            btnUnit.Name = "btnUnit";
+            btnUnit.Text = "Đơn vị tính";
+            btnUnit.Tag = "Đơn vị tính";
+            btnUnit.IconChar = IconChar.Circle;
+            btnUnit.IconColor = MenuItemText;
+            btnUnit.IconFont = IconFont.Auto;
+            btnUnit.IconSize = 6;
+            btnUnit.FlatAppearance.BorderSize = 0;
+            btnUnit.FlatStyle = FlatStyle.Flat;
+            btnUnit.UseVisualStyleBackColor = false;
+            btnUnit.ForeColor = MenuItemText;
+            btnUnit.BackColor = SubMenuItemBackground;
+            btnUnit.TextAlign = ContentAlignment.MiddleLeft;
+            btnUnit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUnit.Padding = new Padding(48, 10, 16, 10);
+            btnUnit.Margin = new Padding(0, 4, 0, 0);
+            btnUnit.Height = 40;
+            btnUnit.Width = 224;
+            btnUnit.Dock = DockStyle.Top;
+            btnUnit.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUnit.Font = new Font("Segoe UI", 9F);
+            btnUnit.Click += BtnUnit_Click;
+            ApplyModernButtonStyle(btnUnit, true);
+            
+            // Create Item sub-item
+            IconButton btnItemMenu = new IconButton();
+            btnItemMenu.Name = "btnItemMenu";
+            btnItemMenu.Text = "Món ăn";
+            btnItemMenu.Tag = "Món ăn";
+            btnItemMenu.IconChar = IconChar.Circle;
+            btnItemMenu.IconColor = MenuItemText;
+            btnItemMenu.IconFont = IconFont.Auto;
+            btnItemMenu.IconSize = 6;
+            btnItemMenu.FlatAppearance.BorderSize = 0;
+            btnItemMenu.FlatStyle = FlatStyle.Flat;
+            btnItemMenu.UseVisualStyleBackColor = false;
+            btnItemMenu.ForeColor = MenuItemText;
+            btnItemMenu.BackColor = SubMenuItemBackground;
+            btnItemMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnItemMenu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnItemMenu.Padding = new Padding(48, 10, 16, 10);
+            btnItemMenu.Margin = new Padding(0, 4, 0, 0);
+            btnItemMenu.Height = 40;
+            btnItemMenu.Width = 224;
+            btnItemMenu.Dock = DockStyle.Top;
+            btnItemMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnItemMenu.Font = new Font("Segoe UI", 9F);
+            btnItemMenu.Click += BtnItemMenu_Click;
+            ApplyModernButtonStyle(btnItemMenu, true);
+            
+            // Create Service sub-item
+            IconButton btnServiceMenu = new IconButton();
+            btnServiceMenu.Name = "btnServiceMenu";
+            btnServiceMenu.Text = "Dịch vụ";
+            btnServiceMenu.Tag = "Dịch vụ";
+            btnServiceMenu.IconChar = IconChar.Circle;
+            btnServiceMenu.IconColor = MenuItemText;
+            btnServiceMenu.IconFont = IconFont.Auto;
+            btnServiceMenu.IconSize = 6;
+            btnServiceMenu.FlatAppearance.BorderSize = 0;
+            btnServiceMenu.FlatStyle = FlatStyle.Flat;
+            btnServiceMenu.UseVisualStyleBackColor = false;
+            btnServiceMenu.ForeColor = MenuItemText;
+            btnServiceMenu.BackColor = SubMenuItemBackground;
+            btnServiceMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnServiceMenu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnServiceMenu.Padding = new Padding(48, 10, 16, 10);
+            btnServiceMenu.Margin = new Padding(0, 4, 0, 0);
+            btnServiceMenu.Height = 40;
+            btnServiceMenu.Width = 224;
+            btnServiceMenu.Dock = DockStyle.Top;
+            btnServiceMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnServiceMenu.Font = new Font("Segoe UI", 9F);
+            btnServiceMenu.Click += BtnServiceMenu_Click;
+            ApplyModernButtonStyle(btnServiceMenu, true);
+            
+            // Add sub-items to panel (in reverse order for Dock.Top)
+            subMenuPanel.Controls.Add(btnServiceMenu);
+            subMenuPanel.Controls.Add(btnItemMenu);
+            subMenuPanel.Controls.Add(btnUnit);
+            subMenuPanel.Controls.Add(btnCategory);
+            
+            // Calculate total height (including margins)
+            subMenuPanel.Height = btnCategory.Height + btnUnit.Height + btnItemMenu.Height + btnServiceMenu.Height + 20; // 20 for margins
+            
+            // Find btnMenu in navContainer and insert sub-menu after it
+            int menuIndex = navContainer.Controls.IndexOf(btnMenu);
+            if (menuIndex >= 0)
+            {
+                navContainer.Controls.Add(subMenuPanel);
+                navContainer.Controls.SetChildIndex(subMenuPanel, menuIndex + 1);
+            }
+            
+            // Store references
+            _subMenuPanels[btnMenu] = subMenuPanel;
+            _menuExpandedState[btnMenu] = false;
+            
+            // Ensure btnMenu tag is set correctly
+            if (btnMenu.Tag == null || !btnMenu.Tag.ToString().StartsWith("Thực đơn"))
+            {
+                btnMenu.Tag = "Thực đơn";
+            }
+        }
+        
+        private void BtnCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmCategory(), "Quản lý thể loại", "category");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý thể loại: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnUnit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmUnit(), "Quản lý đơn vị tính", "unit");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý đơn vị tính: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnItemMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmItem(), "Quản lý món ăn", "item");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý món ăn: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnServiceMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmService(), "Quản lý dịch vụ", "service");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý dịch vụ: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         
@@ -623,6 +827,12 @@ namespace HuongViet.GUI
                 UpdateStaffChevron(isExpanded);
             }
             
+            if (_subMenuPanels.ContainsKey(btnMenu))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                UpdateMenuChevron(isExpanded);
+            }
+            
             navContainer.Refresh();
 
             if (force)
@@ -925,15 +1135,50 @@ namespace HuongViet.GUI
         // Additional navigation methods for other buttons
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            try
+            // Only toggle if sidebar is expanded
+            if (!_sidebarExpanded)
             {
-                // TODO: Implement Menu management form
-                MessageBox.Show("Tính năng quản lý thực đơn sẽ được triển khai sau.", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            catch (Exception ex)
+            
+            // Set as active menu item
+            SetActiveMenuItem(btnMenu);
+            
+            // Toggle sub-menu expansion
+            if (_subMenuPanels.ContainsKey(btnMenu))
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                _menuExpandedState[btnMenu] = !isExpanded;
+                
+                // Show/hide sub-menu
+                _subMenuPanels[btnMenu].Visible = !isExpanded;
+                
+                // Update chevron in button text/icon area
+                UpdateMenuChevron(!isExpanded);
+                
+                // Force layout update
+                navContainer.PerformLayout();
+                navContainer.Refresh();
+            }
+        }
+        
+        private void UpdateMenuChevron(bool isExpanded)
+        {
+            // Update button text to include chevron
+            string baseText = btnMenu.Tag?.ToString() ?? "Thực đơn";
+            if (baseText.Contains("|"))
+            {
+                baseText = baseText.Split('|')[0];
+            }
+            
+            if (_sidebarExpanded)
+            {
+                // Add chevron to text (using Unicode arrow)
+                btnMenu.Text = baseText + "  " + (isExpanded ? "▲" : "▼");
+            }
+            else
+            {
+                btnMenu.Text = string.Empty;
             }
         }
 
@@ -941,13 +1186,13 @@ namespace HuongViet.GUI
         {
             try
             {
-                // TODO: Implement Orders management form
-                MessageBox.Show("Tính năng quản lý đơn hàng sẽ được triển khai sau.", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetActiveMenuItem(btnOrders);
+                LoadChildFormInTab(new FrmPOS(), "Bán hàng", "pos");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi mở form bán hàng: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

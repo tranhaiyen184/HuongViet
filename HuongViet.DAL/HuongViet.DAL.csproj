@@ -90,16 +90,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccumulatedPointsDAL.cs" />
+    <Compile Include="AreaDAL.cs" />
+    <Compile Include="CategoryDAL.cs" />
+    <Compile Include="CustomerDAL.cs" />
     <Compile Include="DatabaseHelper.cs" />
-    <Compile Include="UserDAL.cs" />
-    <Compile Include="PositionDAL.cs" />
     <Compile Include="DepartmentDAL.cs" />
     <Compile Include="FloorDAL.cs" />
-    <Compile Include="AreaDAL.cs" />
-    <Compile Include="RoleDAL.cs" />
+    <Compile Include="ItemDAL.cs" />
+    <Compile Include="OrderDAL.cs" />
     <Compile Include="PermissionDAL.cs" />
+    <Compile Include="PositionDAL.cs" />
+    <Compile Include="RoleDAL.cs" />
     <Compile Include="RoomDAL.cs" />
     <Compile Include="TableDAL.cs" />
+    <Compile Include="UnitDAL.cs" />
+    <Compile Include="UserDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -309,16 +309,17 @@
 			this.btnMenu.Name = "btnMenu";
 			this.btnMenu.Size = new System.Drawing.Size(213, 48);
 			this.btnMenu.TabIndex = 3;
-			this.btnMenu.Tag = "Mặt hàng";
-			this.btnMenu.Text = "Mặt hàng";
+			this.btnMenu.Tag = "Thực đơn";
+			this.btnMenu.Text = "Thực đơn";
 			this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnMenu.UseVisualStyleBackColor = true;
+			this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
 			this.btnMenu.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnMenu.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnOrders
 			// 
-			this.btnOrders.IconChar = FontAwesome.Sharp.IconChar.BowlFood;
+			this.btnOrders.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
 			this.btnOrders.IconColor = System.Drawing.Color.White;
 			this.btnOrders.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnOrders.IconSize = 24;
@@ -327,10 +328,11 @@
 			this.btnOrders.Name = "btnOrders";
 			this.btnOrders.Size = new System.Drawing.Size(213, 48);
 			this.btnOrders.TabIndex = 4;
-			this.btnOrders.Tag = "Thực đơn";
-			this.btnOrders.Text = "Thực đơn";
+			this.btnOrders.Tag = "Bán hàng";
+			this.btnOrders.Text = "Bán hàng";
 			this.btnOrders.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnOrders.UseVisualStyleBackColor = true;
+			this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
 			this.btnOrders.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnOrders.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 

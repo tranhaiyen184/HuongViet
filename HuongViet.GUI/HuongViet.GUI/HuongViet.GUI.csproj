@@ -111,17 +111,35 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCategory.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmDepartment.Designer.cs">
       <DependentUpon>FrmDepartment.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmItem.Designer.cs">
+      <DependentUpon>FrmItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmService.Designer.cs">
+      <DependentUpon>FrmService.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmPosition.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmPosition.Designer.cs">
       <DependentUpon>FrmPosition.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmUnit.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmUser.cs">
       <SubType>Form</SubType>
@@ -165,6 +183,12 @@
     <Compile Include="FrmRoomManagement.Designer.cs">
       <DependentUpon>FrmRoomManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmPOS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPOS.Designer.cs">
+      <DependentUpon>FrmPOS.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmLogin.resx">
@@ -175,6 +199,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmDepartment.resx">
       <DependentUpon>FrmDepartment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmItem.resx">
+      <DependentUpon>FrmItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmService.resx">
+      <DependentUpon>FrmService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPosition.resx">
       <DependentUpon>FrmPosition.cs</DependentUpon>
@@ -196,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmRoomManagement.resx">
       <DependentUpon>FrmRoomManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPOS.resx">
+      <DependentUpon>FrmPOS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
