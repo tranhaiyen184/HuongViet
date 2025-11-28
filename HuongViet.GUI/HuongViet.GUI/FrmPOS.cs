@@ -56,6 +56,10 @@ namespace HuongViet.GUI
             tabControlTables.SelectedIndexChanged += TabControlTables_SelectedIndexChanged;
             tabControlMenu.SelectedIndexChanged += TabControlMenu_SelectedIndexChanged;
             
+            // Setup resize handler để tự động điều chỉnh kích thước
+            this.Resize += FrmPOS_Resize;
+            this.Load += FrmPOS_Load;
+            
             // Initialize labels
             lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             lblTotalAmount.Text = "0";
@@ -66,6 +70,68 @@ namespace HuongViet.GUI
             timer.Interval = 1000;
             timer.Tick += (s, e) => lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             timer.Start();
+        }
+
+        private void FrmPOS_Load(object sender, EventArgs e)
+        {
+            // Điều chỉnh kích thước khi form load
+            AdjustLayout();
+        }
+
+        private void FrmPOS_Resize(object sender, EventArgs e)
+        {
+            // Điều chỉnh kích thước khi form resize
+            AdjustLayout();
+        }
+
+        private void AdjustLayout()
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                return;
+
+            int formWidth = this.ClientSize.Width;
+            int formHeight = this.ClientSize.Height;
+
+            // Điều chỉnh splitContainerMain
+            splitContainerMain.Size = new Size(formWidth, formHeight);
+            splitContainerMain.SplitterDistance = formHeight / 2; // Chia đôi chiều cao
+
+            // Điều chỉnh Panel1 (chứa pnlLeft và pnlRight)
+            int panel1Height = splitContainerMain.Panel1.Height;
+            
+            // pnlLeft giữ nguyên chiều rộng 400
+            pnlLeft.Size = new Size(400, panel1Height);
+            
+            // pnlRight chiếm phần còn lại
+            int rightWidth = formWidth - 400;
+            pnlRight.Location = new Point(400, 0);
+            pnlRight.Size = new Size(rightWidth, panel1Height);
+            
+            // tabControlTables fill pnlLeft
+            tabControlTables.Size = new Size(400, panel1Height);
+            
+            // tabControlMenu fill pnlRight
+            tabControlMenu.Size = new Size(rightWidth, panel1Height);
+
+            // Điều chỉnh Panel2 (chứa order info)
+            int panel2Height = splitContainerMain.Panel2.Height;
+            
+            // pnlOrderHeader
+            pnlOrderHeader.Size = new Size(formWidth, 40);
+            
+            // dgvOrder
+            dgvOrder.Size = new Size(formWidth, panel2Height - 100); // Trừ header và footer
+            
+            // pnlOrderFooter
+            pnlOrderFooter.Location = new Point(0, panel2Height - 60);
+            pnlOrderFooter.Size = new Size(formWidth, 60);
+            
+            // Điều chỉnh vị trí lblDateTime để luôn ở bên phải
+            lblDateTime.Location = new Point(formWidth - 150, 10);
+            
+            // Điều chỉnh vị trí các button trong footer
+            btnPayment.Location = new Point(formWidth - 200, 10);
+            btnSaveOrder.Location = new Point(formWidth - 400, 10);
         }
 
         private void SetupTablesDataGridView()
@@ -305,6 +371,9 @@ namespace HuongViet.GUI
             // Kiểm tra nếu đây là bàn được chọn
             bool isSelected = selectedTable != null && selectedTable.TableID == table.TableID;
             
+            // Kiểm tra nếu bàn có hóa đơn (CurrentOrderID không rỗng)
+            bool hasOrder = !string.IsNullOrWhiteSpace(table.CurrentOrderID);
+            
             if (isSelected)
             {
                 // Màu highlight cho bàn được chọn
@@ -312,6 +381,14 @@ namespace HuongViet.GUI
                 btn.ForeColor = Color.White;
                 btn.FlatAppearance.BorderSize = 3;
                 btn.FlatAppearance.BorderColor = Color.DarkBlue;
+            }
+            else if (hasOrder)
+            {
+                // Màu cho bàn có hóa đơn (màu vàng cam)
+                btn.BackColor = Color.FromArgb(0xFF, 0xB3, 0x47); // orange
+                btn.ForeColor = Color.Black;
+                btn.FlatAppearance.BorderSize = 2;
+                btn.FlatAppearance.BorderColor = Color.DarkOrange;
             }
             else if (table.TableStatus == TableStatus.Available)
             {
@@ -742,14 +819,20 @@ namespace HuongViet.GUI
                 string customerName = txtCustomerName.Text.Trim();
                 string customerPhone = txtCustomerPhone.Text.Trim();
                 
+                // Set giá trị mặc định nếu không nhập thông tin khách hàng
                 if (string.IsNullOrWhiteSpace(customerName))
                 {
                     customerName = "Khách vãng lai";
                 }
                 
-                // Search or create customer
+                if (string.IsNullOrWhiteSpace(customerPhone))
+                {
+                    customerPhone = "0900000000"; // Số điện thoại mặc định (định dạng hợp lệ)
+                }
+                
+                // Search or create customer (chỉ khi có số điện thoại hợp lệ và không phải số mặc định)
                 Customer customer = null;
-                if (!string.IsNullOrWhiteSpace(customerPhone))
+                if (!string.IsNullOrWhiteSpace(customerPhone) && customerPhone != "0900000000")
                 {
                     customer = posBLL.SearchCustomer(customerPhone);
                     if (customer == null)

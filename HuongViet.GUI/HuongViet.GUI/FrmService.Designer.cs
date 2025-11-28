@@ -47,6 +47,8 @@ namespace HuongViet.GUI
             this.lblPageInfo = new System.Windows.Forms.Label();
             this.cmbPageSize = new System.Windows.Forms.ComboBox();
             this.lblPageSize = new System.Windows.Forms.Label();
+            this.btnClearFilter = new System.Windows.Forms.Button();
+            this.btnFilter = new System.Windows.Forms.Button();
             this.pnlForm = new System.Windows.Forms.Panel();
             this.grpServiceInfo = new System.Windows.Forms.GroupBox();
             this.picServiceImage = new System.Windows.Forms.PictureBox();
@@ -69,21 +71,16 @@ namespace HuongViet.GUI
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.pnlFilter = new System.Windows.Forms.Panel();
-            this.lblFilter = new System.Windows.Forms.Label();
-            this.btnClearFilter = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
-            this.btnFilter = new System.Windows.Forms.Button();
             this.txtPriceTo = new System.Windows.Forms.TextBox();
-            this.lblPriceTo = new System.Windows.Forms.Label();
-            this.txtPriceFrom = new System.Windows.Forms.TextBox();
-            this.lblPriceFrom = new System.Windows.Forms.Label();
             this.cmbFilterCategory = new System.Windows.Forms.ComboBox();
-            this.lblFilterCategory = new System.Windows.Forms.Label();
+            this.txtPriceFrom = new System.Windows.Forms.TextBox();
             this.txtSearchService = new System.Windows.Forms.TextBox();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblPriceTo = new System.Windows.Forms.Label();
+            this.lblPriceFrom = new System.Windows.Forms.Label();
             this.lblSearchService = new System.Windows.Forms.Label();
+            this.lblFilterCategory = new System.Windows.Forms.Label();
+            this.pnlFilter = new System.Windows.Forms.Panel();
             this.pnlMain.SuspendLayout();
             this.pnlContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).BeginInit();
@@ -91,9 +88,9 @@ namespace HuongViet.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgvPriceHistory)).BeginInit();
             this.pnlPriceHistoryHeader.SuspendLayout();
             this.pnlPaging.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picServiceImage)).BeginInit();
             this.pnlForm.SuspendLayout();
             this.grpServiceInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picServiceImage)).BeginInit();
             this.pnlButtons.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.pnlFilter.SuspendLayout();
@@ -102,14 +99,17 @@ namespace HuongViet.GUI
             // pnlMain
             // 
             this.pnlMain.Controls.Add(this.pnlContent);
+            this.pnlMain.Controls.Add(this.btnClearFilter);
+            this.pnlMain.Controls.Add(this.btnFilter);
             this.pnlMain.Controls.Add(this.pnlForm);
             this.pnlMain.Controls.Add(this.pnlHeader);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Controls.Add(this.txtPriceTo);
+            this.pnlMain.Controls.Add(this.cmbFilterCategory);
+            this.pnlMain.Controls.Add(this.txtPriceFrom);
+            this.pnlMain.Controls.Add(this.txtSearchService);
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
-            this.pnlMain.Margin = new System.Windows.Forms.Padding(4);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.pnlMain.Size = new System.Drawing.Size(1400, 800);
+            this.pnlMain.Size = new System.Drawing.Size(1440, 878);
             this.pnlMain.TabIndex = 0;
             // 
             // pnlContent
@@ -117,12 +117,9 @@ namespace HuongViet.GUI
             this.pnlContent.Controls.Add(this.dgvServices);
             this.pnlContent.Controls.Add(this.pnlPriceHistory);
             this.pnlContent.Controls.Add(this.pnlPaging);
-            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Location = new System.Drawing.Point(13, 152);
-            this.pnlContent.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlContent.Location = new System.Drawing.Point(10, 118);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Padding = new System.Windows.Forms.Padding(0, 12, 0, 0);
-            this.pnlContent.Size = new System.Drawing.Size(987, 636);
+            this.pnlContent.Size = new System.Drawing.Size(1085, 750);
             this.pnlContent.TabIndex = 2;
             // 
             // dgvServices
@@ -150,9 +147,7 @@ namespace HuongViet.GUI
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvServices.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvServices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvServices.Location = new System.Drawing.Point(0, 12);
-            this.dgvServices.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvServices.Location = new System.Drawing.Point(0, 3);
             this.dgvServices.MultiSelect = false;
             this.dgvServices.Name = "dgvServices";
             this.dgvServices.ReadOnly = true;
@@ -167,7 +162,7 @@ namespace HuongViet.GUI
             this.dgvServices.RowHeadersVisible = false;
             this.dgvServices.RowHeadersWidth = 51;
             this.dgvServices.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvServices.Size = new System.Drawing.Size(987, 392);
+            this.dgvServices.Size = new System.Drawing.Size(1082, 350);
             this.dgvServices.TabIndex = 0;
             this.dgvServices.SelectionChanged += new System.EventHandler(this.dgvServices_SelectionChanged);
             // 
@@ -175,11 +170,9 @@ namespace HuongViet.GUI
             // 
             this.pnlPriceHistory.Controls.Add(this.dgvPriceHistory);
             this.pnlPriceHistory.Controls.Add(this.pnlPriceHistoryHeader);
-            this.pnlPriceHistory.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlPriceHistory.Location = new System.Drawing.Point(0, 404);
-            this.pnlPriceHistory.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlPriceHistory.Location = new System.Drawing.Point(0, 360);
             this.pnlPriceHistory.Name = "pnlPriceHistory";
-            this.pnlPriceHistory.Size = new System.Drawing.Size(987, 180);
+            this.pnlPriceHistory.Size = new System.Drawing.Size(1110, 146);
             this.pnlPriceHistory.TabIndex = 2;
             // 
             // dgvPriceHistory
@@ -190,15 +183,13 @@ namespace HuongViet.GUI
             this.dgvPriceHistory.BackgroundColor = System.Drawing.Color.White;
             this.dgvPriceHistory.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvPriceHistory.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPriceHistory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvPriceHistory.Location = new System.Drawing.Point(0, 40);
-            this.dgvPriceHistory.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvPriceHistory.Location = new System.Drawing.Point(0, 32);
             this.dgvPriceHistory.MultiSelect = false;
             this.dgvPriceHistory.Name = "dgvPriceHistory";
             this.dgvPriceHistory.ReadOnly = true;
             this.dgvPriceHistory.RowHeadersVisible = false;
             this.dgvPriceHistory.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPriceHistory.Size = new System.Drawing.Size(987, 140);
+            this.dgvPriceHistory.Size = new System.Drawing.Size(1082, 114);
             this.dgvPriceHistory.TabIndex = 0;
             // 
             // pnlPriceHistoryHeader
@@ -207,18 +198,19 @@ namespace HuongViet.GUI
             this.pnlPriceHistoryHeader.Controls.Add(this.btnRestorePrice);
             this.pnlPriceHistoryHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlPriceHistoryHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlPriceHistoryHeader.Margin = new System.Windows.Forms.Padding(2);
             this.pnlPriceHistoryHeader.Name = "pnlPriceHistoryHeader";
-            this.pnlPriceHistoryHeader.Size = new System.Drawing.Size(987, 40);
+            this.pnlPriceHistoryHeader.Size = new System.Drawing.Size(1110, 33);
             this.pnlPriceHistoryHeader.TabIndex = 1;
+            this.pnlPriceHistoryHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPriceHistoryHeader_Paint);
             // 
             // lblPriceHistory
             // 
             this.lblPriceHistory.AutoSize = true;
             this.lblPriceHistory.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold);
-            this.lblPriceHistory.Location = new System.Drawing.Point(4, 10);
-            this.lblPriceHistory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPriceHistory.Location = new System.Drawing.Point(3, 8);
             this.lblPriceHistory.Name = "lblPriceHistory";
-            this.lblPriceHistory.Size = new System.Drawing.Size(100, 21);
+            this.lblPriceHistory.Size = new System.Drawing.Size(80, 17);
             this.lblPriceHistory.TabIndex = 0;
             this.lblPriceHistory.Text = "Lịch sử giá";
             // 
@@ -226,10 +218,9 @@ namespace HuongViet.GUI
             // 
             this.btnRestorePrice.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRestorePrice.Font = new System.Drawing.Font("Times New Roman", 10F);
-            this.btnRestorePrice.Location = new System.Drawing.Point(840, 5);
-            this.btnRestorePrice.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRestorePrice.Location = new System.Drawing.Point(967, 3);
             this.btnRestorePrice.Name = "btnRestorePrice";
-            this.btnRestorePrice.Size = new System.Drawing.Size(140, 30);
+            this.btnRestorePrice.Size = new System.Drawing.Size(105, 24);
             this.btnRestorePrice.TabIndex = 1;
             this.btnRestorePrice.Text = "Khôi phục giá này";
             this.btnRestorePrice.UseVisualStyleBackColor = true;
@@ -244,20 +235,17 @@ namespace HuongViet.GUI
             this.pnlPaging.Controls.Add(this.lblPageInfo);
             this.pnlPaging.Controls.Add(this.cmbPageSize);
             this.pnlPaging.Controls.Add(this.lblPageSize);
-            this.pnlPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlPaging.Location = new System.Drawing.Point(0, 584);
-            this.pnlPaging.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlPaging.Location = new System.Drawing.Point(0, 530);
             this.pnlPaging.Name = "pnlPaging";
-            this.pnlPaging.Size = new System.Drawing.Size(987, 52);
+            this.pnlPaging.Size = new System.Drawing.Size(1110, 42);
             this.pnlPaging.TabIndex = 1;
             // 
             // btnFirstPage
             // 
             this.btnFirstPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnFirstPage.Location = new System.Drawing.Point(15, 8);
-            this.btnFirstPage.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFirstPage.Location = new System.Drawing.Point(11, 6);
             this.btnFirstPage.Name = "btnFirstPage";
-            this.btnFirstPage.Size = new System.Drawing.Size(45, 36);
+            this.btnFirstPage.Size = new System.Drawing.Size(34, 29);
             this.btnFirstPage.TabIndex = 0;
             this.btnFirstPage.Text = "<<";
             this.btnFirstPage.UseVisualStyleBackColor = true;
@@ -266,10 +254,9 @@ namespace HuongViet.GUI
             // btnPrevPage
             // 
             this.btnPrevPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPrevPage.Location = new System.Drawing.Point(65, 8);
-            this.btnPrevPage.Margin = new System.Windows.Forms.Padding(4);
+            this.btnPrevPage.Location = new System.Drawing.Point(49, 6);
             this.btnPrevPage.Name = "btnPrevPage";
-            this.btnPrevPage.Size = new System.Drawing.Size(45, 36);
+            this.btnPrevPage.Size = new System.Drawing.Size(34, 29);
             this.btnPrevPage.TabIndex = 1;
             this.btnPrevPage.Text = "<";
             this.btnPrevPage.UseVisualStyleBackColor = true;
@@ -278,10 +265,9 @@ namespace HuongViet.GUI
             // btnNextPage
             // 
             this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnNextPage.Location = new System.Drawing.Point(115, 8);
-            this.btnNextPage.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNextPage.Location = new System.Drawing.Point(86, 6);
             this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(45, 36);
+            this.btnNextPage.Size = new System.Drawing.Size(34, 29);
             this.btnNextPage.TabIndex = 2;
             this.btnNextPage.Text = ">";
             this.btnNextPage.UseVisualStyleBackColor = true;
@@ -290,10 +276,9 @@ namespace HuongViet.GUI
             // btnLastPage
             // 
             this.btnLastPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnLastPage.Location = new System.Drawing.Point(165, 8);
-            this.btnLastPage.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLastPage.Location = new System.Drawing.Point(124, 6);
             this.btnLastPage.Name = "btnLastPage";
-            this.btnLastPage.Size = new System.Drawing.Size(45, 36);
+            this.btnLastPage.Size = new System.Drawing.Size(34, 29);
             this.btnLastPage.TabIndex = 3;
             this.btnLastPage.Text = ">>";
             this.btnLastPage.UseVisualStyleBackColor = true;
@@ -304,10 +289,9 @@ namespace HuongViet.GUI
             this.lblPageInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblPageInfo.AutoSize = true;
             this.lblPageInfo.Font = new System.Drawing.Font("Times New Roman", 10.8F);
-            this.lblPageInfo.Location = new System.Drawing.Point(320, 16);
-            this.lblPageInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPageInfo.Location = new System.Drawing.Point(262, 13);
             this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(175, 20);
+            this.lblPageInfo.Size = new System.Drawing.Size(134, 17);
             this.lblPageInfo.TabIndex = 6;
             this.lblPageInfo.Text = "Trang 1 / 1  (Tổng: 0)";
             this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -323,10 +307,9 @@ namespace HuongViet.GUI
             "20",
             "50",
             "100"});
-            this.cmbPageSize.Location = new System.Drawing.Point(750, 13);
-            this.cmbPageSize.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbPageSize.Location = new System.Drawing.Point(562, 11);
             this.cmbPageSize.Name = "cmbPageSize";
-            this.cmbPageSize.Size = new System.Drawing.Size(60, 28);
+            this.cmbPageSize.Size = new System.Drawing.Size(46, 24);
             this.cmbPageSize.TabIndex = 5;
             this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
             // 
@@ -334,24 +317,42 @@ namespace HuongViet.GUI
             // 
             this.lblPageSize.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblPageSize.AutoSize = true;
-            this.lblPageSize.Font = new System.Drawing.Font("Times New Roman", 10.8F);
-            this.lblPageSize.Location = new System.Drawing.Point(620, 16);
-            this.lblPageSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPageSize.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblPageSize.Location = new System.Drawing.Point(465, 13);
             this.lblPageSize.Name = "lblPageSize";
-            this.lblPageSize.Size = new System.Drawing.Size(113, 20);
+            this.lblPageSize.Size = new System.Drawing.Size(109, 19);
             this.lblPageSize.TabIndex = 4;
-            this.lblPageSize.Text = "Số dòng/trang:";
+            this.lblPageSize.Text = "Số dòng/trang:   ";
+            // 
+            // btnClearFilter
+            // 
+            this.btnClearFilter.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnClearFilter.Location = new System.Drawing.Point(860, 74);
+            this.btnClearFilter.Name = "btnClearFilter";
+            this.btnClearFilter.Size = new System.Drawing.Size(90, 38);
+            this.btnClearFilter.TabIndex = 12;
+            this.btnClearFilter.Text = "Xóa lọc";
+            this.btnClearFilter.UseVisualStyleBackColor = true;
+            this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
+            // 
+            // btnFilter
+            // 
+            this.btnFilter.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnFilter.Location = new System.Drawing.Point(750, 74);
+            this.btnFilter.Name = "btnFilter";
+            this.btnFilter.Size = new System.Drawing.Size(90, 38);
+            this.btnFilter.TabIndex = 10;
+            this.btnFilter.Text = "Lọc";
+            this.btnFilter.UseVisualStyleBackColor = true;
+            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
             // 
             // pnlForm
             // 
             this.pnlForm.Controls.Add(this.grpServiceInfo);
             this.pnlForm.Controls.Add(this.pnlButtons);
-            this.pnlForm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlForm.Location = new System.Drawing.Point(1000, 152);
-            this.pnlForm.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlForm.Location = new System.Drawing.Point(1105, 74);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Padding = new System.Windows.Forms.Padding(13, 12, 0, 0);
-            this.pnlForm.Size = new System.Drawing.Size(387, 636);
+            this.pnlForm.Size = new System.Drawing.Size(310, 794);
             this.pnlForm.TabIndex = 1;
             // 
             // grpServiceInfo
@@ -370,35 +371,33 @@ namespace HuongViet.GUI
             this.grpServiceInfo.Controls.Add(this.lblServicePrice);
             this.grpServiceInfo.Controls.Add(this.txtServiceName);
             this.grpServiceInfo.Controls.Add(this.lblServiceName);
-            this.grpServiceInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpServiceInfo.Font = new System.Drawing.Font("Times New Roman", 11F, System.Drawing.FontStyle.Bold);
-            this.grpServiceInfo.Location = new System.Drawing.Point(13, 12);
-            this.grpServiceInfo.Margin = new System.Windows.Forms.Padding(4);
+            this.grpServiceInfo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold);
+            this.grpServiceInfo.Location = new System.Drawing.Point(10, 10);
             this.grpServiceInfo.Name = "grpServiceInfo";
-            this.grpServiceInfo.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-            this.grpServiceInfo.Size = new System.Drawing.Size(374, 501);
+            this.grpServiceInfo.Padding = new System.Windows.Forms.Padding(15);
+            this.grpServiceInfo.Size = new System.Drawing.Size(280, 486);
             this.grpServiceInfo.TabIndex = 1;
             this.grpServiceInfo.TabStop = false;
             this.grpServiceInfo.Text = "Thông tin dịch vụ";
             // 
             // picServiceImage
             // 
-            this.picServiceImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.picServiceImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picServiceImage.Location = new System.Drawing.Point(240, 40);
+            this.picServiceImage.Location = new System.Drawing.Point(23, 35);
+            this.picServiceImage.Margin = new System.Windows.Forms.Padding(2);
             this.picServiceImage.Name = "picServiceImage";
-            this.picServiceImage.Size = new System.Drawing.Size(110, 110);
+            this.picServiceImage.Size = new System.Drawing.Size(83, 90);
             this.picServiceImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picServiceImage.TabIndex = 15;
             this.picServiceImage.TabStop = false;
             // 
             // btnSelectImage
             // 
-            this.btnSelectImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSelectImage.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.btnSelectImage.Location = new System.Drawing.Point(240, 155);
+            this.btnSelectImage.Location = new System.Drawing.Point(123, 80);
+            this.btnSelectImage.Margin = new System.Windows.Forms.Padding(2);
             this.btnSelectImage.Name = "btnSelectImage";
-            this.btnSelectImage.Size = new System.Drawing.Size(110, 25);
+            this.btnSelectImage.Size = new System.Drawing.Size(82, 20);
             this.btnSelectImage.TabIndex = 16;
             this.btnSelectImage.Text = "Chọn ảnh";
             this.btnSelectImage.UseVisualStyleBackColor = true;
@@ -406,11 +405,11 @@ namespace HuongViet.GUI
             // 
             // btnClearImage
             // 
-            this.btnClearImage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClearImage.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.btnClearImage.Location = new System.Drawing.Point(240, 185);
+            this.btnClearImage.Location = new System.Drawing.Point(123, 104);
+            this.btnClearImage.Margin = new System.Windows.Forms.Padding(2);
             this.btnClearImage.Name = "btnClearImage";
-            this.btnClearImage.Size = new System.Drawing.Size(110, 25);
+            this.btnClearImage.Size = new System.Drawing.Size(82, 20);
             this.btnClearImage.TabIndex = 17;
             this.btnClearImage.Text = "Xóa ảnh";
             this.btnClearImage.UseVisualStyleBackColor = true;
@@ -421,127 +420,110 @@ namespace HuongViet.GUI
             this.chkIsActive.AutoSize = true;
             this.chkIsActive.Checked = true;
             this.chkIsActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsActive.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.chkIsActive.Location = new System.Drawing.Point(24, 390);
+            this.chkIsActive.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.chkIsActive.Location = new System.Drawing.Point(17, 440);
+            this.chkIsActive.Margin = new System.Windows.Forms.Padding(2);
             this.chkIsActive.Name = "chkIsActive";
-            this.chkIsActive.Size = new System.Drawing.Size(109, 25);
+            this.chkIsActive.Size = new System.Drawing.Size(92, 23);
             this.chkIsActive.TabIndex = 10;
             this.chkIsActive.Text = "Hoạt động";
             this.chkIsActive.UseVisualStyleBackColor = true;
             // 
             // txtDescription
             // 
-            this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDescription.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtDescription.Location = new System.Drawing.Point(24, 320);
-            this.txtDescription.Margin = new System.Windows.Forms.Padding(4);
+            this.txtDescription.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txtDescription.Location = new System.Drawing.Point(17, 383);
             this.txtDescription.MaxLength = 1000;
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
-            this.txtDescription.Size = new System.Drawing.Size(326, 60);
+            this.txtDescription.Size = new System.Drawing.Size(245, 52);
             this.txtDescription.TabIndex = 9;
             // 
             // lblDescription
             // 
             this.lblDescription.AutoSize = true;
-            this.lblDescription.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblDescription.Location = new System.Drawing.Point(24, 295);
-            this.lblDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDescription.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblDescription.Location = new System.Drawing.Point(17, 363);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(60, 21);
+            this.lblDescription.Size = new System.Drawing.Size(49, 19);
             this.lblDescription.TabIndex = 8;
             this.lblDescription.Text = "Mô tả:";
             // 
             // cmbUnit
             // 
-            this.cmbUnit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbUnit.Font = new System.Drawing.Font("Times New Roman", 11F);
+            this.cmbUnit.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cmbUnit.FormattingEnabled = true;
-            this.cmbUnit.Location = new System.Drawing.Point(24, 260);
-            this.cmbUnit.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbUnit.Location = new System.Drawing.Point(17, 334);
             this.cmbUnit.Name = "cmbUnit";
-            this.cmbUnit.Size = new System.Drawing.Size(200, 29);
+            this.cmbUnit.Size = new System.Drawing.Size(151, 27);
             this.cmbUnit.TabIndex = 7;
             // 
             // lblUnit
             // 
             this.lblUnit.AutoSize = true;
-            this.lblUnit.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblUnit.Location = new System.Drawing.Point(24, 235);
-            this.lblUnit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUnit.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblUnit.Location = new System.Drawing.Point(17, 314);
             this.lblUnit.Name = "lblUnit";
-            this.lblUnit.Size = new System.Drawing.Size(106, 21);
+            this.lblUnit.Size = new System.Drawing.Size(77, 19);
             this.lblUnit.TabIndex = 6;
             this.lblUnit.Text = "Đơn vị tính:";
             // 
             // cmbCategory
             // 
-            this.cmbCategory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategory.Font = new System.Drawing.Font("Times New Roman", 11F);
+            this.cmbCategory.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(24, 195);
-            this.cmbCategory.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbCategory.Location = new System.Drawing.Point(17, 281);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(326, 29);
+            this.cmbCategory.Size = new System.Drawing.Size(245, 27);
             this.cmbCategory.TabIndex = 5;
             // 
             // lblCategory
             // 
             this.lblCategory.AutoSize = true;
-            this.lblCategory.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblCategory.Location = new System.Drawing.Point(24, 170);
-            this.lblCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCategory.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblCategory.Location = new System.Drawing.Point(17, 261);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(80, 21);
+            this.lblCategory.Size = new System.Drawing.Size(60, 19);
             this.lblCategory.TabIndex = 4;
             this.lblCategory.Text = "Thể loại:";
             // 
             // txtServicePrice
             // 
-            this.txtServicePrice.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtServicePrice.Location = new System.Drawing.Point(24, 130);
-            this.txtServicePrice.Margin = new System.Windows.Forms.Padding(4);
+            this.txtServicePrice.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txtServicePrice.Location = new System.Drawing.Point(17, 229);
             this.txtServicePrice.MaxLength = 18;
             this.txtServicePrice.Name = "txtServicePrice";
-            this.txtServicePrice.Size = new System.Drawing.Size(150, 29);
+            this.txtServicePrice.Size = new System.Drawing.Size(114, 26);
             this.txtServicePrice.TabIndex = 3;
             // 
             // lblServicePrice
             // 
             this.lblServicePrice.AutoSize = true;
-            this.lblServicePrice.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblServicePrice.Location = new System.Drawing.Point(24, 105);
-            this.lblServicePrice.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblServicePrice.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblServicePrice.Location = new System.Drawing.Point(17, 208);
             this.lblServicePrice.Name = "lblServicePrice";
-            this.lblServicePrice.Size = new System.Drawing.Size(43, 21);
+            this.lblServicePrice.Size = new System.Drawing.Size(33, 19);
             this.lblServicePrice.TabIndex = 2;
             this.lblServicePrice.Text = "Giá:";
             // 
             // txtServiceName
             // 
-            this.txtServiceName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtServiceName.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtServiceName.Location = new System.Drawing.Point(24, 65);
-            this.txtServiceName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtServiceName.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.txtServiceName.Location = new System.Drawing.Point(17, 176);
             this.txtServiceName.MaxLength = 200;
             this.txtServiceName.Name = "txtServiceName";
-            this.txtServiceName.Size = new System.Drawing.Size(326, 29);
+            this.txtServiceName.Size = new System.Drawing.Size(245, 26);
             this.txtServiceName.TabIndex = 1;
             // 
             // lblServiceName
             // 
             this.lblServiceName.AutoSize = true;
-            this.lblServiceName.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblServiceName.Location = new System.Drawing.Point(24, 40);
-            this.lblServiceName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblServiceName.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblServiceName.Location = new System.Drawing.Point(17, 155);
             this.lblServiceName.Name = "lblServiceName";
-            this.lblServiceName.Size = new System.Drawing.Size(105, 21);
+            this.lblServiceName.Size = new System.Drawing.Size(82, 19);
             this.lblServiceName.TabIndex = 0;
             this.lblServiceName.Text = "Tên dịch vụ:";
             // 
@@ -552,21 +534,17 @@ namespace HuongViet.GUI
             this.pnlButtons.Controls.Add(this.btnDelete);
             this.pnlButtons.Controls.Add(this.btnEdit);
             this.pnlButtons.Controls.Add(this.btnAdd);
-            this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButtons.Location = new System.Drawing.Point(13, 513);
-            this.pnlButtons.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlButtons.Location = new System.Drawing.Point(10, 514);
             this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Padding = new System.Windows.Forms.Padding(13, 12, 13, 12);
-            this.pnlButtons.Size = new System.Drawing.Size(374, 123);
+            this.pnlButtons.Size = new System.Drawing.Size(280, 90);
             this.pnlButtons.TabIndex = 0;
             // 
             // btnCancel
             // 
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnCancel.Location = new System.Drawing.Point(193, 60);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnCancel.Location = new System.Drawing.Point(145, 49);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(135, 40);
+            this.btnCancel.Size = new System.Drawing.Size(101, 32);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Hủy";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -574,11 +552,10 @@ namespace HuongViet.GUI
             // 
             // btnSave
             // 
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSave.Location = new System.Drawing.Point(47, 60);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnSave.Location = new System.Drawing.Point(35, 49);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(135, 40);
+            this.btnSave.Size = new System.Drawing.Size(101, 32);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Lưu";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -586,11 +563,10 @@ namespace HuongViet.GUI
             // 
             // btnDelete
             // 
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDelete.Location = new System.Drawing.Point(246, 13);
-            this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnDelete.Location = new System.Drawing.Point(184, 11);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 40);
+            this.btnDelete.Size = new System.Drawing.Size(64, 32);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -598,11 +574,10 @@ namespace HuongViet.GUI
             // 
             // btnEdit
             // 
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEdit.Location = new System.Drawing.Point(145, 13);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnEdit.Location = new System.Drawing.Point(109, 11);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(85, 40);
+            this.btnEdit.Size = new System.Drawing.Size(64, 32);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Sửa";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -610,205 +585,133 @@ namespace HuongViet.GUI
             // 
             // btnAdd
             // 
-            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAdd.Location = new System.Drawing.Point(44, 13);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnAdd.Location = new System.Drawing.Point(33, 11);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(85, 40);
+            this.btnAdd.Size = new System.Drawing.Size(64, 32);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // pnlHeader
-            // 
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Controls.Add(this.pnlFilter);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(13, 12);
-            this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1374, 140);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Times New Roman", 16.2F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(540, 0);
-            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(264, 32);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "QUẢN LÝ DỊCH VỤ";
-            // 
-            // pnlFilter
-            // 
-            this.pnlFilter.Controls.Add(this.lblFilter);
-            this.pnlFilter.Controls.Add(this.btnClearFilter);
-            this.pnlFilter.Controls.Add(this.lblStatus);
-            this.pnlFilter.Controls.Add(this.btnFilter);
-            this.pnlFilter.Controls.Add(this.txtPriceTo);
-            this.pnlFilter.Controls.Add(this.lblPriceTo);
-            this.pnlFilter.Controls.Add(this.txtPriceFrom);
-            this.pnlFilter.Controls.Add(this.lblPriceFrom);
-            this.pnlFilter.Controls.Add(this.cmbFilterCategory);
-            this.pnlFilter.Controls.Add(this.lblFilterCategory);
-            this.pnlFilter.Controls.Add(this.txtSearchService);
-            this.pnlFilter.Controls.Add(this.lblSearchService);
-            this.pnlFilter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFilter.Location = new System.Drawing.Point(0, 0);
-            this.pnlFilter.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlFilter.Name = "pnlFilter";
-            this.pnlFilter.Size = new System.Drawing.Size(1374, 140);
-            this.pnlFilter.TabIndex = 1;
-            // 
-            // lblFilter
-            // 
-            this.lblFilter.AutoSize = true;
-            this.lblFilter.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblFilter.Location = new System.Drawing.Point(4, 10);
-            this.lblFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFilter.Name = "lblFilter";
-            this.lblFilter.Size = new System.Drawing.Size(63, 21);
-            this.lblFilter.TabIndex = 13;
-            this.lblFilter.Text = "Bộ lọc:";
-            // 
-            // btnClearFilter
-            // 
-            this.btnClearFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearFilter.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.btnClearFilter.Location = new System.Drawing.Point(1210, 80);
-            this.btnClearFilter.Margin = new System.Windows.Forms.Padding(4);
-            this.btnClearFilter.Name = "btnClearFilter";
-            this.btnClearFilter.Size = new System.Drawing.Size(120, 40);
-            this.btnClearFilter.TabIndex = 12;
-            this.btnClearFilter.Text = "Xóa lọc";
-            this.btnClearFilter.UseVisualStyleBackColor = true;
-            this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Times New Roman", 10F);
-            this.lblStatus.ForeColor = System.Drawing.Color.Gray;
-            this.lblStatus.Location = new System.Drawing.Point(4, 115);
-            this.lblStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(130, 19);
-            this.lblStatus.TabIndex = 11;
-            this.lblStatus.Text = "Tổng số dịch vụ: 0";
-            // 
-            // btnFilter
-            // 
-            this.btnFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFilter.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.btnFilter.Location = new System.Drawing.Point(1070, 80);
-            this.btnFilter.Margin = new System.Windows.Forms.Padding(4);
-            this.btnFilter.Name = "btnFilter";
-            this.btnFilter.Size = new System.Drawing.Size(120, 40);
-            this.btnFilter.TabIndex = 10;
-            this.btnFilter.Text = "Lọc";
-            this.btnFilter.UseVisualStyleBackColor = true;
-            this.btnFilter.Click += new System.EventHandler(this.btnFilter_Click);
-            // 
             // txtPriceTo
             // 
-            this.txtPriceTo.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtPriceTo.Location = new System.Drawing.Point(690, 85);
-            this.txtPriceTo.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPriceTo.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.txtPriceTo.Location = new System.Drawing.Point(620, 74);
             this.txtPriceTo.MaxLength = 18;
             this.txtPriceTo.Name = "txtPriceTo";
-            this.txtPriceTo.Size = new System.Drawing.Size(120, 29);
+            this.txtPriceTo.Size = new System.Drawing.Size(100, 36);
             this.txtPriceTo.TabIndex = 9;
-            // 
-            // lblPriceTo
-            // 
-            this.lblPriceTo.AutoSize = true;
-            this.lblPriceTo.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblPriceTo.Location = new System.Drawing.Point(686, 60);
-            this.lblPriceTo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPriceTo.Name = "lblPriceTo";
-            this.lblPriceTo.Size = new System.Drawing.Size(76, 21);
-            this.lblPriceTo.TabIndex = 8;
-            this.lblPriceTo.Text = "Đến giá:";
-            // 
-            // txtPriceFrom
-            // 
-            this.txtPriceFrom.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtPriceFrom.Location = new System.Drawing.Point(530, 85);
-            this.txtPriceFrom.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPriceFrom.MaxLength = 18;
-            this.txtPriceFrom.Name = "txtPriceFrom";
-            this.txtPriceFrom.Size = new System.Drawing.Size(120, 29);
-            this.txtPriceFrom.TabIndex = 7;
-            // 
-            // lblPriceFrom
-            // 
-            this.lblPriceFrom.AutoSize = true;
-            this.lblPriceFrom.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblPriceFrom.Location = new System.Drawing.Point(526, 60);
-            this.lblPriceFrom.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPriceFrom.Name = "lblPriceFrom";
-            this.lblPriceFrom.Size = new System.Drawing.Size(69, 21);
-            this.lblPriceFrom.TabIndex = 6;
-            this.lblPriceFrom.Text = "Từ giá:";
+            this.txtPriceTo.TextChanged += new System.EventHandler(this.txtPriceTo_TextChanged);
             // 
             // cmbFilterCategory
             // 
             this.cmbFilterCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterCategory.Font = new System.Drawing.Font("Times New Roman", 11F);
+            this.cmbFilterCategory.Font = new System.Drawing.Font("Segoe UI", 16F);
             this.cmbFilterCategory.FormattingEnabled = true;
-            this.cmbFilterCategory.Location = new System.Drawing.Point(8, 85);
-            this.cmbFilterCategory.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbFilterCategory.Location = new System.Drawing.Point(18, 74);
             this.cmbFilterCategory.Name = "cmbFilterCategory";
-            this.cmbFilterCategory.Size = new System.Drawing.Size(450, 29);
+            this.cmbFilterCategory.Size = new System.Drawing.Size(235, 38);
             this.cmbFilterCategory.TabIndex = 3;
+            this.cmbFilterCategory.SelectedIndexChanged += new System.EventHandler(this.cmbFilterCategory_SelectedIndexChanged);
             // 
-            // lblFilterCategory
+            // txtPriceFrom
             // 
-            this.lblFilterCategory.AutoSize = true;
-            this.lblFilterCategory.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblFilterCategory.Location = new System.Drawing.Point(4, 60);
-            this.lblFilterCategory.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblFilterCategory.Name = "lblFilterCategory";
-            this.lblFilterCategory.Size = new System.Drawing.Size(80, 21);
-            this.lblFilterCategory.TabIndex = 2;
-            this.lblFilterCategory.Text = "Thể loại:";
+            this.txtPriceFrom.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.txtPriceFrom.Location = new System.Drawing.Point(500, 74);
+            this.txtPriceFrom.MaxLength = 18;
+            this.txtPriceFrom.Name = "txtPriceFrom";
+            this.txtPriceFrom.Size = new System.Drawing.Size(100, 36);
+            this.txtPriceFrom.TabIndex = 7;
+            this.txtPriceFrom.TextChanged += new System.EventHandler(this.txtPriceFrom_TextChanged);
             // 
             // txtSearchService
             // 
-            this.txtSearchService.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.txtSearchService.Location = new System.Drawing.Point(130, 35);
-            this.txtSearchService.Margin = new System.Windows.Forms.Padding(4);
+            this.txtSearchService.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.txtSearchService.Location = new System.Drawing.Point(270, 74);
             this.txtSearchService.Name = "txtSearchService";
-            this.txtSearchService.Size = new System.Drawing.Size(830, 29);
+            this.txtSearchService.Size = new System.Drawing.Size(200, 36);
             this.txtSearchService.TabIndex = 1;
+            this.txtSearchService.TextChanged += new System.EventHandler(this.txtSearchService_TextChanged);
             this.txtSearchService.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearchService_KeyPress);
+            // 
+            // pnlHeader
+            // 
+            this.pnlHeader.Controls.Add(this.pnlFilter);
+            this.pnlHeader.Location = new System.Drawing.Point(10, 10);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1420, 58);
+            this.pnlHeader.TabIndex = 0;
+            // 
+            // lblPriceTo
+            // 
+            this.lblPriceTo.AutoSize = true;
+            this.lblPriceTo.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblPriceTo.Location = new System.Drawing.Point(609, 30);
+            this.lblPriceTo.Name = "lblPriceTo";
+            this.lblPriceTo.Size = new System.Drawing.Size(58, 19);
+            this.lblPriceTo.TabIndex = 8;
+            this.lblPriceTo.Text = "Đến giá:";
+            this.lblPriceTo.Click += new System.EventHandler(this.lblPriceTo_Click);
+            // 
+            // lblPriceFrom
+            // 
+            this.lblPriceFrom.AutoSize = true;
+            this.lblPriceFrom.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblPriceFrom.Location = new System.Drawing.Point(489, 30);
+            this.lblPriceFrom.Name = "lblPriceFrom";
+            this.lblPriceFrom.Size = new System.Drawing.Size(51, 19);
+            this.lblPriceFrom.TabIndex = 6;
+            this.lblPriceFrom.Text = "Từ giá:";
+            this.lblPriceFrom.Click += new System.EventHandler(this.lblPriceFrom_Click);
             // 
             // lblSearchService
             // 
             this.lblSearchService.AutoSize = true;
-            this.lblSearchService.Font = new System.Drawing.Font("Times New Roman", 11F);
-            this.lblSearchService.Location = new System.Drawing.Point(4, 38);
-            this.lblSearchService.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSearchService.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblSearchService.Location = new System.Drawing.Point(259, 30);
             this.lblSearchService.Name = "lblSearchService";
-            this.lblSearchService.Size = new System.Drawing.Size(105, 21);
+            this.lblSearchService.Size = new System.Drawing.Size(82, 19);
             this.lblSearchService.TabIndex = 0;
             this.lblSearchService.Text = "Tên dịch vụ:";
+            this.lblSearchService.Click += new System.EventHandler(this.lblSearchService_Click);
+            // 
+            // lblFilterCategory
+            // 
+            this.lblFilterCategory.AutoSize = true;
+            this.lblFilterCategory.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.lblFilterCategory.Location = new System.Drawing.Point(7, 30);
+            this.lblFilterCategory.Name = "lblFilterCategory";
+            this.lblFilterCategory.Size = new System.Drawing.Size(60, 19);
+            this.lblFilterCategory.TabIndex = 2;
+            this.lblFilterCategory.Text = "Thể loại:";
+            this.lblFilterCategory.Click += new System.EventHandler(this.lblFilterCategory_Click);
+            // 
+            // pnlFilter
+            // 
+            this.pnlFilter.Controls.Add(this.lblFilterCategory);
+            this.pnlFilter.Controls.Add(this.lblSearchService);
+            this.pnlFilter.Controls.Add(this.lblPriceFrom);
+            this.pnlFilter.Controls.Add(this.lblPriceTo);
+            this.pnlFilter.Location = new System.Drawing.Point(0, 0);
+            this.pnlFilter.Name = "pnlFilter";
+            this.pnlFilter.Size = new System.Drawing.Size(1420, 58);
+            this.pnlFilter.TabIndex = 1;
+            this.pnlFilter.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlFilter_Paint);
             // 
             // FrmService
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1400, 800);
+            this.ClientSize = new System.Drawing.Size(1440, 878);
             this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmService";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý dịch vụ";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.pnlContent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvServices)).EndInit();
             this.pnlPriceHistory.ResumeLayout(false);
@@ -823,7 +726,6 @@ namespace HuongViet.GUI
             ((System.ComponentModel.ISupportInitialize)(this.picServiceImage)).EndInit();
             this.pnlButtons.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.pnlFilter.ResumeLayout(false);
             this.pnlFilter.PerformLayout();
             this.ResumeLayout(false);
@@ -842,12 +744,8 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Panel pnlFilter;
         private System.Windows.Forms.Button btnClearFilter;
         private System.Windows.Forms.Button btnFilter;
-        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Panel pnlPaging;
         private System.Windows.Forms.Button btnFirstPage;
         private System.Windows.Forms.Button btnPrevPage;
@@ -869,14 +767,9 @@ namespace HuongViet.GUI
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.CheckBox chkIsActive;
         private System.Windows.Forms.TextBox txtSearchService;
-        private System.Windows.Forms.Label lblSearchService;
         private System.Windows.Forms.ComboBox cmbFilterCategory;
-        private System.Windows.Forms.Label lblFilterCategory;
         private System.Windows.Forms.TextBox txtPriceFrom;
-        private System.Windows.Forms.Label lblPriceFrom;
         private System.Windows.Forms.TextBox txtPriceTo;
-        private System.Windows.Forms.Label lblPriceTo;
-        private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.Panel pnlPriceHistory;
         private System.Windows.Forms.DataGridView dgvPriceHistory;
         private System.Windows.Forms.Panel pnlPriceHistoryHeader;
@@ -885,6 +778,12 @@ namespace HuongViet.GUI
         private System.Windows.Forms.PictureBox picServiceImage;
         private System.Windows.Forms.Button btnSelectImage;
         private System.Windows.Forms.Button btnClearImage;
+        private System.Windows.Forms.Panel pnlHeader;
+        private System.Windows.Forms.Panel pnlFilter;
+        private System.Windows.Forms.Label lblFilterCategory;
+        private System.Windows.Forms.Label lblSearchService;
+        private System.Windows.Forms.Label lblPriceFrom;
+        private System.Windows.Forms.Label lblPriceTo;
     }
 }
 

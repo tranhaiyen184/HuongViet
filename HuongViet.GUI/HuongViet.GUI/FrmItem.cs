@@ -118,9 +118,7 @@ namespace HuongViet.GUI
 
         private void SetupFilters()
         {
-            // Mặc định chọn "Tất cả" cho filter loại món trong datagrid
-            // Nhưng trong combobox thêm/sửa thì không có dịch vụ
-            cmbFilterItemType.SelectedIndex = 0; // Tất cả
+            // Filter setup - removed ItemType filter to match Service form design
         }
 
         private void LoadCategories()
@@ -269,7 +267,6 @@ namespace HuongViet.GUI
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {items?.Count ?? 0} / {totalRecords} món";
         }
 
         private void UpdatePaginationButtons()
@@ -411,10 +408,11 @@ namespace HuongViet.GUI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            ClearForm(); // Clear form first
             selectedItem = null;
-            isEditing = true;
-            ClearForm();
+            isEditing = true; // Then set isEditing
             EnableEditMode(true);
+            btnSave.Enabled = true; // Enable Save button immediately
             txtItemName.Focus();
         }
 
@@ -608,21 +606,6 @@ namespace HuongViet.GUI
                     currentCategoryId = null;
                 }
 
-                // Filter item type
-                string selectedType = cmbFilterItemType.SelectedItem?.ToString();
-                if (selectedType == "Tất cả")
-                {
-                    currentItemType = null;
-                }
-                else if (selectedType == "Thức ăn")
-                {
-                    currentItemType = ItemType.ThucAn;
-                }
-                else if (selectedType == "Nước uống")
-                {
-                    currentItemType = ItemType.NuocUong;
-                }
-
                 // Filter price from
                 if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text))
                 {
@@ -682,7 +665,6 @@ namespace HuongViet.GUI
         {
             txtSearchItem.Clear();
             cmbFilterCategory.SelectedIndex = 0;
-            cmbFilterItemType.SelectedIndex = 0;
             txtPriceFrom.Clear();
             txtPriceTo.Clear();
             
@@ -970,5 +952,55 @@ namespace HuongViet.GUI
         }
 
         #endregion
+
+        private void pnlFilter_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblSearchItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPriceFrom_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPriceTo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFilterCategory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPriceFrom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPriceTo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSearchItem_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbFilterCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlPriceHistoryHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

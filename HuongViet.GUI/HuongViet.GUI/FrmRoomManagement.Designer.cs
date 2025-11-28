@@ -62,7 +62,7 @@ namespace HuongViet.GUI
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlMain.Size = new System.Drawing.Size(900, 500);
+            this.pnlMain.Size = new System.Drawing.Size(900, 532);
             this.pnlMain.TabIndex = 0;
             // 
             // pnlContent
@@ -72,7 +72,7 @@ namespace HuongViet.GUI
             this.pnlContent.Location = new System.Drawing.Point(10, 60);
             this.pnlContent.Name = "pnlContent";
             this.pnlContent.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.pnlContent.Size = new System.Drawing.Size(600, 430);
+            this.pnlContent.Size = new System.Drawing.Size(600, 462);
             this.pnlContent.TabIndex = 2;
             // 
             // dgvRooms
@@ -91,7 +91,7 @@ namespace HuongViet.GUI
             this.dgvRooms.ReadOnly = true;
             this.dgvRooms.RowHeadersVisible = false;
             this.dgvRooms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvRooms.Size = new System.Drawing.Size(600, 420);
+            this.dgvRooms.Size = new System.Drawing.Size(600, 452);
             this.dgvRooms.TabIndex = 0;
             this.dgvRooms.SelectionChanged += new System.EventHandler(this.dgvRooms_SelectionChanged);
             // 
@@ -103,7 +103,7 @@ namespace HuongViet.GUI
             this.pnlForm.Location = new System.Drawing.Point(610, 60);
             this.pnlForm.Name = "pnlForm";
             this.pnlForm.Padding = new System.Windows.Forms.Padding(10, 10, 0, 0);
-            this.pnlForm.Size = new System.Drawing.Size(280, 430);
+            this.pnlForm.Size = new System.Drawing.Size(280, 462);
             this.pnlForm.TabIndex = 1;
             // 
             // grpRoomInfo
@@ -125,7 +125,7 @@ namespace HuongViet.GUI
             this.grpRoomInfo.Location = new System.Drawing.Point(10, 10);
             this.grpRoomInfo.Name = "grpRoomInfo";
             this.grpRoomInfo.Padding = new System.Windows.Forms.Padding(15);
-            this.grpRoomInfo.Size = new System.Drawing.Size(270, 330);
+            this.grpRoomInfo.Size = new System.Drawing.Size(270, 344);
             this.grpRoomInfo.TabIndex = 1;
             this.grpRoomInfo.TabStop = false;
             this.grpRoomInfo.Text = "Thông tin phòng";
@@ -156,7 +156,7 @@ namespace HuongViet.GUI
             this.lblCapacity.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblCapacity.Location = new System.Drawing.Point(18, 295);
             this.lblCapacity.Name = "lblCapacity";
-            this.lblCapacity.Size = new System.Drawing.Size(66, 15);
+            this.lblCapacity.Size = new System.Drawing.Size(58, 15);
             this.lblCapacity.TabIndex = 10;
             this.lblCapacity.Text = "Sức chứa:";
             // 
@@ -172,11 +172,6 @@ namespace HuongViet.GUI
             0,
             0,
             0});
-            this.nudPricePerHour.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
             this.nudPricePerHour.Name = "nudPricePerHour";
             this.nudPricePerHour.Size = new System.Drawing.Size(234, 23);
             this.nudPricePerHour.TabIndex = 4;
@@ -187,7 +182,7 @@ namespace HuongViet.GUI
             this.lblPricePerHour.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblPricePerHour.Location = new System.Drawing.Point(18, 250);
             this.lblPricePerHour.Name = "lblPricePerHour";
-            this.lblPricePerHour.Size = new System.Drawing.Size(60, 15);
+            this.lblPricePerHour.Size = new System.Drawing.Size(49, 15);
             this.lblPricePerHour.TabIndex = 8;
             this.lblPricePerHour.Text = "Giá/giờ:";
             // 
@@ -214,7 +209,7 @@ namespace HuongViet.GUI
             this.lblRoomStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblRoomStatus.Location = new System.Drawing.Point(18, 205);
             this.lblRoomStatus.Name = "lblRoomStatus";
-            this.lblRoomStatus.Size = new System.Drawing.Size(66, 15);
+            this.lblRoomStatus.Size = new System.Drawing.Size(63, 15);
             this.lblRoomStatus.TabIndex = 6;
             this.lblRoomStatus.Text = "Trạng thái:";
             // 
@@ -263,7 +258,7 @@ namespace HuongViet.GUI
             this.lblFloor.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblFloor.Location = new System.Drawing.Point(18, 115);
             this.lblFloor.Name = "lblFloor";
-            this.lblFloor.Size = new System.Drawing.Size(40, 15);
+            this.lblFloor.Size = new System.Drawing.Size(53, 15);
             this.lblFloor.TabIndex = 2;
             this.lblFloor.Text = "Khu vực:";
             // 
@@ -284,7 +279,7 @@ namespace HuongViet.GUI
             this.lblRoomName.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lblRoomName.Location = new System.Drawing.Point(18, 70);
             this.lblRoomName.Name = "lblRoomName";
-            this.lblRoomName.Size = new System.Drawing.Size(70, 15);
+            this.lblRoomName.Size = new System.Drawing.Size(67, 15);
             this.lblRoomName.TabIndex = 0;
             this.lblRoomName.Text = "Tên phòng:";
             // 
@@ -296,10 +291,10 @@ namespace HuongViet.GUI
             this.pnlButtons.Controls.Add(this.btnEdit);
             this.pnlButtons.Controls.Add(this.btnAdd);
             this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButtons.Location = new System.Drawing.Point(10, 340);
+            this.pnlButtons.Location = new System.Drawing.Point(10, 354);
             this.pnlButtons.Name = "pnlButtons";
             this.pnlButtons.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlButtons.Size = new System.Drawing.Size(270, 90);
+            this.pnlButtons.Size = new System.Drawing.Size(270, 108);
             this.pnlButtons.TabIndex = 0;
             // 
             // btnCancel
@@ -382,7 +377,7 @@ namespace HuongViet.GUI
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(3, 15);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(155, 30);
+            this.lblTitle.Size = new System.Drawing.Size(165, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Quản lý phòng";
             // 
@@ -390,7 +385,7 @@ namespace HuongViet.GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 500);
+            this.ClientSize = new System.Drawing.Size(900, 532);
             this.Controls.Add(this.pnlMain);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;

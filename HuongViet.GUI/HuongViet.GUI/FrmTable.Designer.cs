@@ -17,6 +17,9 @@ namespace HuongViet.GUI
 
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.dgvTables = new System.Windows.Forms.DataGridView();
@@ -47,7 +50,6 @@ namespace HuongViet.GUI
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.btnManageRooms = new System.Windows.Forms.Button();
             this.btnManageFloors = new System.Windows.Forms.Button();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.pnlSearch = new System.Windows.Forms.Panel();
             this.cmbFilterStatus = new System.Windows.Forms.ComboBox();
             this.lblFilterStatus = new System.Windows.Forms.Label();
@@ -72,25 +74,29 @@ namespace HuongViet.GUI
             // 
             // pnlMain
             // 
+            this.pnlMain.Controls.Add(this.btnRefresh);
+            this.pnlMain.Controls.Add(this.btnSearch);
+            this.pnlMain.Controls.Add(this.cmbFilterStatus);
+            this.pnlMain.Controls.Add(this.lblFilterStatus);
             this.pnlMain.Controls.Add(this.pnlContent);
+            this.pnlMain.Controls.Add(this.cmbFilterFloor);
             this.pnlMain.Controls.Add(this.pnlForm);
+            this.pnlMain.Controls.Add(this.lblFilterFloor);
             this.pnlMain.Controls.Add(this.pnlHeader);
-            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Controls.Add(this.txtSearch);
+            this.pnlMain.Controls.Add(this.lblSearch);
             this.pnlMain.Location = new System.Drawing.Point(0, 0);
             this.pnlMain.Name = "pnlMain";
-            this.pnlMain.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlMain.Size = new System.Drawing.Size(1000, 600);
+            this.pnlMain.Size = new System.Drawing.Size(1440, 878);
             this.pnlMain.TabIndex = 0;
             // 
             // pnlContent
             // 
             this.pnlContent.Controls.Add(this.dgvTables);
             this.pnlContent.Controls.Add(this.pnlPaging);
-            this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Location = new System.Drawing.Point(10, 140);
+            this.pnlContent.Location = new System.Drawing.Point(10, 161);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.pnlContent.Size = new System.Drawing.Size(680, 450);
+            this.pnlContent.Size = new System.Drawing.Size(1110, 707);
             this.pnlContent.TabIndex = 2;
             // 
             // dgvTables
@@ -101,15 +107,39 @@ namespace HuongViet.GUI
             this.dgvTables.BackgroundColor = System.Drawing.Color.White;
             this.dgvTables.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvTables.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTables.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvTables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTables.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvTables.Location = new System.Drawing.Point(0, 10);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 14F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.LightBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTables.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvTables.Location = new System.Drawing.Point(0, 3);
             this.dgvTables.MultiSelect = false;
             this.dgvTables.Name = "dgvTables";
             this.dgvTables.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTables.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvTables.RowHeadersVisible = false;
+            this.dgvTables.RowHeadersWidth = 51;
             this.dgvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTables.Size = new System.Drawing.Size(680, 380);
+            this.dgvTables.Size = new System.Drawing.Size(1110, 707);
             this.dgvTables.TabIndex = 0;
             this.dgvTables.SelectionChanged += new System.EventHandler(this.dgvTables_SelectionChanged);
             // 
@@ -122,18 +152,17 @@ namespace HuongViet.GUI
             this.pnlPaging.Controls.Add(this.lblPageInfo);
             this.pnlPaging.Controls.Add(this.cmbPageSize);
             this.pnlPaging.Controls.Add(this.lblPageSize);
-            this.pnlPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlPaging.Location = new System.Drawing.Point(0, 390);
+            this.pnlPaging.Location = new System.Drawing.Point(0, 720);
             this.pnlPaging.Name = "pnlPaging";
-            this.pnlPaging.Size = new System.Drawing.Size(680, 60);
+            this.pnlPaging.Size = new System.Drawing.Size(1110, 42);
             this.pnlPaging.TabIndex = 1;
             // 
             // btnFirstPage
             // 
-            this.btnFirstPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnFirstPage.Location = new System.Drawing.Point(15, 12);
+            this.btnFirstPage.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnFirstPage.Location = new System.Drawing.Point(11, 6);
             this.btnFirstPage.Name = "btnFirstPage";
-            this.btnFirstPage.Size = new System.Drawing.Size(45, 36);
+            this.btnFirstPage.Size = new System.Drawing.Size(34, 29);
             this.btnFirstPage.TabIndex = 0;
             this.btnFirstPage.Text = "<<";
             this.btnFirstPage.UseVisualStyleBackColor = true;
@@ -141,10 +170,10 @@ namespace HuongViet.GUI
             // 
             // btnPrevPage
             // 
-            this.btnPrevPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnPrevPage.Location = new System.Drawing.Point(65, 12);
+            this.btnPrevPage.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnPrevPage.Location = new System.Drawing.Point(49, 6);
             this.btnPrevPage.Name = "btnPrevPage";
-            this.btnPrevPage.Size = new System.Drawing.Size(45, 36);
+            this.btnPrevPage.Size = new System.Drawing.Size(34, 29);
             this.btnPrevPage.TabIndex = 1;
             this.btnPrevPage.Text = "<";
             this.btnPrevPage.UseVisualStyleBackColor = true;
@@ -152,10 +181,10 @@ namespace HuongViet.GUI
             // 
             // btnNextPage
             // 
-            this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnNextPage.Location = new System.Drawing.Point(115, 12);
+            this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnNextPage.Location = new System.Drawing.Point(86, 6);
             this.btnNextPage.Name = "btnNextPage";
-            this.btnNextPage.Size = new System.Drawing.Size(45, 36);
+            this.btnNextPage.Size = new System.Drawing.Size(34, 29);
             this.btnNextPage.TabIndex = 2;
             this.btnNextPage.Text = ">";
             this.btnNextPage.UseVisualStyleBackColor = true;
@@ -163,10 +192,10 @@ namespace HuongViet.GUI
             // 
             // btnLastPage
             // 
-            this.btnLastPage.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnLastPage.Location = new System.Drawing.Point(165, 12);
+            this.btnLastPage.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnLastPage.Location = new System.Drawing.Point(124, 6);
             this.btnLastPage.Name = "btnLastPage";
-            this.btnLastPage.Size = new System.Drawing.Size(45, 36);
+            this.btnLastPage.Size = new System.Drawing.Size(34, 29);
             this.btnLastPage.TabIndex = 3;
             this.btnLastPage.Text = ">>";
             this.btnLastPage.UseVisualStyleBackColor = true;
@@ -174,51 +203,51 @@ namespace HuongViet.GUI
             // 
             // lblPageInfo
             // 
-            this.lblPageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPageInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPageInfo.Location = new System.Drawing.Point(380, 20);
+            this.lblPageInfo.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblPageInfo.AutoSize = true;
+            this.lblPageInfo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPageInfo.Location = new System.Drawing.Point(262, 13);
             this.lblPageInfo.Name = "lblPageInfo";
-            this.lblPageInfo.Size = new System.Drawing.Size(220, 20);
+            this.lblPageInfo.Size = new System.Drawing.Size(139, 19);
             this.lblPageInfo.TabIndex = 6;
-            this.lblPageInfo.Text = "Trang 1 / 1";
-            this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblPageInfo.Text = "Trang 1 / 1  (Tổng: 0)";
+            this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cmbPageSize
             // 
+            this.cmbPageSize.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.cmbPageSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPageSize.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbPageSize.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cmbPageSize.FormattingEnabled = true;
             this.cmbPageSize.Items.AddRange(new object[] {
             "10",
             "20",
             "50",
             "100"});
-            this.cmbPageSize.Location = new System.Drawing.Point(605, 18);
+            this.cmbPageSize.Location = new System.Drawing.Point(562, 11);
             this.cmbPageSize.Name = "cmbPageSize";
-            this.cmbPageSize.Size = new System.Drawing.Size(70, 23);
+            this.cmbPageSize.Size = new System.Drawing.Size(46, 27);
             this.cmbPageSize.TabIndex = 5;
             this.cmbPageSize.SelectedIndexChanged += new System.EventHandler(this.cmbPageSize_SelectedIndexChanged);
             // 
             // lblPageSize
             // 
-            this.lblPageSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPageSize.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.lblPageSize.AutoSize = true;
-            this.lblPageSize.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblPageSize.Location = new System.Drawing.Point(500, 21);
+            this.lblPageSize.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPageSize.Location = new System.Drawing.Point(465, 13);
             this.lblPageSize.Name = "lblPageSize";
-            this.lblPageSize.Size = new System.Drawing.Size(87, 15);
+            this.lblPageSize.Size = new System.Drawing.Size(109, 19);
             this.lblPageSize.TabIndex = 4;
-            this.lblPageSize.Text = "Số dòng/trang:";
+            this.lblPageSize.Text = "Số dòng/trang:   ";
             // 
             // pnlForm
             // 
             this.pnlForm.Controls.Add(this.grpTableInfo);
             this.pnlForm.Controls.Add(this.pnlButtons);
-            this.pnlForm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlForm.Location = new System.Drawing.Point(690, 140);
+            this.pnlForm.Location = new System.Drawing.Point(1130, 161);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Padding = new System.Windows.Forms.Padding(10, 10, 0, 0);
-            this.pnlForm.Size = new System.Drawing.Size(300, 450);
+            this.pnlForm.Size = new System.Drawing.Size(300, 762);
             this.pnlForm.TabIndex = 1;
             // 
             // grpTableInfo
@@ -231,22 +260,19 @@ namespace HuongViet.GUI
             this.grpTableInfo.Controls.Add(this.lblFloor);
             this.grpTableInfo.Controls.Add(this.txtTableName);
             this.grpTableInfo.Controls.Add(this.lblTableName);
-            this.grpTableInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grpTableInfo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.grpTableInfo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpTableInfo.Location = new System.Drawing.Point(10, 10);
             this.grpTableInfo.Name = "grpTableInfo";
             this.grpTableInfo.Padding = new System.Windows.Forms.Padding(15);
-            this.grpTableInfo.Size = new System.Drawing.Size(290, 340);
+            this.grpTableInfo.Size = new System.Drawing.Size(280, 340);
             this.grpTableInfo.TabIndex = 1;
             this.grpTableInfo.TabStop = false;
             this.grpTableInfo.Text = "Thông tin bàn";
             // 
             // cmbTableStatus
             // 
-            this.cmbTableStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbTableStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTableStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbTableStatus.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbTableStatus.FormattingEnabled = true;
             this.cmbTableStatus.Items.AddRange(new object[] {
             "Trống",
@@ -255,32 +281,30 @@ namespace HuongViet.GUI
             "Không khả dụng"});
             this.cmbTableStatus.Location = new System.Drawing.Point(18, 270);
             this.cmbTableStatus.Name = "cmbTableStatus";
-            this.cmbTableStatus.Size = new System.Drawing.Size(254, 23);
+            this.cmbTableStatus.Size = new System.Drawing.Size(226, 31);
             this.cmbTableStatus.TabIndex = 6;
             // 
             // lblTableStatus
             // 
             this.lblTableStatus.AutoSize = true;
-            this.lblTableStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTableStatus.Location = new System.Drawing.Point(18, 250);
+            this.lblTableStatus.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblTableStatus.Location = new System.Drawing.Point(18, 246);
             this.lblTableStatus.Name = "lblTableStatus";
-            this.lblTableStatus.Size = new System.Drawing.Size(66, 15);
+            this.lblTableStatus.Size = new System.Drawing.Size(88, 21);
             this.lblTableStatus.TabIndex = 5;
             this.lblTableStatus.Text = "Trạng thái:";
             // 
             // nudCapacity
             // 
-            this.nudCapacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.nudCapacity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nudCapacity.Location = new System.Drawing.Point(18, 225);
+            this.nudCapacity.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nudCapacity.Location = new System.Drawing.Point(18, 203);
             this.nudCapacity.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.nudCapacity.Name = "nudCapacity";
-            this.nudCapacity.Size = new System.Drawing.Size(254, 23);
+            this.nudCapacity.Size = new System.Drawing.Size(226, 32);
             this.nudCapacity.TabIndex = 4;
             this.nudCapacity.Value = new decimal(new int[] {
             1,
@@ -291,53 +315,49 @@ namespace HuongViet.GUI
             // lblCapacity
             // 
             this.lblCapacity.AutoSize = true;
-            this.lblCapacity.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblCapacity.Location = new System.Drawing.Point(18, 205);
+            this.lblCapacity.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblCapacity.Location = new System.Drawing.Point(18, 179);
             this.lblCapacity.Name = "lblCapacity";
-            this.lblCapacity.Size = new System.Drawing.Size(66, 15);
+            this.lblCapacity.Size = new System.Drawing.Size(85, 21);
             this.lblCapacity.TabIndex = 3;
             this.lblCapacity.Text = "Sức chứa:";
             // 
             // cmbFloor
             // 
-            this.cmbFloor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbFloor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFloor.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbFloor.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbFloor.FormattingEnabled = true;
-            this.cmbFloor.Location = new System.Drawing.Point(18, 180);
+            this.cmbFloor.Location = new System.Drawing.Point(18, 136);
             this.cmbFloor.Name = "cmbFloor";
-            this.cmbFloor.Size = new System.Drawing.Size(254, 23);
+            this.cmbFloor.Size = new System.Drawing.Size(226, 31);
             this.cmbFloor.TabIndex = 2;
             // 
             // lblFloor
             // 
             this.lblFloor.AutoSize = true;
-            this.lblFloor.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFloor.Location = new System.Drawing.Point(18, 160);
+            this.lblFloor.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblFloor.Location = new System.Drawing.Point(18, 112);
             this.lblFloor.Name = "lblFloor";
-            this.lblFloor.Size = new System.Drawing.Size(40, 15);
+            this.lblFloor.Size = new System.Drawing.Size(78, 21);
             this.lblFloor.TabIndex = 1;
             this.lblFloor.Text = "Khu vực:";
             // 
             // txtTableName
             // 
-            this.txtTableName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTableName.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.txtTableName.Location = new System.Drawing.Point(18, 135);
+            this.txtTableName.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTableName.Location = new System.Drawing.Point(18, 69);
             this.txtTableName.MaxLength = 20;
             this.txtTableName.Name = "txtTableName";
-            this.txtTableName.Size = new System.Drawing.Size(254, 23);
+            this.txtTableName.Size = new System.Drawing.Size(226, 32);
             this.txtTableName.TabIndex = 0;
             // 
             // lblTableName
             // 
             this.lblTableName.AutoSize = true;
-            this.lblTableName.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblTableName.Location = new System.Drawing.Point(18, 115);
+            this.lblTableName.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblTableName.Location = new System.Drawing.Point(18, 45);
             this.lblTableName.Name = "lblTableName";
-            this.lblTableName.Size = new System.Drawing.Size(60, 15);
+            this.lblTableName.Size = new System.Drawing.Size(75, 21);
             this.lblTableName.TabIndex = 0;
             this.lblTableName.Text = "Tên bàn:";
             // 
@@ -348,21 +368,17 @@ namespace HuongViet.GUI
             this.pnlButtons.Controls.Add(this.btnDelete);
             this.pnlButtons.Controls.Add(this.btnEdit);
             this.pnlButtons.Controls.Add(this.btnAdd);
-            this.pnlButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButtons.Location = new System.Drawing.Point(10, 350);
+            this.pnlButtons.Location = new System.Drawing.Point(10, 360);
             this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlButtons.Size = new System.Drawing.Size(290, 100);
+            this.pnlButtons.Size = new System.Drawing.Size(280, 90);
             this.pnlButtons.TabIndex = 0;
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnCancel.Location = new System.Drawing.Point(150, 55);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnCancel.Location = new System.Drawing.Point(145, 49);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(130, 40);
+            this.btnCancel.Size = new System.Drawing.Size(101, 32);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Hủy";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -370,12 +386,10 @@ namespace HuongViet.GUI
             // 
             // btnSave
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSave.Location = new System.Drawing.Point(10, 55);
+            this.btnSave.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnSave.Location = new System.Drawing.Point(35, 49);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(130, 40);
+            this.btnSave.Size = new System.Drawing.Size(101, 32);
             this.btnSave.TabIndex = 3;
             this.btnSave.Text = "Lưu";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -383,12 +397,10 @@ namespace HuongViet.GUI
             // 
             // btnDelete
             // 
-            this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnDelete.Location = new System.Drawing.Point(195, 10);
+            this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnDelete.Location = new System.Drawing.Point(184, 11);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(85, 40);
+            this.btnDelete.Size = new System.Drawing.Size(64, 32);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "Xóa";
             this.btnDelete.UseVisualStyleBackColor = true;
@@ -396,26 +408,21 @@ namespace HuongViet.GUI
             // 
             // btnEdit
             // 
-            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnEdit.Location = new System.Drawing.Point(100, 10);
+            this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnEdit.Location = new System.Drawing.Point(109, 11);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(85, 40);
+            this.btnEdit.Size = new System.Drawing.Size(64, 32);
             this.btnEdit.TabIndex = 1;
             this.btnEdit.Text = "Sửa";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Enabled = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnAdd
             // 
-            this.btnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnAdd.Location = new System.Drawing.Point(10, 10);
+            this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnAdd.Location = new System.Drawing.Point(33, 11);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(85, 40);
+            this.btnAdd.Size = new System.Drawing.Size(64, 32);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Text = "Thêm";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -423,49 +430,48 @@ namespace HuongViet.GUI
             // 
             // pnlHeader
             // 
-            this.pnlHeader.Controls.Add(this.btnManageRooms);
-            this.pnlHeader.Controls.Add(this.btnManageFloors);
-            this.pnlHeader.Controls.Add(this.lblStatus);
             this.pnlHeader.Controls.Add(this.pnlSearch);
             this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlHeader.Location = new System.Drawing.Point(10, 10);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(980, 130);
+            this.pnlHeader.Size = new System.Drawing.Size(1420, 86);
             this.pnlHeader.TabIndex = 0;
             // 
-            // lblStatus
+            // btnManageRooms
             // 
-            this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblStatus.ForeColor = System.Drawing.Color.Gray;
-            this.lblStatus.Location = new System.Drawing.Point(3, 112);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(95, 15);
-            this.lblStatus.TabIndex = 2;
-            this.lblStatus.Text = "Tổng số bàn: 0";
+            this.btnManageRooms.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.btnManageRooms.Location = new System.Drawing.Point(249, 34);
+            this.btnManageRooms.Name = "btnManageRooms";
+            this.btnManageRooms.Size = new System.Drawing.Size(120, 30);
+            this.btnManageRooms.TabIndex = 4;
+            this.btnManageRooms.Text = "Quản lý phòng";
+            this.btnManageRooms.UseVisualStyleBackColor = true;
+            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
+            // 
+            // btnManageFloors
+            // 
+            this.btnManageFloors.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.btnManageFloors.Location = new System.Drawing.Point(86, 34);
+            this.btnManageFloors.Name = "btnManageFloors";
+            this.btnManageFloors.Size = new System.Drawing.Size(120, 30);
+            this.btnManageFloors.TabIndex = 3;
+            this.btnManageFloors.Text = "Quản lý khu vực";
+            this.btnManageFloors.UseVisualStyleBackColor = true;
+            this.btnManageFloors.Click += new System.EventHandler(this.btnManageFloors_Click);
             // 
             // pnlSearch
             // 
-            this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlSearch.Controls.Add(this.cmbFilterStatus);
-            this.pnlSearch.Controls.Add(this.lblFilterStatus);
-            this.pnlSearch.Controls.Add(this.cmbFilterFloor);
-            this.pnlSearch.Controls.Add(this.lblFilterFloor);
-            this.pnlSearch.Controls.Add(this.btnRefresh);
-            this.pnlSearch.Controls.Add(this.btnSearch);
-            this.pnlSearch.Controls.Add(this.txtSearch);
-            this.pnlSearch.Controls.Add(this.lblSearch);
-            this.pnlSearch.Location = new System.Drawing.Point(450, 15);
+            this.pnlSearch.Controls.Add(this.btnManageRooms);
+            this.pnlSearch.Controls.Add(this.btnManageFloors);
+            this.pnlSearch.Location = new System.Drawing.Point(0, 0);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(530, 95);
+            this.pnlSearch.Size = new System.Drawing.Size(1420, 145);
             this.pnlSearch.TabIndex = 1;
             // 
             // cmbFilterStatus
             // 
             this.cmbFilterStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbFilterStatus.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cmbFilterStatus.FormattingEnabled = true;
             this.cmbFilterStatus.Items.AddRange(new object[] {
             "Tất cả",
@@ -473,50 +479,50 @@ namespace HuongViet.GUI
             "Đang sử dụng",
             "Đang dọn dẹp",
             "Không khả dụng"});
-            this.cmbFilterStatus.Location = new System.Drawing.Point(410, 48);
+            this.cmbFilterStatus.Location = new System.Drawing.Point(811, 107);
             this.cmbFilterStatus.Name = "cmbFilterStatus";
-            this.cmbFilterStatus.Size = new System.Drawing.Size(120, 23);
+            this.cmbFilterStatus.Size = new System.Drawing.Size(150, 27);
             this.cmbFilterStatus.TabIndex = 7;
             this.cmbFilterStatus.SelectedIndexChanged += new System.EventHandler(this.cmbFilterStatus_SelectedIndexChanged);
             // 
             // lblFilterStatus
             // 
             this.lblFilterStatus.AutoSize = true;
-            this.lblFilterStatus.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFilterStatus.Location = new System.Drawing.Point(410, 30);
+            this.lblFilterStatus.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblFilterStatus.Location = new System.Drawing.Point(811, 82);
             this.lblFilterStatus.Name = "lblFilterStatus";
-            this.lblFilterStatus.Size = new System.Drawing.Size(66, 15);
+            this.lblFilterStatus.Size = new System.Drawing.Size(88, 21);
             this.lblFilterStatus.TabIndex = 6;
             this.lblFilterStatus.Text = "Trạng thái:";
             // 
             // cmbFilterFloor
             // 
             this.cmbFilterFloor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbFilterFloor.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbFilterFloor.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.cmbFilterFloor.FormattingEnabled = true;
-            this.cmbFilterFloor.Location = new System.Drawing.Point(270, 48);
+            this.cmbFilterFloor.Location = new System.Drawing.Point(611, 107);
             this.cmbFilterFloor.Name = "cmbFilterFloor";
-            this.cmbFilterFloor.Size = new System.Drawing.Size(130, 23);
+            this.cmbFilterFloor.Size = new System.Drawing.Size(180, 27);
             this.cmbFilterFloor.TabIndex = 5;
             this.cmbFilterFloor.SelectedIndexChanged += new System.EventHandler(this.cmbFilterFloor_SelectedIndexChanged);
             // 
             // lblFilterFloor
             // 
             this.lblFilterFloor.AutoSize = true;
-            this.lblFilterFloor.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblFilterFloor.Location = new System.Drawing.Point(270, 30);
+            this.lblFilterFloor.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblFilterFloor.Location = new System.Drawing.Point(611, 82);
             this.lblFilterFloor.Name = "lblFilterFloor";
-            this.lblFilterFloor.Size = new System.Drawing.Size(40, 15);
+            this.lblFilterFloor.Size = new System.Drawing.Size(78, 21);
             this.lblFilterFloor.TabIndex = 4;
             this.lblFilterFloor.Text = "Khu vực:";
             // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnRefresh.Location = new System.Drawing.Point(420, 70);
+            this.btnRefresh.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.btnRefresh.Location = new System.Drawing.Point(1140, 98);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(110, 25);
+            this.btnRefresh.Size = new System.Drawing.Size(110, 38);
             this.btnRefresh.TabIndex = 3;
             this.btnRefresh.Text = "Làm mới";
             this.btnRefresh.UseVisualStyleBackColor = true;
@@ -525,10 +531,10 @@ namespace HuongViet.GUI
             // btnSearch
             // 
             this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnSearch.Location = new System.Drawing.Point(300, 70);
+            this.btnSearch.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.btnSearch.Location = new System.Drawing.Point(1006, 98);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(110, 25);
+            this.btnSearch.Size = new System.Drawing.Size(110, 38);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -536,52 +542,30 @@ namespace HuongViet.GUI
             // 
             // txtSearch
             // 
-            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.txtSearch.Location = new System.Drawing.Point(0, 48);
+            this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.txtSearch.Location = new System.Drawing.Point(96, 102);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(260, 27);
+            this.txtSearch.Size = new System.Drawing.Size(490, 36);
             this.txtSearch.TabIndex = 1;
             this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
             // 
             // lblSearch
             // 
             this.lblSearch.AutoSize = true;
-            this.lblSearch.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.lblSearch.Location = new System.Drawing.Point(0, 30);
+            this.lblSearch.Font = new System.Drawing.Font("Times New Roman", 14F);
+            this.lblSearch.Location = new System.Drawing.Point(22, 107);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(58, 15);
+            this.lblSearch.Size = new System.Drawing.Size(86, 21);
             this.lblSearch.TabIndex = 0;
-            this.lblSearch.Text = "Từ khóa:";
-            // 
-            // btnManageRooms
-            // 
-            this.btnManageRooms.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnManageRooms.Location = new System.Drawing.Point(250, 15);
-            this.btnManageRooms.Name = "btnManageRooms";
-            this.btnManageRooms.Size = new System.Drawing.Size(100, 30);
-            this.btnManageRooms.TabIndex = 4;
-            this.btnManageRooms.Text = "Quản lý phòng";
-            this.btnManageRooms.UseVisualStyleBackColor = true;
-            this.btnManageRooms.Click += new System.EventHandler(this.btnManageRooms_Click);
-            // 
-            // btnManageFloors
-            // 
-            this.btnManageFloors.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.btnManageFloors.Location = new System.Drawing.Point(150, 15);
-            this.btnManageFloors.Name = "btnManageFloors";
-            this.btnManageFloors.Size = new System.Drawing.Size(100, 30);
-            this.btnManageFloors.TabIndex = 3;
-            this.btnManageFloors.Text = "Quản lý khu vực";
-            this.btnManageFloors.UseVisualStyleBackColor = true;
-            this.btnManageFloors.Click += new System.EventHandler(this.btnManageFloors_Click);
+            this.lblSearch.Text = "Tìm kiếm:";
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.Location = new System.Drawing.Point(3, 15);
+            this.lblTitle.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Location = new System.Drawing.Point(15, 15);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(145, 30);
+            this.lblTitle.Size = new System.Drawing.Size(138, 26);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Quản lý bàn";
             // 
@@ -589,13 +573,15 @@ namespace HuongViet.GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 600);
+            this.ClientSize = new System.Drawing.Size(1440, 878);
             this.Controls.Add(this.pnlMain);
             this.KeyPreview = true;
             this.Name = "FrmTable";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản lý bàn";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.pnlMain.ResumeLayout(false);
+            this.pnlMain.PerformLayout();
             this.pnlContent.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTables)).EndInit();
             this.pnlPaging.ResumeLayout(false);
@@ -608,7 +594,6 @@ namespace HuongViet.GUI
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
             this.pnlSearch.ResumeLayout(false);
-            this.pnlSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -643,7 +628,6 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.ComboBox cmbFilterStatus;
         private System.Windows.Forms.Label lblFilterStatus;

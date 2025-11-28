@@ -114,6 +114,9 @@
     <Compile Include="FrmCategory.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FrmCategory.Designer.cs">
+      <DependentUpon>FrmCategory.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmDepartment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +144,9 @@
     </Compile>
     <Compile Include="FrmUnit.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmUnit.Designer.cs">
+      <DependentUpon>FrmUnit.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmUser.cs">
       <SubType>Form</SubType>

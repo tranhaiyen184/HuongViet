@@ -8,24 +8,6 @@ using HuongViet.Models;
 
 namespace HuongViet.GUI
 {
-    // Helper class for ComboBox display
-    public class AreaDisplayItem
-    {
-        public string AreaID { get; set; }
-        public string DisplayText { get; set; }
-        
-        public AreaDisplayItem(string areaId, string displayText)
-        {
-            AreaID = areaId;
-            DisplayText = displayText;
-        }
-        
-        public override string ToString()
-        {
-            return DisplayText;
-        }
-    }
-
     public partial class FrmTable : Form
     {
         private readonly TableBLL tableBLL;
@@ -71,6 +53,7 @@ namespace HuongViet.GUI
 
         private void SetupDataGridView()
         {
+            // Base settings
             dgvTables.RowHeadersVisible = false;
             dgvTables.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvTables.MultiSelect = false;
@@ -78,6 +61,21 @@ namespace HuongViet.GUI
             dgvTables.AllowUserToDeleteRows = false;
             dgvTables.ReadOnly = true;
             dgvTables.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            
+            // Header styles
+            dgvTables.EnableHeadersVisualStyles = false;
+            dgvTables.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
+            dgvTables.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvTables.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvTables.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgvTables.ColumnHeadersHeight = 40;
+            dgvTables.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            
+            // Row styles
+            dgvTables.RowTemplate.Height = 35;
+            dgvTables.DefaultCellStyle.Font = new Font("Times New Roman", 12F);
+            dgvTables.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            dgvTables.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
         private void SetupPagination()
@@ -275,7 +273,6 @@ namespace HuongViet.GUI
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {tables?.Count ?? 0} / {totalRecords} bàn";
         }
 
         private void UpdatePaginationButtons()
@@ -759,5 +756,22 @@ namespace HuongViet.GUI
 
         #endregion
     }
-}
 
+    // Helper class for ComboBox display
+    public class AreaDisplayItem
+    {
+        public string AreaID { get; set; }
+        public string DisplayText { get; set; }
+        
+        public AreaDisplayItem(string areaId, string displayText)
+        {
+            AreaID = areaId;
+            DisplayText = displayText;
+        }
+        
+        public override string ToString()
+        {
+            return DisplayText;
+        }
+    }
+}

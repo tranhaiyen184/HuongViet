@@ -182,14 +182,12 @@ namespace HuongViet.GUI
 
         private void UpdateStatusLabel()
         {
-            int count = departments?.Count ?? 0;
-            lblStatus.Text = $"Tổng số phòng ban: {totalRecords}";
+            // Status label removed from UI
         }
 
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {departments?.Count ?? 0} / {totalRecords} phòng ban";
         }
 
         private void UpdatePaginationButtons()
@@ -598,9 +596,5 @@ namespace HuongViet.GUI
 
 		}
 
-		private void lblTitle_Click(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

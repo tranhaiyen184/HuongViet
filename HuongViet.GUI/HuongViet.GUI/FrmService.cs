@@ -39,6 +39,7 @@ namespace HuongViet.GUI
             itemBLL = new ItemBLL();
             categoryBLL = new CategoryBLL();
             unitBLL = new UnitBLL();
+            this.Resize += FrmService_Resize;
             InitializeForm();
             LoadCategories();
             LoadUnits();
@@ -48,6 +49,49 @@ namespace HuongViet.GUI
         protected override void SetVisibleCore(bool value)
         {
             base.SetVisibleCore(value);
+        }
+
+        private void FrmService_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized) return;
+
+            // Resize pnlMain to fill form
+            pnlMain.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
+            
+            // Resize pnlHeader
+            pnlHeader.Width = this.ClientSize.Width - 20;
+            pnlFilter.Width = pnlHeader.Width;
+            
+            // Resize pnlContent
+            pnlContent.Width = this.ClientSize.Width - 320; // Leave space for form panel
+            pnlContent.Height = this.ClientSize.Height - 116; // Header height + margins
+            
+            // Resize dgvServices
+            dgvServices.Width = pnlContent.Width;
+            dgvServices.Height = pnlContent.Height - 196; // Price history + paging height
+            
+            // Resize pnlPriceHistory
+            pnlPriceHistory.Width = pnlContent.Width;
+            pnlPriceHistory.Location = new Point(0, dgvServices.Height);
+            pnlPriceHistoryHeader.Width = pnlPriceHistory.Width;
+            dgvPriceHistory.Width = pnlPriceHistory.Width;
+            btnRestorePrice.Location = new Point(pnlPriceHistory.Width - 110, 4);
+            
+            // Resize pnlPaging
+            pnlPaging.Width = pnlContent.Width;
+            pnlPaging.Location = new Point(0, pnlContent.Height - 42);
+            
+            // Resize pnlForm
+            pnlForm.Location = new Point(this.ClientSize.Width - 310, 106);
+            pnlForm.Height = this.ClientSize.Height - 116;
+            
+            // Resize grpServiceInfo
+            grpServiceInfo.Width = pnlForm.Width - 20;
+            grpServiceInfo.Height = pnlForm.Height - 100;
+            
+            // Resize pnlButtons
+            pnlButtons.Location = new Point(10, pnlForm.Height - 90);
+            pnlButtons.Width = pnlForm.Width - 20;
         }
 
         private void InitializeForm()
@@ -257,7 +301,6 @@ namespace HuongViet.GUI
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {services?.Count ?? 0} / {totalRecords} dịch vụ";
         }
 
         private void UpdatePaginationButtons()
@@ -364,10 +407,11 @@ namespace HuongViet.GUI
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            ClearForm(); // Clear form first
             selectedService = null;
-            isEditing = true;
-            ClearForm();
+            isEditing = true; // Then set isEditing
             EnableEditMode(true);
+            btnSave.Enabled = true; // Enable Save button immediately
             txtServiceName.Focus();
         }
 
@@ -881,6 +925,56 @@ namespace HuongViet.GUI
         }
 
         #endregion
+
+        private void pnlFilter_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lblSearchService_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbFilterCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblFilterCategory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtSearchService_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPriceFrom_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPriceFrom_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPriceTo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPriceTo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pnlPriceHistoryHeader_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
 

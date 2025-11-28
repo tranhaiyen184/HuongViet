@@ -28,168 +28,6 @@ namespace HuongViet.GUI
             base.SetVisibleCore(value);
         }
 
-        private void InitializeComponent()
-        {
-            this.dgvUnits = new System.Windows.Forms.DataGridView();
-            this.txtUnitName = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnEdit = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.lblUnitName = new System.Windows.Forms.Label();
-            this.grpUnitInfo = new System.Windows.Forms.GroupBox();
-            this.pnlButtons = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUnits)).BeginInit();
-            this.grpUnitInfo.SuspendLayout();
-            this.pnlButtons.SuspendLayout();
-            this.SuspendLayout();
-            
-            // 
-            // dgvUnits
-            // 
-            this.dgvUnits.AllowUserToAddRows = false;
-            this.dgvUnits.AllowUserToDeleteRows = false;
-            this.dgvUnits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvUnits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUnits.Location = new System.Drawing.Point(20, 20);
-            this.dgvUnits.MultiSelect = false;
-            this.dgvUnits.Name = "dgvUnits";
-            this.dgvUnits.ReadOnly = true;
-            this.dgvUnits.RowHeadersVisible = false;
-            this.dgvUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvUnits.Size = new System.Drawing.Size(500, 400);
-            this.dgvUnits.TabIndex = 0;
-            this.dgvUnits.SelectionChanged += new System.EventHandler(this.dgvUnits_SelectionChanged);
-            
-            // 
-            // grpUnitInfo
-            // 
-            this.grpUnitInfo.Controls.Add(this.lblUnitName);
-            this.grpUnitInfo.Controls.Add(this.txtUnitName);
-            this.grpUnitInfo.Location = new System.Drawing.Point(540, 20);
-            this.grpUnitInfo.Name = "grpUnitInfo";
-            this.grpUnitInfo.Size = new System.Drawing.Size(350, 150);
-            this.grpUnitInfo.TabIndex = 1;
-            this.grpUnitInfo.TabStop = false;
-            this.grpUnitInfo.Text = "Thông tin đơn vị tính";
-            
-            // 
-            // lblUnitName
-            // 
-            this.lblUnitName.AutoSize = true;
-            this.lblUnitName.Location = new System.Drawing.Point(20, 35);
-            this.lblUnitName.Name = "lblUnitName";
-            this.lblUnitName.Size = new System.Drawing.Size(95, 13);
-            this.lblUnitName.TabIndex = 0;
-            this.lblUnitName.Text = "Tên đơn vị tính:";
-            
-            // 
-            // txtUnitName
-            // 
-            this.txtUnitName.Location = new System.Drawing.Point(20, 55);
-            this.txtUnitName.MaxLength = 50;
-            this.txtUnitName.Name = "txtUnitName";
-            this.txtUnitName.Size = new System.Drawing.Size(310, 20);
-            this.txtUnitName.TabIndex = 1;
-            
-            // 
-            // pnlButtons
-            // 
-            this.pnlButtons.Controls.Add(this.btnAdd);
-            this.pnlButtons.Controls.Add(this.btnEdit);
-            this.pnlButtons.Controls.Add(this.btnDelete);
-            this.pnlButtons.Controls.Add(this.btnSave);
-            this.pnlButtons.Controls.Add(this.btnCancel);
-            this.pnlButtons.Location = new System.Drawing.Point(540, 190);
-            this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Size = new System.Drawing.Size(350, 130);
-            this.pnlButtons.TabIndex = 2;
-            
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(20, 20);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(100, 30);
-            this.btnAdd.TabIndex = 0;
-            this.btnAdd.Text = "Thêm";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            
-            // 
-            // btnEdit
-            // 
-            this.btnEdit.Location = new System.Drawing.Point(130, 20);
-            this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(100, 30);
-            this.btnEdit.TabIndex = 1;
-            this.btnEdit.Text = "Sửa";
-            this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-            
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(240, 20);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(100, 30);
-            this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Xóa";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(75, 60);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 30);
-            this.btnSave.TabIndex = 3;
-            this.btnSave.Text = "Lưu";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(185, 60);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Hủy";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            
-            // 
-            // FrmUnit
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(920, 450);
-            this.Controls.Add(this.pnlButtons);
-            this.Controls.Add(this.grpUnitInfo);
-            this.Controls.Add(this.dgvUnits);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FrmUnit";
-            this.Text = "Quản lý đơn vị tính";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUnits)).EndInit();
-            this.grpUnitInfo.ResumeLayout(false);
-            this.grpUnitInfo.PerformLayout();
-            this.pnlButtons.ResumeLayout(false);
-            this.ResumeLayout(false);
-        }
-
-        private System.Windows.Forms.DataGridView dgvUnits;
-        private System.Windows.Forms.TextBox txtUnitName;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label lblUnitName;
-        private System.Windows.Forms.GroupBox grpUnitInfo;
-        private System.Windows.Forms.Panel pnlButtons;
 
         private void InitializeForm()
         {
@@ -314,9 +152,10 @@ namespace HuongViet.GUI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             selectedUnit = null;
-            isEditing = true;
             ClearForm();
+            isEditing = true; // Set sau khi ClearForm để không bị reset
             EnableEditMode(true);
+            btnSave.Enabled = true; // Enable nút Lưu ngay khi bấm Thêm
             txtUnitName.Focus();
         }
 
@@ -430,6 +269,27 @@ namespace HuongViet.GUI
             
             isEditing = false;
             EnableEditMode(false);
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            // TODO: Implement search functionality
+            LoadUnits();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            txtSearch.Clear();
+            LoadUnits();
+        }
+
+        private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btnSearch_Click(sender, e);
+                e.Handled = true;
+            }
         }
     }
 }

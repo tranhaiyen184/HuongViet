@@ -126,10 +126,10 @@ namespace HuongViet.GUI
             this.tabPageTables.Controls.Add(this.lblTableCount);
             this.tabPageTables.Controls.Add(this.flowLayoutTables);
             this.tabPageTables.Controls.Add(this.dgvTables);
-            this.tabPageTables.Location = new System.Drawing.Point(4, 25);
+            this.tabPageTables.Location = new System.Drawing.Point(4, 22);
             this.tabPageTables.Name = "tabPageTables";
             this.tabPageTables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTables.Size = new System.Drawing.Size(392, 471);
+            this.tabPageTables.Size = new System.Drawing.Size(392, 474);
             this.tabPageTables.TabIndex = 0;
             this.tabPageTables.Text = "PHÒNG / BÀN";
             this.tabPageTables.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@ namespace HuongViet.GUI
             this.cmbAreaFilter.FormattingEnabled = true;
             this.cmbAreaFilter.Location = new System.Drawing.Point(3, 3);
             this.cmbAreaFilter.Name = "cmbAreaFilter";
-            this.cmbAreaFilter.Size = new System.Drawing.Size(386, 28);
+            this.cmbAreaFilter.Size = new System.Drawing.Size(386, 24);
             this.cmbAreaFilter.TabIndex = 1;
             // 
             // lblTableCount
@@ -150,7 +150,7 @@ namespace HuongViet.GUI
             this.lblTableCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblTableCount.Location = new System.Drawing.Point(3, 448);
             this.lblTableCount.Name = "lblTableCount";
-            this.lblTableCount.Size = new System.Drawing.Size(60, 20);
+            this.lblTableCount.Size = new System.Drawing.Size(44, 17);
             this.lblTableCount.TabIndex = 0;
             this.lblTableCount.Text = "0 bàn";
             // 
@@ -162,9 +162,8 @@ namespace HuongViet.GUI
             this.flowLayoutTables.Name = "flowLayoutTables";
             this.flowLayoutTables.Size = new System.Drawing.Size(386, 410);
             this.flowLayoutTables.TabIndex = 2;
-            this.flowLayoutTables.WrapContents = true;
-
-            // dgvTables (kept hidden for compatibility)
+            // 
+            // dgvTables
             // 
             this.dgvTables.AllowUserToAddRows = false;
             this.dgvTables.AllowUserToDeleteRows = false;
@@ -179,7 +178,7 @@ namespace HuongViet.GUI
             this.dgvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTables.Size = new System.Drawing.Size(386, 417);
             this.dgvTables.TabIndex = 0;
-            this.dgvTables.Visible = false; // hide default grid
+            this.dgvTables.Visible = false;
             // 
             // pnlRight
             // 
@@ -201,12 +200,11 @@ namespace HuongViet.GUI
             // tabPageMenu
             // 
             this.tabPageMenu.Controls.Add(this.flowLayoutItems);
-            this.tabPageMenu.Location = new System.Drawing.Point(4, 25);
+            this.tabPageMenu.Location = new System.Drawing.Point(4, 22);
             this.tabPageMenu.Name = "tabPageMenu";
             this.tabPageMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMenu.Size = new System.Drawing.Size(992, 471);
+            this.tabPageMenu.Size = new System.Drawing.Size(992, 474);
             this.tabPageMenu.TabIndex = 0;
-            this.tabPageMenu.Text = "";
             this.tabPageMenu.UseVisualStyleBackColor = true;
             // 
             // flowLayoutItems
@@ -216,7 +214,6 @@ namespace HuongViet.GUI
             this.flowLayoutItems.Name = "flowLayoutItems";
             this.flowLayoutItems.Size = new System.Drawing.Size(986, 465);
             this.flowLayoutItems.TabIndex = 0;
-            this.flowLayoutItems.WrapContents = true;
             // 
             // pnlOrderHeader
             // 
@@ -233,7 +230,7 @@ namespace HuongViet.GUI
             this.lblTableInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.lblTableInfo.Location = new System.Drawing.Point(10, 10);
             this.lblTableInfo.Name = "lblTableInfo";
-            this.lblTableInfo.Size = new System.Drawing.Size(120, 20);
+            this.lblTableInfo.Size = new System.Drawing.Size(117, 17);
             this.lblTableInfo.TabIndex = 1;
             this.lblTableInfo.Text = "Chưa chọn bàn";
             // 
@@ -243,7 +240,7 @@ namespace HuongViet.GUI
             this.lblDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblDateTime.Location = new System.Drawing.Point(1250, 10);
             this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(140, 20);
+            this.lblDateTime.Size = new System.Drawing.Size(120, 17);
             this.lblDateTime.TabIndex = 0;
             this.lblDateTime.Text = "20/07/2022 18:17";
             // 
@@ -302,47 +299,47 @@ namespace HuongViet.GUI
             // 
             this.lblTotalAmount.AutoSize = true;
             this.lblTotalAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTotalAmount.Location = new System.Drawing.Point(850, 20);
+            this.lblTotalAmount.Location = new System.Drawing.Point(849, 23);
             this.lblTotalAmount.Name = "lblTotalAmount";
-            this.lblTotalAmount.Size = new System.Drawing.Size(23, 25);
+            this.lblTotalAmount.Size = new System.Drawing.Size(19, 20);
             this.lblTotalAmount.TabIndex = 5;
             this.lblTotalAmount.Text = "0";
             // 
             // lblCustomerPhone
             // 
             this.lblCustomerPhone.AutoSize = true;
-            this.lblCustomerPhone.Location = new System.Drawing.Point(300, 35);
+            this.lblCustomerPhone.Location = new System.Drawing.Point(300, 23);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
-            this.lblCustomerPhone.Size = new System.Drawing.Size(91, 16);
+            this.lblCustomerPhone.Size = new System.Drawing.Size(73, 13);
             this.lblCustomerPhone.TabIndex = 4;
             this.lblCustomerPhone.Text = "Số điện thoại:";
             // 
             // lblCustomerName
             // 
             this.lblCustomerName.AutoSize = true;
-            this.lblCustomerName.Location = new System.Drawing.Point(10, 35);
+            this.lblCustomerName.Location = new System.Drawing.Point(10, 23);
             this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(103, 16);
+            this.lblCustomerName.Size = new System.Drawing.Size(89, 13);
             this.lblCustomerName.TabIndex = 3;
             this.lblCustomerName.Text = "Tên khách hàng:";
             // 
             // txtCustomerPhone
             // 
-            this.txtCustomerPhone.Location = new System.Drawing.Point(400, 32);
+            this.txtCustomerPhone.Location = new System.Drawing.Point(400, 20);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
-            this.txtCustomerPhone.Size = new System.Drawing.Size(150, 22);
+            this.txtCustomerPhone.Size = new System.Drawing.Size(150, 20);
             this.txtCustomerPhone.TabIndex = 2;
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Location = new System.Drawing.Point(120, 32);
+            this.txtCustomerName.Location = new System.Drawing.Point(120, 20);
             this.txtCustomerName.Name = "txtCustomerName";
-            this.txtCustomerName.Size = new System.Drawing.Size(150, 22);
+            this.txtCustomerName.Size = new System.Drawing.Size(150, 20);
             this.txtCustomerName.TabIndex = 1;
             // 
             // btnSearchCustomer
             // 
-            this.btnSearchCustomer.Location = new System.Drawing.Point(560, 30);
+            this.btnSearchCustomer.Location = new System.Drawing.Point(560, 18);
             this.btnSearchCustomer.Name = "btnSearchCustomer";
             this.btnSearchCustomer.Size = new System.Drawing.Size(100, 25);
             this.btnSearchCustomer.TabIndex = 0;
@@ -352,7 +349,6 @@ namespace HuongViet.GUI
             // 
             // FrmPOS
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1400, 800);
             this.Controls.Add(this.splitContainerMain);
@@ -377,6 +373,7 @@ namespace HuongViet.GUI
             this.pnlOrderFooter.ResumeLayout(false);
             this.pnlOrderFooter.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }
