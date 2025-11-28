@@ -11,10 +11,10 @@ namespace HuongViet.GUI
         private System.Windows.Forms.TabControl tabControlMenu;
         private System.Windows.Forms.TabPage tabPageMenu;
         private System.Windows.Forms.DataGridView dgvTables;
-        private System.Windows.Forms.DataGridView dgvItems;
+    private System.Windows.Forms.FlowLayoutPanel flowLayoutTables;
         private System.Windows.Forms.DataGridView dgvOrder;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutItems;
         private System.Windows.Forms.ComboBox cmbAreaFilter;
-        private System.Windows.Forms.Button btnFilterItemType;
         private System.Windows.Forms.Label lblTableCount;
         private System.Windows.Forms.Label lblTableInfo;
         private System.Windows.Forms.Label lblDateTime;
@@ -46,12 +46,12 @@ namespace HuongViet.GUI
             this.tabPageTables = new System.Windows.Forms.TabPage();
             this.cmbAreaFilter = new System.Windows.Forms.ComboBox();
             this.lblTableCount = new System.Windows.Forms.Label();
+            this.flowLayoutTables = new System.Windows.Forms.FlowLayoutPanel();
             this.dgvTables = new System.Windows.Forms.DataGridView();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.tabControlMenu = new System.Windows.Forms.TabControl();
             this.tabPageMenu = new System.Windows.Forms.TabPage();
-            this.btnFilterItemType = new System.Windows.Forms.Button();
-            this.dgvItems = new System.Windows.Forms.DataGridView();
+            this.flowLayoutItems = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlOrderHeader = new System.Windows.Forms.Panel();
             this.lblTableInfo = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
@@ -76,7 +76,6 @@ namespace HuongViet.GUI
             this.pnlRight.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
             this.tabPageMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.pnlOrderHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.pnlOrderFooter.SuspendLayout();
@@ -84,7 +83,6 @@ namespace HuongViet.GUI
             // 
             // splitContainerMain
             // 
-            this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainerMain.Location = new System.Drawing.Point(0, 0);
             this.splitContainerMain.Name = "splitContainerMain";
             this.splitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -108,7 +106,6 @@ namespace HuongViet.GUI
             // pnlLeft
             // 
             this.pnlLeft.Controls.Add(this.tabControlTables);
-            this.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlLeft.Location = new System.Drawing.Point(0, 0);
             this.pnlLeft.Name = "pnlLeft";
             this.pnlLeft.Size = new System.Drawing.Size(400, 500);
@@ -117,7 +114,6 @@ namespace HuongViet.GUI
             // tabControlTables
             // 
             this.tabControlTables.Controls.Add(this.tabPageTables);
-            this.tabControlTables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlTables.Location = new System.Drawing.Point(0, 0);
             this.tabControlTables.Name = "tabControlTables";
             this.tabControlTables.SelectedIndex = 0;
@@ -128,6 +124,7 @@ namespace HuongViet.GUI
             // 
             this.tabPageTables.Controls.Add(this.cmbAreaFilter);
             this.tabPageTables.Controls.Add(this.lblTableCount);
+            this.tabPageTables.Controls.Add(this.flowLayoutTables);
             this.tabPageTables.Controls.Add(this.dgvTables);
             this.tabPageTables.Location = new System.Drawing.Point(4, 25);
             this.tabPageTables.Name = "tabPageTables";
@@ -139,7 +136,6 @@ namespace HuongViet.GUI
             // 
             // cmbAreaFilter
             // 
-            this.cmbAreaFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.cmbAreaFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAreaFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.cmbAreaFilter.FormattingEnabled = true;
@@ -151,7 +147,6 @@ namespace HuongViet.GUI
             // lblTableCount
             // 
             this.lblTableCount.AutoSize = true;
-            this.lblTableCount.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblTableCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblTableCount.Location = new System.Drawing.Point(3, 448);
             this.lblTableCount.Name = "lblTableCount";
@@ -159,13 +154,22 @@ namespace HuongViet.GUI
             this.lblTableCount.TabIndex = 0;
             this.lblTableCount.Text = "0 bàn";
             // 
-            // dgvTables
+            // flowLayoutTables
+            // 
+            this.flowLayoutTables.AutoScroll = true;
+            this.flowLayoutTables.BackColor = System.Drawing.Color.White;
+            this.flowLayoutTables.Location = new System.Drawing.Point(3, 35);
+            this.flowLayoutTables.Name = "flowLayoutTables";
+            this.flowLayoutTables.Size = new System.Drawing.Size(386, 410);
+            this.flowLayoutTables.TabIndex = 2;
+            this.flowLayoutTables.WrapContents = true;
+
+            // dgvTables (kept hidden for compatibility)
             // 
             this.dgvTables.AllowUserToAddRows = false;
             this.dgvTables.AllowUserToDeleteRows = false;
             this.dgvTables.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvTables.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTables.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTables.Location = new System.Drawing.Point(3, 31);
             this.dgvTables.MultiSelect = false;
             this.dgvTables.Name = "dgvTables";
@@ -175,11 +179,11 @@ namespace HuongViet.GUI
             this.dgvTables.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvTables.Size = new System.Drawing.Size(386, 417);
             this.dgvTables.TabIndex = 0;
+            this.dgvTables.Visible = false; // hide default grid
             // 
             // pnlRight
             // 
             this.pnlRight.Controls.Add(this.tabControlMenu);
-            this.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlRight.Location = new System.Drawing.Point(400, 0);
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Size = new System.Drawing.Size(1000, 500);
@@ -188,7 +192,6 @@ namespace HuongViet.GUI
             // tabControlMenu
             // 
             this.tabControlMenu.Controls.Add(this.tabPageMenu);
-            this.tabControlMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMenu.Location = new System.Drawing.Point(0, 0);
             this.tabControlMenu.Name = "tabControlMenu";
             this.tabControlMenu.SelectedIndex = 0;
@@ -197,50 +200,28 @@ namespace HuongViet.GUI
             // 
             // tabPageMenu
             // 
-            this.tabPageMenu.Controls.Add(this.btnFilterItemType);
-            this.tabPageMenu.Controls.Add(this.dgvItems);
+            this.tabPageMenu.Controls.Add(this.flowLayoutItems);
             this.tabPageMenu.Location = new System.Drawing.Point(4, 25);
             this.tabPageMenu.Name = "tabPageMenu";
             this.tabPageMenu.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageMenu.Size = new System.Drawing.Size(992, 471);
             this.tabPageMenu.TabIndex = 0;
-            this.tabPageMenu.Text = "THỰC ĐƠN";
+            this.tabPageMenu.Text = "";
             this.tabPageMenu.UseVisualStyleBackColor = true;
             // 
-            // btnFilterItemType
+            // flowLayoutItems
             // 
-            this.btnFilterItemType.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnFilterItemType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnFilterItemType.Location = new System.Drawing.Point(3, 3);
-            this.btnFilterItemType.Name = "btnFilterItemType";
-            this.btnFilterItemType.Size = new System.Drawing.Size(986, 35);
-            this.btnFilterItemType.TabIndex = 1;
-            this.btnFilterItemType.Text = "Tất cả";
-            this.btnFilterItemType.UseVisualStyleBackColor = true;
-            this.btnFilterItemType.Click += new System.EventHandler(this.BtnFilterItemType_Click);
-            // 
-            // dgvItems
-            // 
-            this.dgvItems.AllowUserToAddRows = false;
-            this.dgvItems.AllowUserToDeleteRows = false;
-            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvItems.Location = new System.Drawing.Point(3, 38);
-            this.dgvItems.MultiSelect = false;
-            this.dgvItems.Name = "dgvItems";
-            this.dgvItems.ReadOnly = true;
-            this.dgvItems.RowHeadersWidth = 51;
-            this.dgvItems.RowTemplate.Height = 24;
-            this.dgvItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvItems.Size = new System.Drawing.Size(986, 430);
-            this.dgvItems.TabIndex = 0;
+            this.flowLayoutItems.AutoScroll = true;
+            this.flowLayoutItems.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutItems.Name = "flowLayoutItems";
+            this.flowLayoutItems.Size = new System.Drawing.Size(986, 465);
+            this.flowLayoutItems.TabIndex = 0;
+            this.flowLayoutItems.WrapContents = true;
             // 
             // pnlOrderHeader
             // 
             this.pnlOrderHeader.Controls.Add(this.lblTableInfo);
             this.pnlOrderHeader.Controls.Add(this.lblDateTime);
-            this.pnlOrderHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlOrderHeader.Location = new System.Drawing.Point(0, 0);
             this.pnlOrderHeader.Name = "pnlOrderHeader";
             this.pnlOrderHeader.Size = new System.Drawing.Size(1400, 40);
@@ -258,7 +239,6 @@ namespace HuongViet.GUI
             // 
             // lblDateTime
             // 
-            this.lblDateTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDateTime.AutoSize = true;
             this.lblDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblDateTime.Location = new System.Drawing.Point(1250, 10);
@@ -272,7 +252,6 @@ namespace HuongViet.GUI
             this.dgvOrder.AllowUserToAddRows = false;
             this.dgvOrder.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvOrder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvOrder.Location = new System.Drawing.Point(0, 40);
             this.dgvOrder.Name = "dgvOrder";
             this.dgvOrder.RowHeadersWidth = 51;
@@ -290,7 +269,6 @@ namespace HuongViet.GUI
             this.pnlOrderFooter.Controls.Add(this.txtCustomerPhone);
             this.pnlOrderFooter.Controls.Add(this.txtCustomerName);
             this.pnlOrderFooter.Controls.Add(this.btnSearchCustomer);
-            this.pnlOrderFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlOrderFooter.Location = new System.Drawing.Point(0, 240);
             this.pnlOrderFooter.Name = "pnlOrderFooter";
             this.pnlOrderFooter.Size = new System.Drawing.Size(1400, 60);
@@ -298,7 +276,6 @@ namespace HuongViet.GUI
             // 
             // btnPayment
             // 
-            this.btnPayment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPayment.BackColor = System.Drawing.Color.Red;
             this.btnPayment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.btnPayment.ForeColor = System.Drawing.Color.White;
@@ -312,7 +289,6 @@ namespace HuongViet.GUI
             // 
             // btnSaveOrder
             // 
-            this.btnSaveOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.btnSaveOrder.Location = new System.Drawing.Point(1000, 10);
             this.btnSaveOrder.Name = "btnSaveOrder";
@@ -324,7 +300,6 @@ namespace HuongViet.GUI
             // 
             // lblTotalAmount
             // 
-            this.lblTotalAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTotalAmount.AutoSize = true;
             this.lblTotalAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
             this.lblTotalAmount.Location = new System.Drawing.Point(850, 20);
@@ -335,7 +310,6 @@ namespace HuongViet.GUI
             // 
             // lblCustomerPhone
             // 
-            this.lblCustomerPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCustomerPhone.AutoSize = true;
             this.lblCustomerPhone.Location = new System.Drawing.Point(300, 35);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
@@ -345,7 +319,6 @@ namespace HuongViet.GUI
             // 
             // lblCustomerName
             // 
-            this.lblCustomerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblCustomerName.AutoSize = true;
             this.lblCustomerName.Location = new System.Drawing.Point(10, 35);
             this.lblCustomerName.Name = "lblCustomerName";
@@ -355,7 +328,6 @@ namespace HuongViet.GUI
             // 
             // txtCustomerPhone
             // 
-            this.txtCustomerPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtCustomerPhone.Location = new System.Drawing.Point(400, 32);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
             this.txtCustomerPhone.Size = new System.Drawing.Size(150, 22);
@@ -363,7 +335,6 @@ namespace HuongViet.GUI
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtCustomerName.Location = new System.Drawing.Point(120, 32);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.Size = new System.Drawing.Size(150, 22);
@@ -371,7 +342,6 @@ namespace HuongViet.GUI
             // 
             // btnSearchCustomer
             // 
-            this.btnSearchCustomer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSearchCustomer.Location = new System.Drawing.Point(560, 30);
             this.btnSearchCustomer.Name = "btnSearchCustomer";
             this.btnSearchCustomer.Size = new System.Drawing.Size(100, 25);
@@ -383,7 +353,7 @@ namespace HuongViet.GUI
             // FrmPOS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1400, 800);
             this.Controls.Add(this.splitContainerMain);
             this.Name = "FrmPOS";
@@ -401,7 +371,6 @@ namespace HuongViet.GUI
             this.pnlRight.ResumeLayout(false);
             this.tabControlMenu.ResumeLayout(false);
             this.tabPageMenu.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
             this.pnlOrderHeader.ResumeLayout(false);
             this.pnlOrderHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();

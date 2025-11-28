@@ -120,6 +120,7 @@
     <Compile Include="FrmDepartment.Designer.cs">
       <DependentUpon>FrmDepartment.cs</DependentUpon>
     </Compile>
+
     <Compile Include="FrmItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +190,7 @@
     <Compile Include="FrmPOS.Designer.cs">
       <DependentUpon>FrmPOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="SessionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmLogin.resx">

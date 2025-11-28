@@ -167,6 +167,16 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
+        /// Cập nhật bàn (alias cho UpdateTable để tương thích với POSBLL)
+        /// </summary>
+        /// <param name="table">Thông tin bàn</param>
+        /// <returns>True nếu thành công</returns>
+        public bool Update(Table table)
+        {
+            return UpdateTable(table);
+        }
+
+        /// <summary>
         /// Xóa bàn
         /// </summary>
         /// <param name="tableId">ID bàn</param>

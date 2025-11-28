@@ -45,6 +45,60 @@ namespace HuongViet.GUI
             _currentUser = currentUser;
             InitializeLayoutState();
             UpdateUserInfo();
+            
+            // Add Resize event handler to update layout
+            this.Resize += FrmMain_Resize;
+        }
+        
+        private void FrmMain_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                return;
+                
+            int headerHeight = headerPanel.Height;
+            int formHeight = this.ClientSize.Height;
+            int formWidth = this.ClientSize.Width;
+            
+            // Update header panel
+            headerPanel.Location = new Point(0, 0);
+            headerPanel.Size = new Size(formWidth, headerHeight);
+            
+            // Update sidebar panel
+            sidebarPanel.Location = new Point(0, headerHeight);
+            sidebarPanel.Height = formHeight - headerHeight;
+            
+            // Update navContainer
+            navContainer.Size = new Size(sidebarPanel.Width, sidebarPanel.Height);
+            
+            // Update content panel
+            contentPanel.Location = new Point(sidebarPanel.Width, headerHeight);
+            contentPanel.Size = new Size(formWidth - sidebarPanel.Width, formHeight - headerHeight);
+            
+            // Update tab control size
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Size = new Size(contentPanel.Width, contentPanel.Height);
+                
+                // Update all child forms size
+                foreach (TabPage tabPage in _mainTabControl.TabPages)
+                {
+                    foreach (Control control in tabPage.Controls)
+                    {
+                        if (control is Form childForm)
+                        {
+                            childForm.Size = new Size(tabPage.Width, tabPage.Height);
+                        }
+                    }
+                }
+            }
+            
+            // Update placeholder panel size
+            if (placeholderPanel != null && placeholderPanel.Visible)
+            {
+                placeholderPanel.Size = new Size(
+                    contentPanel.Width - contentPanel.Padding.Left - contentPanel.Padding.Right,
+                    contentPanel.Height - contentPanel.Padding.Top - contentPanel.Padding.Bottom);
+            }
         }
 
         private void InitializeLayoutState()
@@ -288,7 +342,8 @@ namespace HuongViet.GUI
             btnCategory.Margin = new Padding(0, 4, 0, 0);
             btnCategory.Height = 40;
             btnCategory.Width = 224;
-            btnCategory.Dock = DockStyle.Top;
+            btnCategory.Dock = DockStyle.None;
+            btnCategory.Location = new Point(8, 0);
             btnCategory.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnCategory.Font = new Font("Segoe UI", 9F);
             btnCategory.Click += BtnCategory_Click;
@@ -314,7 +369,8 @@ namespace HuongViet.GUI
             btnUnit.Margin = new Padding(0, 4, 0, 0);
             btnUnit.Height = 40;
             btnUnit.Width = 224;
-            btnUnit.Dock = DockStyle.Top;
+            btnUnit.Dock = DockStyle.None;
+            btnUnit.Location = new Point(8, 44);
             btnUnit.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnUnit.Font = new Font("Segoe UI", 9F);
             btnUnit.Click += BtnUnit_Click;
@@ -340,7 +396,8 @@ namespace HuongViet.GUI
             btnItemMenu.Margin = new Padding(0, 4, 0, 0);
             btnItemMenu.Height = 40;
             btnItemMenu.Width = 224;
-            btnItemMenu.Dock = DockStyle.Top;
+            btnItemMenu.Dock = DockStyle.None;
+            btnItemMenu.Location = new Point(8, 88);
             btnItemMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnItemMenu.Font = new Font("Segoe UI", 9F);
             btnItemMenu.Click += BtnItemMenu_Click;
@@ -366,17 +423,18 @@ namespace HuongViet.GUI
             btnServiceMenu.Margin = new Padding(0, 4, 0, 0);
             btnServiceMenu.Height = 40;
             btnServiceMenu.Width = 224;
-            btnServiceMenu.Dock = DockStyle.Top;
+            btnServiceMenu.Dock = DockStyle.None;
+            btnServiceMenu.Location = new Point(8, 132);
             btnServiceMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnServiceMenu.Font = new Font("Segoe UI", 9F);
             btnServiceMenu.Click += BtnServiceMenu_Click;
             ApplyModernButtonStyle(btnServiceMenu, true);
             
-            // Add sub-items to panel (in reverse order for Dock.Top)
-            subMenuPanel.Controls.Add(btnServiceMenu);
-            subMenuPanel.Controls.Add(btnItemMenu);
-            subMenuPanel.Controls.Add(btnUnit);
+            // Add sub-items to panel
             subMenuPanel.Controls.Add(btnCategory);
+            subMenuPanel.Controls.Add(btnUnit);
+            subMenuPanel.Controls.Add(btnItemMenu);
+            subMenuPanel.Controls.Add(btnServiceMenu);
             
             // Calculate total height (including margins)
             subMenuPanel.Height = btnCategory.Height + btnUnit.Height + btnItemMenu.Height + btnServiceMenu.Height + 20; // 20 for margins
@@ -489,7 +547,8 @@ namespace HuongViet.GUI
             btnDepartment.Margin = new Padding(0, 4, 0, 0);
             btnDepartment.Height = 40;
             btnDepartment.Width = 224;
-            btnDepartment.Dock = DockStyle.Top;
+            btnDepartment.Dock = DockStyle.None;
+            btnDepartment.Location = new Point(8, 0);
             btnDepartment.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDepartment.Font = new Font("Segoe UI", 9F);
             btnDepartment.Click += BtnDepartment_Click;
@@ -515,7 +574,8 @@ namespace HuongViet.GUI
             btnPositionSub.Margin = new Padding(0, 4, 0, 0);
             btnPositionSub.Height = 40;
             btnPositionSub.Width = 224;
-            btnPositionSub.Dock = DockStyle.Top;
+            btnPositionSub.Dock = DockStyle.None;
+            btnPositionSub.Location = new Point(8, 44);
             btnPositionSub.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnPositionSub.Font = new Font("Segoe UI", 9F);
             btnPositionSub.Click += BtnPositionSub_Click;
@@ -541,7 +601,8 @@ namespace HuongViet.GUI
             btnUser.Margin = new Padding(0, 4, 0, 0);
             btnUser.Height = 40;
             btnUser.Width = 224;
-            btnUser.Dock = DockStyle.Top;
+            btnUser.Dock = DockStyle.None;
+            btnUser.Location = new Point(8, 88);
             btnUser.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnUser.Font = new Font("Segoe UI", 9F);
             btnUser.Click += BtnUser_Click;
@@ -567,17 +628,18 @@ namespace HuongViet.GUI
             btnRole.Margin = new Padding(0, 4, 0, 0);
             btnRole.Height = 40;
             btnRole.Width = 224;
-            btnRole.Dock = DockStyle.Top;
+            btnRole.Dock = DockStyle.None;
+            btnRole.Location = new Point(8, 132);
             btnRole.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnRole.Font = new Font("Segoe UI", 9F);
             btnRole.Click += BtnRole_Click;
             ApplyModernButtonStyle(btnRole, true);
             
-            // Add sub-items to panel (in reverse order for Dock.Top)
-            subMenuPanel.Controls.Add(btnRole);
-            subMenuPanel.Controls.Add(btnUser);
-            subMenuPanel.Controls.Add(btnPositionSub);
+            // Add sub-items to panel
             subMenuPanel.Controls.Add(btnDepartment);
+            subMenuPanel.Controls.Add(btnPositionSub);
+            subMenuPanel.Controls.Add(btnUser);
+            subMenuPanel.Controls.Add(btnRole);
             
             // Calculate total height (including margins)
             subMenuPanel.Height = btnDepartment.Height + btnPositionSub.Height + btnUser.Height + btnRole.Height + 16; // 16 for margins
@@ -720,7 +782,27 @@ namespace HuongViet.GUI
 
         private void UpdateSidebarState(bool force = false)
         {
+            int headerHeight = headerPanel.Height;
+            int formHeight = this.ClientSize.Height;
+            int formWidth = this.ClientSize.Width;
+            
             sidebarPanel.Width = _sidebarExpanded ? ExpandedSidebarWidth : CollapsedSidebarWidth;
+            sidebarPanel.Location = new Point(0, headerHeight);
+            sidebarPanel.Height = formHeight - headerHeight;
+            
+            // Update navContainer to fill sidebarPanel
+            navContainer.Location = new Point(0, 0);
+            navContainer.Size = new Size(sidebarPanel.Width, sidebarPanel.Height);
+            
+            // Update contentPanel position and size
+            contentPanel.Location = new Point(sidebarPanel.Width, headerHeight);
+            contentPanel.Size = new Size(formWidth - sidebarPanel.Width, formHeight - headerHeight);
+            
+            // Update tab control size to match content panel
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Size = new Size(contentPanel.Width, contentPanel.Height);
+            }
 
             foreach (var button in _navigationButtons)
             {
@@ -921,7 +1003,9 @@ namespace HuongViet.GUI
         {
             // Create and configure TabControl
             _mainTabControl = new TabControl();
-            _mainTabControl.Dock = DockStyle.Fill;
+            _mainTabControl.Dock = DockStyle.None;
+            _mainTabControl.Location = new Point(0, 0);
+            _mainTabControl.Size = new Size(contentPanel.Width, contentPanel.Height);
             _mainTabControl.Alignment = TabAlignment.Top;
             _mainTabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
             _mainTabControl.SizeMode = TabSizeMode.Fixed;
@@ -1046,15 +1130,20 @@ namespace HuongViet.GUI
             // Configure child form
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
+            childForm.Dock = DockStyle.None;
+            childForm.Location = new Point(0, 0);
 
             // Add form to tab page
             tabPage.Controls.Add(childForm);
-            childForm.Show();
 
             // Add tab page to tab control
             _mainTabControl.TabPages.Add(tabPage);
             _mainTabControl.SelectedTab = tabPage;
+            
+            // Set child form size after tab page is added (to get correct tab page size)
+            Rectangle tabPageClientRect = tabPage.DisplayRectangle;
+            childForm.Size = new Size(tabPageClientRect.Width, tabPageClientRect.Height);
+            childForm.Show();
 
             // Store reference
             _openTabs[tabKey] = childForm;

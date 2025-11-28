@@ -18,7 +18,6 @@ namespace HuongViet.GUI
         private List<Item> items;
         private List<OrderDetail> currentOrderDetails;
         private Table selectedTable;
-        private ItemType? currentItemTypeFilter;
         private string currentAreaFilter;
         private string currentStaffId;
 
@@ -37,13 +36,20 @@ namespace HuongViet.GUI
 
         private void InitializeForm()
         {
-            // Set current staff (you may get this from login session)
-            // For now, using a default or getting from auth
-            currentStaffId = "USER001"; // TODO: Get from current session
+            // Get current staff ID from session
+            currentStaffId = SessionManager.CurrentUserID;
+            
+            // If no user logged in, show warning
+            if (string.IsNullOrEmpty(currentStaffId))
+            {
+                MessageBox.Show("Không tìm thấy thông tin nhân viên. Vui lòng đăng nhập lại.", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                currentStaffId = "USER001"; // Fallback
+            }
             
             // Setup DataGridViews
             SetupTablesDataGridView();
-            SetupItemsDataGridView();
+            SetupItemsGrid();
             SetupOrderDataGridView();
             
             // Setup event handlers
@@ -84,7 +90,7 @@ namespace HuongViet.GUI
             {
                 Name = "AreaName",
                 HeaderText = "Khu vực",
-                DataPropertyName = "Area.AreaName",
+                DataPropertyName = null, // Will be handled in CellFormatting
                 Width = 150
             });
             
@@ -109,46 +115,11 @@ namespace HuongViet.GUI
             dgvTables.SelectionChanged += DgvTables_SelectionChanged;
         }
 
-        private void SetupItemsDataGridView()
+        private void SetupItemsGrid()
         {
-            dgvItems.AutoGenerateColumns = false;
-            dgvItems.AllowUserToAddRows = false;
-            dgvItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvItems.MultiSelect = false;
-            dgvItems.ReadOnly = true;
-            
-            // Add columns
-            dgvItems.Columns.Clear();
-            dgvItems.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "ItemName",
-                HeaderText = "Tên món",
-                DataPropertyName = "ItemName",
-                Width = 250
-            });
-            
-            dgvItems.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "ItemType",
-                HeaderText = "Loại",
-                DataPropertyName = "ItemType",
-                Width = 100
-            });
-            
-            dgvItems.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "ItemPrice",
-                HeaderText = "Giá",
-                DataPropertyName = "ItemPrice",
-                Width = 120,
-                DefaultCellStyle = new DataGridViewCellStyle
-                {
-                    Format = "N0"
-                }
-            });
-            
-            dgvItems.CellFormatting += DgvItems_CellFormatting;
-            dgvItems.CellDoubleClick += DgvItems_CellDoubleClick;
+            flowLayoutItems.AutoScroll = true;
+            flowLayoutItems.WrapContents = true;
+            flowLayoutItems.FlowDirection = FlowDirection.LeftToRight;
         }
 
         private void SetupOrderDataGridView()
@@ -243,10 +214,14 @@ namespace HuongViet.GUI
                 {
                     areaId = areas[cmbAreaFilter.SelectedIndex - 1].AreaID;
                 }
-                
                 tables = posBLL.GetAllTables(areaId);
-                dgvTables.DataSource = tables;
-                
+
+                // Display as cards in flowLayoutTables
+                DisplayTablesAsCards();
+
+                // Fallback: keep grid data source but hidden by default
+                try { dgvTables.DataSource = tables; } catch { }
+
                 // Update label
                 lblTableCount.Text = $"{tables.Count} bàn";
             }
@@ -256,16 +231,258 @@ namespace HuongViet.GUI
             }
         }
 
+        private void DisplayTablesAsCards()
+        {
+            // Use flowLayoutTables (added to designer) to show table buttons/cards
+            try
+            {
+                if (flowLayoutTables == null)
+                {
+                    return;
+                }
+
+                flowLayoutTables.Controls.Clear();
+
+                if (tables == null || tables.Count == 0)
+                {
+                    return;
+                }
+
+                int btnWidth = 100;
+                int btnHeight = 70;
+                int margin = 8;
+
+                foreach (var table in tables)
+                {
+                    Button btn = new Button
+                    {
+                        Width = btnWidth,
+                        Height = btnHeight,
+                        Text = table.TableName,
+                        Tag = table,
+                        FlatStyle = FlatStyle.Flat,
+                        Margin = new Padding(margin),
+                        Font = new Font("Segoe UI", 9F, FontStyle.Bold)
+                    };
+
+                    // Color by status
+                    SetTableButtonColor(btn, table);
+
+                    // Hover effect
+                    btn.MouseEnter += (s, e) => { ((Button)s).FlatAppearance.BorderSize = 2; };
+                    btn.MouseLeave += (s, e) => { ((Button)s).FlatAppearance.BorderSize = 1; };
+
+                    btn.Click += (s, e) =>
+                    {
+                        var clickedTable = (s as Button)?.Tag as Table;
+                        if (clickedTable != null)
+                        {
+                            // Cập nhật bàn được chọn
+                            selectedTable = clickedTable;
+                            
+                            // Load hóa đơn hiện tại của bàn (nếu có)
+                            LoadTableOrder();
+                            
+                            // Highlight bàn được chọn
+                            HighlightSelectedTable();
+                        }
+                    };
+
+                    flowLayoutTables.Controls.Add(btn);
+                }
+                
+                // Highlight bàn hiện tại nếu có
+                HighlightSelectedTable();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error displaying table cards: {ex.Message}");
+            }
+        }
+
+        private void SetTableButtonColor(Button btn, Table table)
+        {
+            // Kiểm tra nếu đây là bàn được chọn
+            bool isSelected = selectedTable != null && selectedTable.TableID == table.TableID;
+            
+            if (isSelected)
+            {
+                // Màu highlight cho bàn được chọn
+                btn.BackColor = Color.FromArgb(0x4A, 0x90, 0xE2); // blue
+                btn.ForeColor = Color.White;
+                btn.FlatAppearance.BorderSize = 3;
+                btn.FlatAppearance.BorderColor = Color.DarkBlue;
+            }
+            else if (table.TableStatus == TableStatus.Available)
+            {
+                btn.BackColor = Color.FromArgb(0xE6, 0xEE, 0xD8); // light green
+                btn.ForeColor = Color.Black;
+                btn.FlatAppearance.BorderSize = 1;
+                btn.FlatAppearance.BorderColor = Color.Gray;
+            }
+            else
+            {
+                btn.BackColor = Color.FromArgb(0xF8, 0xD7, 0xD4); // light red
+                btn.ForeColor = Color.Black;
+                btn.FlatAppearance.BorderSize = 1;
+                btn.FlatAppearance.BorderColor = Color.Gray;
+            }
+        }
+
+        private void HighlightSelectedTable()
+        {
+            if (flowLayoutTables == null) return;
+            
+            // Cập nhật màu sắc cho tất cả các button bàn
+            foreach (Control control in flowLayoutTables.Controls)
+            {
+                if (control is Button btn && btn.Tag is Table table)
+                {
+                    SetTableButtonColor(btn, table);
+                }
+            }
+        }
+
         private void LoadItems()
         {
             try
             {
-                items = posBLL.GetAllItems(currentItemTypeFilter);
-                dgvItems.DataSource = items;
+                // Load tất cả thức ăn và nước uống (không load dịch vụ)
+                var allItems = posBLL.GetAllItems(null);
+                items = allItems.Where(i => i.ItemType == ItemType.ThucAn || i.ItemType == ItemType.NuocUong).ToList();
+                
+                DisplayItemsAsCards();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi tải danh sách món: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DisplayItemsAsCards()
+        {
+            flowLayoutItems.Controls.Clear();
+            
+            if (items == null || items.Count == 0)
+            {
+                return;
+            }
+            
+            int cardWidth = 180;
+            int cardHeight = 200;
+            int spacing = 10;
+            
+            foreach (var item in items)
+            {
+                // Create card panel
+                Panel cardPanel = new Panel
+                {
+                    Width = cardWidth,
+                    Height = cardHeight,
+                    Margin = new Padding(spacing),
+                    BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = Color.White,
+                    Cursor = Cursors.Hand
+                };
+                
+                // Add hover effect
+                cardPanel.MouseEnter += (s, e) => 
+                {
+                    cardPanel.BackColor = Color.LightBlue;
+                    cardPanel.BorderStyle = BorderStyle.Fixed3D;
+                };
+                cardPanel.MouseLeave += (s, e) => 
+                {
+                    cardPanel.BackColor = Color.White;
+                    cardPanel.BorderStyle = BorderStyle.FixedSingle;
+                };
+                
+                // Click event handler - add item to order
+                EventHandler addItemHandler = (s, e) => AddItemToOrder(item);
+                
+                // Add click event to card panel
+                cardPanel.Click += addItemHandler;
+                
+                // Item image
+                PictureBox picItem = new PictureBox
+                {
+                    Width = cardWidth - 20,
+                    Height = 120,
+                    Location = new Point(10, 10),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Cursor = Cursors.Hand
+                };
+                
+                // Add click event to picture box
+                picItem.Click += addItemHandler;
+                
+                // Load image if available - handle base64
+                if (!string.IsNullOrWhiteSpace(item.ItemImage))
+                {
+                    try
+                    {
+                        // Try to load as base64 string
+                        byte[] imageBytes = Convert.FromBase64String(item.ItemImage);
+                        using (var ms = new System.IO.MemoryStream(imageBytes))
+                        {
+                            var tempImage = Image.FromStream(ms);
+                            picItem.Image = new Bitmap(tempImage); // Clone to avoid disposal issues
+                        }
+                    }
+                    catch
+                    {
+                        // If base64 fails, show placeholder
+                        picItem.BackColor = Color.LightGray;
+                    }
+                }
+                else
+                {
+                    picItem.BackColor = Color.LightGray;
+                }
+                
+                // Item name label
+                Label lblItemName = new Label
+                {
+                    Text = item.ItemName,
+                    Location = new Point(5, 135),
+                    Width = cardWidth - 10,
+                    Height = 30,
+                    Font = new Font("Microsoft Sans Serif", 9F, FontStyle.Bold),
+                    TextAlign = ContentAlignment.TopCenter,
+                    Cursor = Cursors.Hand
+                };
+                
+                // Auto wrap text if too long
+                if (item.ItemName.Length > 20)
+                {
+                    lblItemName.Text = item.ItemName.Substring(0, 17) + "...";
+                }
+                
+                // Add click event to label
+                lblItemName.Click += addItemHandler;
+                
+                // Price label
+                Label lblPrice = new Label
+                {
+                    Text = item.ItemPrice.ToString("N0") + " đ",
+                    Location = new Point(5, 165),
+                    Width = cardWidth - 10,
+                    Height = 25,
+                    Font = new Font("Microsoft Sans Serif", 10F, FontStyle.Bold),
+                    ForeColor = Color.Red,
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Cursor = Cursors.Hand
+                };
+                
+                // Add click event to price label
+                lblPrice.Click += addItemHandler;
+                
+                cardPanel.Controls.Add(picItem);
+                cardPanel.Controls.Add(lblItemName);
+                cardPanel.Controls.Add(lblPrice);
+                
+                flowLayoutItems.Controls.Add(cardPanel);
             }
         }
 
@@ -320,9 +537,9 @@ namespace HuongViet.GUI
                     e.Value = table.TableStatus == TableStatus.Available ? "Trống" : "Đang sử dụng";
                     e.CellStyle.BackColor = table.TableStatus == TableStatus.Available ? Color.LightGreen : Color.LightCoral;
                 }
-                else if (dgvTables.Columns[e.ColumnIndex].Name == "AreaName" && table.Area != null)
+                else if (dgvTables.Columns[e.ColumnIndex].Name == "AreaName")
                 {
-                    e.Value = table.Area.AreaName;
+                    e.Value = table.Area?.AreaName ?? "";
                 }
             }
         }
@@ -351,18 +568,39 @@ namespace HuongViet.GUI
             
             try
             {
+                // Lấy thông tin mới nhất của bàn từ database
                 var tableInfo = posBLL.GetTableInfo(selectedTable.TableID);
+                
+                // Cập nhật thông tin bàn hiện tại
+                selectedTable = tableInfo.Table;
                 
                 lblTableInfo.Text = $"Bàn: {selectedTable.TableName} - {selectedTable.Area?.AreaName ?? ""}";
                 
                 if (tableInfo.CurrentOrder != null)
                 {
+                    // Load hóa đơn hiện tại của bàn
                     currentOrderDetails = tableInfo.OrderDetails.ToList();
+                    
+                    // Hiển thị thông tin khách hàng nếu có
+                    if (tableInfo.CurrentOrder.Customer != null)
+                    {
+                        txtCustomerName.Text = tableInfo.CurrentOrder.Customer.CustomerName ?? "";
+                        txtCustomerPhone.Text = tableInfo.CurrentOrder.Customer.CustomerPhoneNum ?? "";
+                    }
+                    else
+                    {
+                        txtCustomerName.Text = tableInfo.CurrentOrder.CustomerName ?? "";
+                        txtCustomerPhone.Text = tableInfo.CurrentOrder.CustomerPhone ?? "";
+                    }
+                    
                     RefreshOrderDisplay();
                 }
                 else
                 {
+                    // Bàn trống - xóa thông tin đơn hàng và khách hàng
                     currentOrderDetails.Clear();
+                    txtCustomerName.Text = "";
+                    txtCustomerPhone.Text = "";
                     RefreshOrderDisplay();
                 }
             }
@@ -372,42 +610,21 @@ namespace HuongViet.GUI
             }
         }
 
-        private void DgvItems_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dgvItems.Rows[e.RowIndex].DataBoundItem is Item item)
-            {
-                if (dgvItems.Columns[e.ColumnIndex].Name == "ItemType")
-                {
-                    switch (item.ItemType)
-                    {
-                        case ItemType.ThucAn:
-                            e.Value = "Thức ăn";
-                            break;
-                        case ItemType.NuocUong:
-                            e.Value = "Nước uống";
-                            break;
-                        case ItemType.DichVu:
-                            e.Value = "Dịch vụ";
-                            break;
-                    }
-                }
-            }
-        }
-
-        private void DgvItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                var item = dgvItems.Rows[e.RowIndex].DataBoundItem as Item;
-                if (item != null)
-                {
-                    AddItemToOrder(item);
-                }
-            }
-        }
 
         private void AddItemToOrder(Item item)
         {
+            if (item == null)
+            {
+                return;
+            }
+            
+            // Check if table is selected
+            if (selectedTable == null)
+            {
+                MessageBox.Show("Vui lòng chọn bàn trước khi thêm món", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
             // Check if item already exists in order
             var existingDetail = currentOrderDetails.FirstOrDefault(d => d.ItemID == item.ItemID);
             
@@ -475,32 +692,6 @@ namespace HuongViet.GUI
             }
         }
 
-        private void BtnFilterItemType_Click(object sender, EventArgs e)
-        {
-            // Toggle item type filter
-            if (currentItemTypeFilter == null)
-            {
-                currentItemTypeFilter = ItemType.ThucAn;
-                btnFilterItemType.Text = "Thức ăn";
-            }
-            else if (currentItemTypeFilter == ItemType.ThucAn)
-            {
-                currentItemTypeFilter = ItemType.NuocUong;
-                btnFilterItemType.Text = "Nước uống";
-            }
-            else if (currentItemTypeFilter == ItemType.NuocUong)
-            {
-                currentItemTypeFilter = ItemType.DichVu;
-                btnFilterItemType.Text = "Dịch vụ";
-            }
-            else
-            {
-                currentItemTypeFilter = null;
-                btnFilterItemType.Text = "Tất cả";
-            }
-            
-            LoadItems();
-        }
 
         private void BtnSearchCustomer_Click(object sender, EventArgs e)
         {
@@ -594,6 +785,11 @@ namespace HuongViet.GUI
                 );
                 
                 MessageBox.Show("Lưu đơn hàng thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
+                // Cập nhật lại danh sách bàn để hiển thị trạng thái mới
+                LoadTables();
+                
+                // Load lại thông tin đơn hàng của bàn hiện tại
                 LoadTableOrder();
             }
             catch (Exception ex)
@@ -658,7 +854,11 @@ namespace HuongViet.GUI
                     if (posBLL.ProcessPayment(selectedTable.CurrentOrderID, selectedMethod.Value, currentStaffId))
                     {
                         MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                        // Cập nhật lại danh sách bàn để hiển thị trạng thái mới
                         LoadTables();
+                        
+                        // Load lại thông tin bàn sau thanh toán (bàn sẽ trở về trạng thái trống)
                         LoadTableOrder();
                     }
                 }

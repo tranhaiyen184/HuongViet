@@ -67,7 +67,11 @@ namespace HuongViet.DAL
 
         public List<Table> GetByAreaId(string areaId)
         {
-            string query = "SELECT * FROM tables WHERE AreaID = @areaId ORDER BY TableName";
+            string query = @"SELECT t.*, a.AreaName 
+                           FROM tables t 
+                           LEFT JOIN areas a ON t.AreaID = a.AreaID 
+                           WHERE t.AreaID = @areaId 
+                           ORDER BY t.TableName";
             MySqlParameter[] parameters = { new MySqlParameter("@areaId", areaId) };
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
             return ConvertDataTableToList(dt);

@@ -73,7 +73,7 @@
 			// 
 			this.headerPanel.Controls.Add(this.logoPictureBox);
 			this.headerPanel.Controls.Add(this.userPanel);
-			this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.headerPanel.Dock = System.Windows.Forms.DockStyle.None;
 			this.headerPanel.Location = new System.Drawing.Point(0, 0);
 			this.headerPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.headerPanel.Name = "headerPanel";
@@ -211,7 +211,7 @@
 			// 
 			this.sidebarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
 			this.sidebarPanel.Controls.Add(this.navContainer);
-			this.sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
+			this.sidebarPanel.Dock = System.Windows.Forms.DockStyle.None;
 			this.sidebarPanel.Location = new System.Drawing.Point(0, 130);
 			this.sidebarPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.sidebarPanel.Name = "sidebarPanel";
@@ -222,18 +222,13 @@
 			// 
 			this.navContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
 			this.navContainer.Controls.Add(this.btnDashboard);
-			this.navContainer.Controls.Add(this.btnInvoices);
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
-			this.navContainer.Controls.Add(this.btnCombo);
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
-			this.navContainer.Controls.Add(this.btnCustomers);
-			this.navContainer.Controls.Add(this.btnSettings);
-			this.navContainer.Controls.Add(this.btnRestaurant);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
-			this.navContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.navContainer.Dock = System.Windows.Forms.DockStyle.None;
 			this.navContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.navContainer.Location = new System.Drawing.Point(0, 0);
 			this.navContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -276,6 +271,7 @@
 			this.btnInvoices.Text = "Hóa đơn";
 			this.btnInvoices.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnInvoices.UseVisualStyleBackColor = true;
+			this.btnInvoices.Visible = false;
 			this.btnInvoices.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnInvoices.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -351,6 +347,7 @@
 			this.btnCombo.Text = "Combo";
 			this.btnCombo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCombo.UseVisualStyleBackColor = true;
+			this.btnCombo.Visible = false;
 			this.btnCombo.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnCombo.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -408,6 +405,7 @@
 			this.btnCustomers.Text = "Khách hàng";
 			this.btnCustomers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCustomers.UseVisualStyleBackColor = true;
+			this.btnCustomers.Visible = false;
 			this.btnCustomers.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnCustomers.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -426,6 +424,7 @@
 			this.btnSettings.Text = "Hệ thống";
 			this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnSettings.UseVisualStyleBackColor = true;
+			this.btnSettings.Visible = false;
 			this.btnSettings.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnSettings.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -444,13 +443,14 @@
 			this.btnRestaurant.Text = "Thiết lập nhà hàng";
 			this.btnRestaurant.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnRestaurant.UseVisualStyleBackColor = true;
+			this.btnRestaurant.Visible = false;
 			this.btnRestaurant.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnRestaurant.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// contentPanel
 			// 
 			this.contentPanel.Controls.Add(this.placeholderPanel);
-			this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.contentPanel.Dock = System.Windows.Forms.DockStyle.None;
 			this.contentPanel.Location = new System.Drawing.Point(240, 130);
 			this.contentPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.contentPanel.Name = "contentPanel";

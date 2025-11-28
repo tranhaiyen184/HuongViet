@@ -817,12 +817,37 @@ namespace HuongViet.GUI
                     return;
                 }
 
-                byte[] imageBytes = Convert.FromBase64String(base64String);
-                using (MemoryStream ms = new MemoryStream(imageBytes))
+                Image img = null;
+
+                // Try as base64 string
+                try
                 {
-                    picItemImage.Image = Image.FromStream(ms);
+                    byte[] imageBytes = Convert.FromBase64String(base64String);
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // Create a copy to avoid stream disposal issues
+                        img = new Bitmap(Image.FromStream(ms));
+                    }
                 }
-                currentImageBase64 = base64String;
+                catch
+                {
+                    // If not valid base64, ignore
+                    img = null;
+                }
+
+                if (img != null)
+                {
+                    // Dispose previous image safely
+                    var old = picItemImage.Image;
+                    picItemImage.Image = img;
+                    old?.Dispose();
+                    currentImageBase64 = base64String;
+                }
+                else
+                {
+                    picItemImage.Image = null;
+                    currentImageBase64 = null;
+                }
             }
             catch (Exception)
             {

@@ -207,6 +207,16 @@ namespace HuongViet.BLL
                         order.UpdatedAt = DateTime.Now;
 
                         orderBLL.Update(order);
+                        
+                        // Đảm bảo bàn có CurrentOrderID và trạng thái đúng
+                        if (table.CurrentOrderID != order.OrderID || table.TableStatus != TableStatus.Occupied)
+                        {
+                            table.CurrentOrderID = order.OrderID;
+                            table.TableStatus = TableStatus.Occupied;
+                            table.UpdatedAt = DateTime.Now;
+                            tableBLL.Update(table);
+                        }
+                        
                         return order;
                     }
                 }
@@ -238,9 +248,11 @@ namespace HuongViet.BLL
 
                 if (orderBLL.Insert(order))
                 {
-                    // Cập nhật CurrentOrderID của bàn
+                    // Cập nhật CurrentOrderID và trạng thái của bàn
                     table.CurrentOrderID = order.OrderID;
-                    tableBLL.UpdateTableStatus(tableId, TableStatus.Occupied);
+                    table.TableStatus = TableStatus.Occupied;
+                    table.UpdatedAt = DateTime.Now;
+                    tableBLL.Update(table);
                     return order;
                 }
 
@@ -272,14 +284,16 @@ namespace HuongViet.BLL
 
                 if (orderBLL.Update(order))
                 {
-                    // Cập nhật trạng thái bàn về Available
+                    // Cập nhật trạng thái bàn về Available và xóa CurrentOrderID
                     if (!string.IsNullOrWhiteSpace(order.TableID))
                     {
                         var table = tableBLL.GetTableById(order.TableID);
                         if (table != null)
                         {
                             table.CurrentOrderID = null;
-                            tableBLL.UpdateTableStatus(order.TableID, TableStatus.Available);
+                            table.TableStatus = TableStatus.Available;
+                            table.UpdatedAt = DateTime.Now;
+                            tableBLL.Update(table);
                         }
                     }
 
