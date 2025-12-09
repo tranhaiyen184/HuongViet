@@ -54,6 +54,7 @@
     <Compile Include="OrderDetail.cs" />
     <Compile Include="PagedResult.cs" />
     <Compile Include="Position.cs" />
+    <Compile Include="ReportingBestSellingItem.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="Permission.cs" />
     <Compile Include="RolePermission.cs" />

@@ -46,13 +46,14 @@
     <Compile Include="AuthBLL.cs" />
     <Compile Include="CategoryBLL.cs" />
     <Compile Include="CustomerBLL.cs" />
-    <Compile Include="DepartmentBLL.cs" /> 
+    <Compile Include="DepartmentBLL.cs" />
     <Compile Include="FloorBLL.cs" />
     <Compile Include="ItemBLL.cs" />
     <Compile Include="OrderBLL.cs" />
     <Compile Include="OrderManagementExample.cs" />
     <Compile Include="POSBLL.cs" />
-    <Compile Include="PositionBLL.cs" /> 
+    <Compile Include="PositionBLL.cs" />
+    <Compile Include="ReportBLL.cs" />
     <Compile Include="RoleBLL.cs" />
     <Compile Include="RoomBLL.cs" />
     <Compile Include="TableBLL.cs" />
