@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace HuongViet.GUI
 {
@@ -16,7 +17,7 @@ namespace HuongViet.GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
             try
             {
                 using (var loginForm = new FrmLogin())
@@ -25,7 +26,7 @@ namespace HuongViet.GUI
                     {
                         // Save logged in user to session
                         SessionManager.CurrentUser = loginForm.LoggedInUser;
-                        
+
                         // Pass logged in user to main form
                         Application.Run(new FrmMain(loginForm.LoggedInUser));
                     }

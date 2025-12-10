@@ -1,10 +1,12 @@
+using FontAwesome.Sharp;
+using HuongViet.BLL;
+using HuongViet.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FontAwesome.Sharp;
-using HuongViet.Models;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace HuongViet.GUI
 {
@@ -45,11 +47,166 @@ namespace HuongViet.GUI
             _currentUser = currentUser;
             InitializeLayoutState();
             UpdateUserInfo();
-            
+
             // Add Resize event handler to update layout
             this.Resize += FrmMain_Resize;
+
+            // Configure charts
+            LoadMockBestSellerCharts();
         }
-        
+        private void ConfigureCharts()
+        {
+            // Quantity chart: create legend first, then series and assign legend name explicitly
+            chartBestByQuantity.Legends.Clear();
+            chartBestByQuantity.Legends.Add(new Legend("LegendQuantity") { Docking = Docking.Bottom });
+            chartBestByQuantity.Series.Clear();
+            var s1 = new Series("Quantity")
+            {
+                ChartType = SeriesChartType.Pie,
+                Legend = "LegendQuantity"
+            };
+            chartBestByQuantity.Series.Add(s1);
+
+            // Revenue chart
+            chartBestByRevenue.Legends.Clear();
+            chartBestByRevenue.Legends.Add(new Legend("LegendRevenue") { Docking = Docking.Bottom });
+            chartBestByRevenue.Series.Clear();
+            var s2 = new Series("Revenue")
+            {
+                ChartType = SeriesChartType.Pie,
+                Legend = "LegendRevenue"
+            };
+            chartBestByRevenue.Series.Add(s2);
+        }
+
+        private void LoadMockBestSellerCharts()
+        {
+            // 1. Create mock data
+            ReportBLL reportBLL = new ReportBLL();
+            var data = reportBLL.GetBestSalerItems(ReportBLL.ReportType.Monthly);
+
+            // 2. Sort and take top 10 (optional)
+            var topByQty = data.OrderByDescending(x => x.TotalQuantitySold).Take(10).ToList();
+            var topByRev = data.OrderByDescending(x => x.TotalRevenue).Take(10).ToList();
+
+            // 3. Make sure charts have series
+            ConfigureCharts();
+
+            // 4. Fill Quantity chart
+            var sQty = chartBestByQuantity.Series["Quantity"];
+            sQty.Points.Clear();
+
+            foreach (var it in topByQty)
+            {
+                string label = string.IsNullOrEmpty(it.ItemName) ? it.ItemID : it.ItemName;
+
+                int idx = sQty.Points.AddXY(label, it.TotalQuantitySold);
+                var pt = sQty.Points[idx];
+
+                pt.LegendText = label;
+                pt.Label = "#VALX\n#PERCENT{P2}";
+            }
+
+            // 5. Fill Revenue chart
+            var sRev = chartBestByRevenue.Series["Revenue"];
+            sRev.Points.Clear();
+
+            foreach (var it in topByRev)
+            {
+                string label = string.IsNullOrEmpty(it.ItemName) ? it.ItemID : it.ItemName;
+
+                int idx = sRev.Points.AddXY(label, (double)it.TotalRevenue);
+                var pt = sRev.Points[idx];
+
+                pt.LegendText = label;
+                pt.Label = "#VALX\n#PERCENT{P2}";
+            }
+        }
+
+
+        //private void ConfigureCharts()
+        //{
+        //    // chartBestByQuantity
+        //    chartBestByQuantity.Series.Clear();
+        //    var s1 = new Series("Quantity") { ChartType = SeriesChartType.Pie };
+        //    chartBestByQuantity.Series.Add(s1);
+        //    chartBestByQuantity.Legends.Clear();
+        //    chartBestByQuantity.Legends.Add(new Legend("LegendQuantity") { Docking = Docking.Bottom });
+
+        //    // chartBestByRevenue
+        //    chartBestByRevenue.Series.Clear();
+        //    var s2 = new Series("Revenue") { ChartType = SeriesChartType.Pie };
+        //    chartBestByRevenue.Series.Add(s2);
+        //    chartBestByRevenue.Legends.Clear();
+        //    chartBestByRevenue.Legends.Add(new Legend("LegendRevenue") { Docking = Docking.Bottom });
+        //}
+
+        private void FrmMain_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadBestSellerCharts();
+            }
+            catch
+            {
+                // ignore
+            }
+        }
+
+        private void LoadBestSellerCharts()
+        {
+            var reportBLL = new ReportBLL();
+            var best = reportBLL.GetBestSalerItems(ReportBLL.ReportType.Monthly);
+            if (best == null || best.Count == 0) return;
+
+            // Prepare top 10 lists
+            var topByQty = best.OrderByDescending(x => x.TotalQuantitySold).Take(10).ToList();
+            var topByRev = best.OrderByDescending(x => x.TotalRevenue).Take(10).ToList();
+
+            // Ensure charts have at least 1 series
+            EnsureChartSeries(chartBestByQuantity, "Quantity");
+            EnsureChartSeries(chartBestByRevenue, "Revenue");
+
+            // Fill the charts
+            FillChart(chartBestByQuantity.Series[0], topByQty, x => x.TotalQuantitySold);
+            FillChart(chartBestByRevenue.Series[0], topByRev, x => (double)x.TotalRevenue);
+        }
+
+        private void EnsureChartSeries(Chart chart, string seriesName)
+        {
+            if (chart.Series.Count == 0)
+            {
+                chart.Series.Add(new Series(seriesName)
+                {
+                    ChartType = SeriesChartType.Pie
+                });
+            }
+            else
+            {
+                chart.Series[0].Name = seriesName;
+            }
+        }
+
+        private void FillChart<T>(Series series, List<T> items, Func<T, double> valueSelector)
+    where T : ReportingBestSellingItem
+        {
+            series.Points.Clear();
+
+            foreach (var item in items)
+            {
+                string label = string.IsNullOrEmpty(item.ItemName) ? item.ItemID : item.ItemName;
+
+                // Add point → index
+                int idx = series.Points.AddXY(label, valueSelector(item));
+
+                // Get point
+                var pt = series.Points[idx];
+                pt.LegendText = label;
+                pt.Label = "#VALX\n#PERCENT{P2}";
+            }
+        }
+
+
         private void FrmMain_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
