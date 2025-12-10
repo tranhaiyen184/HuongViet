@@ -69,9 +69,9 @@ namespace HuongViet.GUI
 			this.pnlMain.Controls.Add(this.pnlRight);
 			this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
-			this.pnlMain.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlMain.Name = "pnlMain";
-			this.pnlMain.Size = new System.Drawing.Size(1398, 812);
+			this.pnlMain.Size = new System.Drawing.Size(1414, 812);
 			this.pnlMain.TabIndex = 0;
 			// 
 			// lblTitle
@@ -88,8 +88,8 @@ namespace HuongViet.GUI
 			// btnRefresh
 			// 
 			this.btnRefresh.Font = new System.Drawing.Font("Times New Roman", 14F);
-			this.btnRefresh.Location = new System.Drawing.Point(315, 19);
-			this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
+			this.btnRefresh.Location = new System.Drawing.Point(1065, 16);
+			this.btnRefresh.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnRefresh.Name = "btnRefresh";
 			this.btnRefresh.Size = new System.Drawing.Size(112, 32);
 			this.btnRefresh.TabIndex = 1;
@@ -102,9 +102,9 @@ namespace HuongViet.GUI
 			this.pnlLeft.Controls.Add(this.lblTreeTitle);
 			this.pnlLeft.Controls.Add(this.treeViewTables);
 			this.pnlLeft.Location = new System.Drawing.Point(15, 65);
-			this.pnlLeft.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlLeft.Name = "pnlLeft";
-			this.pnlLeft.Size = new System.Drawing.Size(982, 731);
+			this.pnlLeft.Size = new System.Drawing.Size(650, 731);
 			this.pnlLeft.TabIndex = 2;
 			// 
 			// lblTreeTitle
@@ -122,25 +122,24 @@ namespace HuongViet.GUI
 			// 
 			this.treeViewTables.BackColor = System.Drawing.Color.White;
 			this.treeViewTables.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.treeViewTables.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.treeViewTables.Font = new System.Drawing.Font("Times New Roman", 12F);
 			this.treeViewTables.FullRowSelect = true;
 			this.treeViewTables.HideSelection = false;
 			this.treeViewTables.ItemHeight = 30;
 			this.treeViewTables.Location = new System.Drawing.Point(0, 28);
-			this.treeViewTables.Margin = new System.Windows.Forms.Padding(2);
+			this.treeViewTables.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.treeViewTables.Name = "treeViewTables";
-			this.treeViewTables.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.treeViewTables.Size = new System.Drawing.Size(966, 699);
+			this.treeViewTables.Size = new System.Drawing.Size(648, 699);
 			this.treeViewTables.TabIndex = 1;
 			this.treeViewTables.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTables_AfterSelect);
 			// 
 			// pnlCenter
 			// 
 			this.pnlCenter.Controls.Add(this.grpAreaInfo);
-			this.pnlCenter.Location = new System.Drawing.Point(1010, 65);
-			this.pnlCenter.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlCenter.Location = new System.Drawing.Point(670, 65);
+			this.pnlCenter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlCenter.Name = "pnlCenter";
-			this.pnlCenter.Size = new System.Drawing.Size(376, 252);
+			this.pnlCenter.Size = new System.Drawing.Size(338, 731);
 			this.pnlCenter.TabIndex = 3;
 			// 
 			// grpAreaInfo
@@ -149,11 +148,11 @@ namespace HuongViet.GUI
 			this.grpAreaInfo.Controls.Add(this.txtAreaName);
 			this.grpAreaInfo.Controls.Add(this.lblAreaName);
 			this.grpAreaInfo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold);
-			this.grpAreaInfo.Location = new System.Drawing.Point(2, 17);
-			this.grpAreaInfo.Margin = new System.Windows.Forms.Padding(2);
+			this.grpAreaInfo.Location = new System.Drawing.Point(2, 2);
+			this.grpAreaInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.grpAreaInfo.Name = "grpAreaInfo";
-			this.grpAreaInfo.Padding = new System.Windows.Forms.Padding(2);
-			this.grpAreaInfo.Size = new System.Drawing.Size(372, 217);
+			this.grpAreaInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.grpAreaInfo.Size = new System.Drawing.Size(338, 203);
 			this.grpAreaInfo.TabIndex = 0;
 			this.grpAreaInfo.TabStop = false;
 			this.grpAreaInfo.Text = "Quản lý khu vực";
@@ -165,19 +164,19 @@ namespace HuongViet.GUI
 			this.pnlAreaButtons.Controls.Add(this.btnAreaDelete);
 			this.pnlAreaButtons.Controls.Add(this.btnAreaSave);
 			this.pnlAreaButtons.Controls.Add(this.btnAreaCancel);
-			this.pnlAreaButtons.Location = new System.Drawing.Point(18, 96);
-			this.pnlAreaButtons.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlAreaButtons.Location = new System.Drawing.Point(15, 106);
+			this.pnlAreaButtons.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlAreaButtons.Name = "pnlAreaButtons";
-			this.pnlAreaButtons.Size = new System.Drawing.Size(322, 100);
+			this.pnlAreaButtons.Size = new System.Drawing.Size(300, 85);
 			this.pnlAreaButtons.TabIndex = 2;
 			// 
 			// btnAreaAdd
 			// 
 			this.btnAreaAdd.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaAdd.Location = new System.Drawing.Point(2, 7);
-			this.btnAreaAdd.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAreaAdd.Location = new System.Drawing.Point(0, 7);
+			this.btnAreaAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnAreaAdd.Name = "btnAreaAdd";
-			this.btnAreaAdd.Size = new System.Drawing.Size(88, 37);
+			this.btnAreaAdd.Size = new System.Drawing.Size(70, 32);
 			this.btnAreaAdd.TabIndex = 0;
 			this.btnAreaAdd.Text = "Thêm";
 			this.btnAreaAdd.UseVisualStyleBackColor = true;
@@ -185,10 +184,10 @@ namespace HuongViet.GUI
 			// btnAreaEdit
 			// 
 			this.btnAreaEdit.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaEdit.Location = new System.Drawing.Point(109, 7);
-			this.btnAreaEdit.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAreaEdit.Location = new System.Drawing.Point(117, 7);
+			this.btnAreaEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnAreaEdit.Name = "btnAreaEdit";
-			this.btnAreaEdit.Size = new System.Drawing.Size(88, 37);
+			this.btnAreaEdit.Size = new System.Drawing.Size(70, 32);
 			this.btnAreaEdit.TabIndex = 1;
 			this.btnAreaEdit.Text = "Sửa";
 			this.btnAreaEdit.UseVisualStyleBackColor = true;
@@ -196,10 +195,10 @@ namespace HuongViet.GUI
 			// btnAreaDelete
 			// 
 			this.btnAreaDelete.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaDelete.Location = new System.Drawing.Point(218, 7);
-			this.btnAreaDelete.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAreaDelete.Location = new System.Drawing.Point(226, 7);
+			this.btnAreaDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnAreaDelete.Name = "btnAreaDelete";
-			this.btnAreaDelete.Size = new System.Drawing.Size(88, 37);
+			this.btnAreaDelete.Size = new System.Drawing.Size(70, 32);
 			this.btnAreaDelete.TabIndex = 2;
 			this.btnAreaDelete.Text = "Xóa";
 			this.btnAreaDelete.UseVisualStyleBackColor = true;
@@ -207,10 +206,10 @@ namespace HuongViet.GUI
 			// btnAreaSave
 			// 
 			this.btnAreaSave.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaSave.Location = new System.Drawing.Point(55, 49);
-			this.btnAreaSave.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAreaSave.Location = new System.Drawing.Point(68, 44);
+			this.btnAreaSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnAreaSave.Name = "btnAreaSave";
-			this.btnAreaSave.Size = new System.Drawing.Size(88, 37);
+			this.btnAreaSave.Size = new System.Drawing.Size(70, 32);
 			this.btnAreaSave.TabIndex = 3;
 			this.btnAreaSave.Text = "Lưu";
 			this.btnAreaSave.UseVisualStyleBackColor = true;
@@ -218,10 +217,10 @@ namespace HuongViet.GUI
 			// btnAreaCancel
 			// 
 			this.btnAreaCancel.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaCancel.Location = new System.Drawing.Point(171, 50);
-			this.btnAreaCancel.Margin = new System.Windows.Forms.Padding(2);
+			this.btnAreaCancel.Location = new System.Drawing.Point(171, 44);
+			this.btnAreaCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnAreaCancel.Name = "btnAreaCancel";
-			this.btnAreaCancel.Size = new System.Drawing.Size(88, 37);
+			this.btnAreaCancel.Size = new System.Drawing.Size(70, 32);
 			this.btnAreaCancel.TabIndex = 4;
 			this.btnAreaCancel.Text = "Hủy";
 			this.btnAreaCancel.UseVisualStyleBackColor = true;
@@ -229,17 +228,17 @@ namespace HuongViet.GUI
 			// txtAreaName
 			// 
 			this.txtAreaName.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.txtAreaName.Location = new System.Drawing.Point(127, 45);
-			this.txtAreaName.Margin = new System.Windows.Forms.Padding(2);
+			this.txtAreaName.Location = new System.Drawing.Point(15, 65);
+			this.txtAreaName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.txtAreaName.Name = "txtAreaName";
-			this.txtAreaName.Size = new System.Drawing.Size(226, 26);
+			this.txtAreaName.Size = new System.Drawing.Size(301, 26);
 			this.txtAreaName.TabIndex = 1;
 			// 
 			// lblAreaName
 			// 
 			this.lblAreaName.AutoSize = true;
 			this.lblAreaName.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblAreaName.Location = new System.Drawing.Point(14, 49);
+			this.lblAreaName.Location = new System.Drawing.Point(15, 41);
 			this.lblAreaName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lblAreaName.Name = "lblAreaName";
 			this.lblAreaName.Size = new System.Drawing.Size(88, 19);
@@ -249,10 +248,10 @@ namespace HuongViet.GUI
 			// pnlRight
 			// 
 			this.pnlRight.Controls.Add(this.grpTableInfo);
-			this.pnlRight.Location = new System.Drawing.Point(1010, 330);
-			this.pnlRight.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlRight.Location = new System.Drawing.Point(938, 65);
+			this.pnlRight.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlRight.Name = "pnlRight";
-			this.pnlRight.Size = new System.Drawing.Size(374, 392);
+			this.pnlRight.Size = new System.Drawing.Size(465, 731);
 			this.pnlRight.TabIndex = 4;
 			// 
 			// grpTableInfo
@@ -267,11 +266,11 @@ namespace HuongViet.GUI
 			this.grpTableInfo.Controls.Add(this.txtTableName);
 			this.grpTableInfo.Controls.Add(this.lblTableName);
 			this.grpTableInfo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold);
-			this.grpTableInfo.Location = new System.Drawing.Point(4, 25);
-			this.grpTableInfo.Margin = new System.Windows.Forms.Padding(2);
+			this.grpTableInfo.Location = new System.Drawing.Point(2, 20);
+			this.grpTableInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.grpTableInfo.Name = "grpTableInfo";
-			this.grpTableInfo.Padding = new System.Windows.Forms.Padding(2);
-			this.grpTableInfo.Size = new System.Drawing.Size(370, 325);
+			this.grpTableInfo.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.grpTableInfo.Size = new System.Drawing.Size(461, 325);
 			this.grpTableInfo.TabIndex = 0;
 			this.grpTableInfo.TabStop = false;
 			this.grpTableInfo.Text = "Thông tin bàn";
@@ -283,17 +282,17 @@ namespace HuongViet.GUI
 			this.pnlTableButtons.Controls.Add(this.btnTableDelete);
 			this.pnlTableButtons.Controls.Add(this.btnTableSave);
 			this.pnlTableButtons.Controls.Add(this.btnTableCancel);
-			this.pnlTableButtons.Location = new System.Drawing.Point(19, 219);
-			this.pnlTableButtons.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlTableButtons.Location = new System.Drawing.Point(15, 179);
+			this.pnlTableButtons.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.pnlTableButtons.Name = "pnlTableButtons";
-			this.pnlTableButtons.Size = new System.Drawing.Size(328, 83);
+			this.pnlTableButtons.Size = new System.Drawing.Size(428, 83);
 			this.pnlTableButtons.TabIndex = 8;
 			// 
 			// btnTableAdd
 			// 
 			this.btnTableAdd.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableAdd.Location = new System.Drawing.Point(2, 2);
-			this.btnTableAdd.Margin = new System.Windows.Forms.Padding(2);
+			this.btnTableAdd.Location = new System.Drawing.Point(47, 2);
+			this.btnTableAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnTableAdd.Name = "btnTableAdd";
 			this.btnTableAdd.Size = new System.Drawing.Size(88, 37);
 			this.btnTableAdd.TabIndex = 0;
@@ -303,8 +302,8 @@ namespace HuongViet.GUI
 			// btnTableEdit
 			// 
 			this.btnTableEdit.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableEdit.Location = new System.Drawing.Point(109, 2);
-			this.btnTableEdit.Margin = new System.Windows.Forms.Padding(2);
+			this.btnTableEdit.Location = new System.Drawing.Point(181, 2);
+			this.btnTableEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnTableEdit.Name = "btnTableEdit";
 			this.btnTableEdit.Size = new System.Drawing.Size(88, 37);
 			this.btnTableEdit.TabIndex = 1;
@@ -314,8 +313,8 @@ namespace HuongViet.GUI
 			// btnTableDelete
 			// 
 			this.btnTableDelete.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableDelete.Location = new System.Drawing.Point(218, 2);
-			this.btnTableDelete.Margin = new System.Windows.Forms.Padding(2);
+			this.btnTableDelete.Location = new System.Drawing.Point(315, 2);
+			this.btnTableDelete.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnTableDelete.Name = "btnTableDelete";
 			this.btnTableDelete.Size = new System.Drawing.Size(88, 37);
 			this.btnTableDelete.TabIndex = 2;
@@ -325,8 +324,8 @@ namespace HuongViet.GUI
 			// btnTableSave
 			// 
 			this.btnTableSave.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableSave.Location = new System.Drawing.Point(55, 43);
-			this.btnTableSave.Margin = new System.Windows.Forms.Padding(2);
+			this.btnTableSave.Location = new System.Drawing.Point(108, 43);
+			this.btnTableSave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnTableSave.Name = "btnTableSave";
 			this.btnTableSave.Size = new System.Drawing.Size(88, 37);
 			this.btnTableSave.TabIndex = 3;
@@ -336,8 +335,8 @@ namespace HuongViet.GUI
 			// btnTableCancel
 			// 
 			this.btnTableCancel.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableCancel.Location = new System.Drawing.Point(171, 44);
-			this.btnTableCancel.Margin = new System.Windows.Forms.Padding(2);
+			this.btnTableCancel.Location = new System.Drawing.Point(242, 44);
+			this.btnTableCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.btnTableCancel.Name = "btnTableCancel";
 			this.btnTableCancel.Size = new System.Drawing.Size(88, 37);
 			this.btnTableCancel.TabIndex = 4;
@@ -354,17 +353,17 @@ namespace HuongViet.GUI
             "Đang sử dụng",
             "Đang dọn dẹp",
             "Không khả dụng"});
-			this.cmbTableStatus.Location = new System.Drawing.Point(127, 156);
-			this.cmbTableStatus.Margin = new System.Windows.Forms.Padding(2);
+			this.cmbTableStatus.Location = new System.Drawing.Point(105, 136);
+			this.cmbTableStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.cmbTableStatus.Name = "cmbTableStatus";
-			this.cmbTableStatus.Size = new System.Drawing.Size(226, 27);
+			this.cmbTableStatus.Size = new System.Drawing.Size(151, 27);
 			this.cmbTableStatus.TabIndex = 7;
 			// 
 			// lblTableStatus
 			// 
 			this.lblTableStatus.AutoSize = true;
 			this.lblTableStatus.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblTableStatus.Location = new System.Drawing.Point(15, 158);
+			this.lblTableStatus.Location = new System.Drawing.Point(15, 138);
 			this.lblTableStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lblTableStatus.Name = "lblTableStatus";
 			this.lblTableStatus.Size = new System.Drawing.Size(71, 19);
@@ -374,8 +373,8 @@ namespace HuongViet.GUI
 			// nudCapacity
 			// 
 			this.nudCapacity.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.nudCapacity.Location = new System.Drawing.Point(127, 117);
-			this.nudCapacity.Margin = new System.Windows.Forms.Padding(2);
+			this.nudCapacity.Location = new System.Drawing.Point(105, 104);
+			this.nudCapacity.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.nudCapacity.Maximum = new decimal(new int[] {
             20,
             0,
@@ -387,7 +386,7 @@ namespace HuongViet.GUI
             0,
             0});
 			this.nudCapacity.Name = "nudCapacity";
-			this.nudCapacity.Size = new System.Drawing.Size(226, 26);
+			this.nudCapacity.Size = new System.Drawing.Size(90, 26);
 			this.nudCapacity.TabIndex = 5;
 			this.nudCapacity.Value = new decimal(new int[] {
             4,
@@ -399,7 +398,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblCapacity.AutoSize = true;
 			this.lblCapacity.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblCapacity.Location = new System.Drawing.Point(15, 119);
+			this.lblCapacity.Location = new System.Drawing.Point(15, 106);
 			this.lblCapacity.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lblCapacity.Name = "lblCapacity";
 			this.lblCapacity.Size = new System.Drawing.Size(71, 19);
@@ -411,17 +410,17 @@ namespace HuongViet.GUI
 			this.cmbFloor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbFloor.Font = new System.Drawing.Font("Times New Roman", 12F);
 			this.cmbFloor.FormattingEnabled = true;
-			this.cmbFloor.Location = new System.Drawing.Point(127, 77);
-			this.cmbFloor.Margin = new System.Windows.Forms.Padding(2);
+			this.cmbFloor.Location = new System.Drawing.Point(105, 71);
+			this.cmbFloor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.cmbFloor.Name = "cmbFloor";
-			this.cmbFloor.Size = new System.Drawing.Size(226, 27);
+			this.cmbFloor.Size = new System.Drawing.Size(338, 27);
 			this.cmbFloor.TabIndex = 3;
 			// 
 			// lblFloor
 			// 
 			this.lblFloor.AutoSize = true;
 			this.lblFloor.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.lblFloor.Location = new System.Drawing.Point(15, 80);
+			this.lblFloor.Location = new System.Drawing.Point(15, 73);
 			this.lblFloor.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.lblFloor.Name = "lblFloor";
 			this.lblFloor.Size = new System.Drawing.Size(65, 19);
@@ -431,10 +430,10 @@ namespace HuongViet.GUI
 			// txtTableName
 			// 
 			this.txtTableName.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.txtTableName.Location = new System.Drawing.Point(127, 38);
-			this.txtTableName.Margin = new System.Windows.Forms.Padding(2);
+			this.txtTableName.Location = new System.Drawing.Point(105, 38);
+			this.txtTableName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.txtTableName.Name = "txtTableName";
-			this.txtTableName.Size = new System.Drawing.Size(226, 26);
+			this.txtTableName.Size = new System.Drawing.Size(338, 26);
 			this.txtTableName.TabIndex = 1;
 			// 
 			// lblTableName
@@ -453,9 +452,9 @@ namespace HuongViet.GUI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.White;
-			this.ClientSize = new System.Drawing.Size(1398, 812);
+			this.ClientSize = new System.Drawing.Size(1414, 812);
 			this.Controls.Add(this.pnlMain);
-			this.Margin = new System.Windows.Forms.Padding(2);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "FrmTable";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Quản lý bàn";
