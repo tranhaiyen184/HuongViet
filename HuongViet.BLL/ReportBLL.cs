@@ -39,9 +39,18 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
-        /// Lấy mặt hàng bán chạy nhất trong khoảng thời gian (từ - đến)
+        /// Lấy mặt hàng bán chạy nhất theo ngày, tuần tháng
         /// </summary>
-        /// <returns>Mặt hàng bán chạy nhất hoặc null nếu không có dữ liệu</returns>
+        /// <returns>
+        /// Mặt hàng bán chạy nhất hoặc null nếu không có dữ liệu
+        /// Mặt hàng sẽ có các thuộc tính: 
+        ///     ItemID, 
+        ///     ItemName, 
+        ///     TotalQuantitySold (số lượng đã bán), 
+        ///     TotalRevenue (doanh thu tính theo sản phẩm), 
+        ///     QuantityPercent (% theo số lượng), 
+        ///     RevenuePercent (% theo doanh thu)
+        /// </returns>
         public List<ReportingBestSellingItem> GetBestSalerItems(ReportType reportType)
         {
             try
@@ -55,6 +64,36 @@ namespace HuongViet.BLL
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi lấy báo cáo mặt hàng bán chạy: {ex.Message}");
+            }
+        }
+
+        public int GetTotalRevenue(ReportType reportType)
+        {
+            try
+            {
+                var (from, to) = GetDateRange(reportType, DateTime.Now);
+                if (from > to)
+                    throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+                return reportDAL.GetTotalRevenue(from, to);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy tổng doanh thu: {ex.Message}");
+            }
+        }
+
+        public List<int> GetDailyRevenue(ReportType reportType)
+        {
+            try
+            {
+                var (from, to) = GetDateRange(reportType, DateTime.Now);
+                if (from > to)
+                    throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+                return reportDAL.GetDailyRevenue(from, to);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy doanh thu theo ngày: {ex.Message}");
             }
         }
 

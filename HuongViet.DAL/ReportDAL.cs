@@ -15,7 +15,7 @@ namespace HuongViet.DAL
 
         public ReportDAL()
         {
-            dbHelper = new DatabaseHelper(); 
+            dbHelper = new DatabaseHelper();
         }
 
         private ReportingBestSellingItem MapDataRowToEntity(DataRow row)
@@ -115,6 +115,78 @@ ORDER BY
             }
 
             return null;
+        }
+
+        public int GetTotalRevenue(DateTime from, DateTime to)
+        {
+            string query = @"
+SELECT
+    COALESCE(SUM(od.TotalAmount), 0) AS TotalRevenue
+FROM orders o
+LEFT JOIN order_details od
+    ON o.OrderID = od.OrderID
+WHERE
+    o.OrderStatus = 'Completed'
+    AND o.DeletedAt IS NULL
+    AND o.OrderDate BETWEEN @FromDate AND @ToDate;
+";
+            var parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@FromDate", MySqlDbType.DateTime) { Value = from },
+                new MySqlParameter("@ToDate", MySqlDbType.DateTime) { Value = to }
+            };
+            var table = dbHelper.ExecuteQuery(query, parameters);
+            if (table != null && table.Rows.Count > 0)
+            {
+                var row = table.Rows[0];
+                if (row["TotalRevenue"] != DBNull.Value)
+                {
+                    return Convert.ToInt32(row["TotalRevenue"]);
+                }
+            }
+            return 0;
+        }
+
+        public List<int> GetDailyRevenue(DateTime from, DateTime to)
+        {
+            string query = @"
+SELECT
+    DATE(o.OrderDate) AS RevenueDate,
+    COALESCE(SUM(od.TotalAmount), 0) AS DailyRevenue
+FROM orders o
+LEFT JOIN order_details od
+    ON o.OrderID = od.OrderID
+WHERE
+    o.OrderStatus = 'Completed'
+    AND o.DeletedAt IS NULL
+    AND o.OrderDate BETWEEN @FromDate AND @ToDate
+GROUP BY
+    DATE(o.OrderDate)
+ORDER BY
+    RevenueDate ASC;
+";
+            var parameters = new MySqlParameter[]
+            {
+                new MySqlParameter("@FromDate", MySqlDbType.DateTime) { Value = from },
+                new MySqlParameter("@ToDate", MySqlDbType.DateTime) { Value = to }
+            };
+            var table = dbHelper.ExecuteQuery(query, parameters);
+            List<int> dailyRevenues = new List<int>();
+            if (table != null && table.Rows.Count > 0)
+            {
+                foreach (DataRow row in table.Rows)
+                {
+                    if (row["DailyRevenue"] != DBNull.Value)
+                    {
+                        dailyRevenues.Add(Convert.ToInt32(row["DailyRevenue"]));
+                    }
+                    else
+                    {
+                        dailyRevenues.Add(0);
+                    }
+                }
+            }
+            return dailyRevenues;
         }
     }
 }
