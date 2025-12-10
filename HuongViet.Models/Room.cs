@@ -10,12 +10,12 @@ namespace HuongViet.Models
         public RoomType RoomType { get; set; }
         public decimal PricePerHour { get; set; }
         public int Capacity { get; set; }
-        public string FloorID { get; set; }
+        public string AreaID { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         
         // Navigation property
-        public Floor Floor { get; set; }
+        public Area Area { get; set; }
     }
 }
 

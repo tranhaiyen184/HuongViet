@@ -9,24 +9,6 @@ using FontAwesome.Sharp;
 
 namespace HuongViet.GUI
 {
-    // Helper class for ComboBox display
-    public class PositionDisplayItem
-    {
-        public string PositionID { get; set; }
-        public string PositionName { get; set; }
-        
-        public PositionDisplayItem(string positionId, string positionName)
-        {
-            PositionID = positionId;
-            PositionName = positionName;
-        }
-        
-        public override string ToString()
-        {
-            return PositionName;
-        }
-    }
-
     public partial class FrmUser : Form
     {
         private readonly UserBLL userBLL;
@@ -260,7 +242,6 @@ namespace HuongViet.GUI
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {users?.Count ?? 0} / {totalRecords} nhân viên";
         }
 
         private void UpdatePaginationButtons()
@@ -358,7 +339,14 @@ namespace HuongViet.GUI
                 return;
             }
             
-            // Kiểm tra các trường bắt buộc
+            // Khi thêm mới (selectedUser == null), luôn enable nút Lưu
+            if (selectedUser == null)
+            {
+                btnSave.Enabled = true;
+                return;
+            }
+            
+            // Khi sửa (selectedUser != null), chỉ enable khi form hợp lệ
             bool isValid = !string.IsNullOrWhiteSpace(txtLastName.Text) &&
                           !string.IsNullOrWhiteSpace(txtFirstName.Text) &&
                           !string.IsNullOrWhiteSpace(txtUserName.Text) &&
@@ -413,10 +401,11 @@ namespace HuongViet.GUI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             selectedUser = null;
-            isEditing = true;
             ClearForm();
+            isEditing = true; // Set sau khi ClearForm để không bị reset
             EnableEditMode(true);
-            ValidateFormAndEnableSave(); // Validate sau khi enable
+            btnCancel.Enabled = true; // Enable nút Cancel khi thêm mới
+            btnSave.Enabled = true; // Enable nút Lưu ngay khi bấm Thêm
             txtLastName.Focus();
         }
 
@@ -743,6 +732,24 @@ namespace HuongViet.GUI
             {
                 base.OnFormClosed(e);
             }
+        }
+    }
+
+    // Helper class for ComboBox display
+    public class PositionDisplayItem
+    {
+        public string PositionID { get; set; }
+        public string PositionName { get; set; }
+        
+        public PositionDisplayItem(string positionId, string positionName)
+        {
+            PositionID = positionId;
+            PositionName = positionName;
+        }
+        
+        public override string ToString()
+        {
+            return PositionName;
         }
     }
 }

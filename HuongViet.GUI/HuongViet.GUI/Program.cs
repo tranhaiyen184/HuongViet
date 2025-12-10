@@ -23,6 +23,9 @@ namespace HuongViet.GUI
                 {
                     if (loginForm.ShowDialog() == DialogResult.OK)
                     {
+                        // Save logged in user to session
+                        SessionManager.CurrentUser = loginForm.LoggedInUser;
+                        
                         // Pass logged in user to main form
                         Application.Run(new FrmMain(loginForm.LoggedInUser));
                     }
@@ -32,6 +35,11 @@ namespace HuongViet.GUI
             {
                 MessageBox.Show($"Lỗi khởi động ứng dụng: {ex.Message}", "Lỗi",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Clear session on exit
+                SessionManager.ClearSession();
             }
         }
     }

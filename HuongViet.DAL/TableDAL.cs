@@ -23,7 +23,7 @@ namespace HuongViet.DAL
                 TableName = row["TableName"].ToString(),
                 TableStatus = (TableStatus)Enum.Parse(typeof(TableStatus), row["TableStatus"].ToString()),
                 Capacity = Convert.ToInt32(row["Capacity"]),
-                FloorID = row["FloorID"].ToString(),
+                AreaID = row["AreaID"].ToString(),
                 CurrentOrderID = row.IsNull("CurrentOrderID") ? null : row["CurrentOrderID"].ToString(),
                 CreatedAt = Convert.ToDateTime(row["CreatedAt"]),
                 UpdatedAt = Convert.ToDateTime(row["UpdatedAt"])
@@ -32,19 +32,19 @@ namespace HuongViet.DAL
 
         public List<Table> GetAll()
         {
-            string query = @"SELECT t.*, f.FloorNumber 
+            string query = @"SELECT t.*, a.AreaName 
                            FROM tables t 
-                           LEFT JOIN floors f ON t.FloorID = f.FloorID 
-                           ORDER BY f.FloorNumber, t.TableName";
+                           LEFT JOIN areas a ON t.AreaID = a.AreaID 
+                           ORDER BY a.AreaName, t.TableName";
             DataTable dt = dbHelper.ExecuteQuery(query);
             return ConvertDataTableToList(dt);
         }
 
         public Table GetById(string id)
         {
-            string query = @"SELECT t.*, f.FloorNumber 
+            string query = @"SELECT t.*, a.AreaName 
                            FROM tables t 
-                           LEFT JOIN floors f ON t.FloorID = f.FloorID 
+                           LEFT JOIN areas a ON t.AreaID = a.AreaID 
                            WHERE t.TableID = @id";
             MySqlParameter[] parameters = { new MySqlParameter("@id", id) };
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
@@ -52,12 +52,12 @@ namespace HuongViet.DAL
             if (dt.Rows.Count > 0)
             {
                 var table = MapDataRowToEntity(dt.Rows[0]);
-                if (!dt.Rows[0].IsNull("FloorNumber"))
+                if (!dt.Rows[0].IsNull("AreaName"))
                 {
-                    table.Floor = new Floor
+                    table.Area = new Area
                     {
-                        FloorID = table.FloorID,
-                        FloorNumber = Convert.ToInt32(dt.Rows[0]["FloorNumber"])
+                        AreaID = table.AreaID,
+                        AreaName = dt.Rows[0]["AreaName"].ToString()
                     };
                 }
                 return table;
@@ -65,10 +65,14 @@ namespace HuongViet.DAL
             return null;
         }
 
-        public List<Table> GetByFloorId(string floorId)
+        public List<Table> GetByAreaId(string areaId)
         {
-            string query = "SELECT * FROM tables WHERE FloorID = @floorId ORDER BY TableName";
-            MySqlParameter[] parameters = { new MySqlParameter("@floorId", floorId) };
+            string query = @"SELECT t.*, a.AreaName 
+                           FROM tables t 
+                           LEFT JOIN areas a ON t.AreaID = a.AreaID 
+                           WHERE t.AreaID = @areaId 
+                           ORDER BY t.TableName";
+            MySqlParameter[] parameters = { new MySqlParameter("@areaId", areaId) };
             DataTable dt = dbHelper.ExecuteQuery(query, parameters);
             return ConvertDataTableToList(dt);
         }
@@ -85,9 +89,9 @@ namespace HuongViet.DAL
         {
             try
             {
-                string query = @"INSERT INTO tables (TableID, TableName, TableStatus, Capacity, FloorID, 
+                string query = @"INSERT INTO tables (TableID, TableName, TableStatus, Capacity, AreaID, 
                                CurrentOrderID, CreatedAt, UpdatedAt) 
-                               VALUES (@TableID, @TableName, @TableStatus, @Capacity, @FloorID, 
+                               VALUES (@TableID, @TableName, @TableStatus, @Capacity, @AreaID, 
                                @CurrentOrderID, @CreatedAt, @UpdatedAt)";
                 
                 MySqlParameter[] parameters = 
@@ -96,7 +100,7 @@ namespace HuongViet.DAL
                     new MySqlParameter("@TableName", table.TableName),
                     new MySqlParameter("@TableStatus", table.TableStatus.ToString()),
                     new MySqlParameter("@Capacity", table.Capacity),
-                    new MySqlParameter("@FloorID", table.FloorID),
+                    new MySqlParameter("@AreaID", table.AreaID),
                     new MySqlParameter("@CurrentOrderID", (object)table.CurrentOrderID ?? DBNull.Value),
                     new MySqlParameter("@CreatedAt", table.CreatedAt),
                     new MySqlParameter("@UpdatedAt", table.UpdatedAt)
@@ -116,7 +120,7 @@ namespace HuongViet.DAL
             try
             {
                 string query = @"UPDATE tables SET TableName = @TableName, TableStatus = @TableStatus, 
-                               Capacity = @Capacity, FloorID = @FloorID, CurrentOrderID = @CurrentOrderID,
+                               Capacity = @Capacity, AreaID = @AreaID, CurrentOrderID = @CurrentOrderID,
                                UpdatedAt = @UpdatedAt WHERE TableID = @TableID";
                 
                 MySqlParameter[] parameters = 
@@ -125,7 +129,7 @@ namespace HuongViet.DAL
                     new MySqlParameter("@TableName", table.TableName),
                     new MySqlParameter("@TableStatus", table.TableStatus.ToString()),
                     new MySqlParameter("@Capacity", table.Capacity),
-                    new MySqlParameter("@FloorID", table.FloorID),
+                    new MySqlParameter("@AreaID", table.AreaID),
                     new MySqlParameter("@CurrentOrderID", (object)table.CurrentOrderID ?? DBNull.Value),
                     new MySqlParameter("@UpdatedAt", DateTime.Now)
                 };
@@ -171,13 +175,13 @@ namespace HuongViet.DAL
             return count > 0;
         }
 
-        public bool IsTableNameExists(string tableName, string floorId, string excludeTableId = null)
+        public bool IsTableNameExists(string tableName, string areaId, string excludeTableId = null)
         {
-            string query = "SELECT COUNT(*) FROM tables WHERE TableName = @tableName AND FloorID = @floorId";
+            string query = "SELECT COUNT(*) FROM tables WHERE TableName = @tableName AND AreaID = @areaId";
             List<MySqlParameter> parameters = new List<MySqlParameter>
             {
                 new MySqlParameter("@tableName", tableName),
-                new MySqlParameter("@floorId", floorId)
+                new MySqlParameter("@areaId", areaId)
             };
 
             if (!string.IsNullOrEmpty(excludeTableId))
@@ -210,7 +214,7 @@ namespace HuongViet.DAL
             }
         }
 
-        public PagedResult<Table> Search(SearchCriteria criteria, string floorId = null, TableStatus? status = null)
+        public PagedResult<Table> Search(SearchCriteria criteria, string areaId = null, TableStatus? status = null)
         {
             try
             {
@@ -222,15 +226,15 @@ namespace HuongViet.DAL
                 // Tìm kiếm keyword
                 if (!string.IsNullOrEmpty(criteria.SearchTerm))
                 {
-                    conditions.Add(@"(t.TableName LIKE @searchTerm OR f.FloorNumber LIKE @searchTerm)");
+                    conditions.Add(@"(t.TableName LIKE @searchTerm OR a.AreaName LIKE @searchTerm)");
                     parameters.Add(new MySqlParameter("@searchTerm", $"%{criteria.SearchTerm}%"));
                 }
 
-                // Filter theo FloorID
-                if (!string.IsNullOrEmpty(floorId))
+                // Filter theo AreaID
+                if (!string.IsNullOrEmpty(areaId))
                 {
-                    conditions.Add("t.FloorID = @floorId");
-                    parameters.Add(new MySqlParameter("@floorId", floorId));
+                    conditions.Add("t.AreaID = @areaId");
+                    parameters.Add(new MySqlParameter("@areaId", areaId));
                 }
 
                 // Filter theo Status
@@ -253,12 +257,12 @@ namespace HuongViet.DAL
                 }
                 else
                 {
-                    orderBy = "ORDER BY f.FloorNumber, t.TableName";
+                    orderBy = "ORDER BY a.AreaName, t.TableName";
                 }
 
                 // Đếm tổng số bản ghi
                 string countQuery = @"SELECT COUNT(*) FROM tables t
-                                    LEFT JOIN floors f ON t.FloorID = f.FloorID " + whereClause;
+                                    LEFT JOIN areas a ON t.AreaID = a.AreaID " + whereClause;
 
                 int totalRecords = Convert.ToInt32(dbHelper.ExecuteScalar(countQuery, parameters.ToArray()));
 
@@ -266,9 +270,9 @@ namespace HuongViet.DAL
                 int offset = (criteria.PageNumber - 1) * criteria.PageSize;
 
                 // Lấy dữ liệu với phân trang
-                string dataQuery = @"SELECT t.*, f.FloorNumber 
+                string dataQuery = @"SELECT t.*, a.AreaName 
                                    FROM tables t
-                                   LEFT JOIN floors f ON t.FloorID = f.FloorID " +
+                                   LEFT JOIN areas a ON t.AreaID = a.AreaID " +
                                    whereClause + " " + orderBy + $" LIMIT {criteria.PageSize} OFFSET {offset}";
 
                 DataTable dt = dbHelper.ExecuteQuery(dataQuery, parameters.ToArray());
@@ -293,12 +297,12 @@ namespace HuongViet.DAL
             foreach (DataRow row in dt.Rows)
             {
                 var table = MapDataRowToEntity(row);
-                if (!row.IsNull("FloorNumber"))
+                if (!row.IsNull("AreaName"))
                 {
-                    table.Floor = new Floor
+                    table.Area = new Area
                     {
-                        FloorID = table.FloorID,
-                        FloorNumber = Convert.ToInt32(row["FloorNumber"])
+                        AreaID = table.AreaID,
+                        AreaName = row["AreaName"].ToString()
                     };
                 }
                 list.Add(table);

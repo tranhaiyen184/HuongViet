@@ -44,13 +44,12 @@
 			this.sidebarPanel = new System.Windows.Forms.Panel();
 			this.navContainer = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnDashboard = new FontAwesome.Sharp.IconButton();
-			this.btnInvoices = new FontAwesome.Sharp.IconButton();
 			this.btnTables = new FontAwesome.Sharp.IconButton();
 			this.btnMenu = new FontAwesome.Sharp.IconButton();
 			this.btnOrders = new FontAwesome.Sharp.IconButton();
-			this.btnCombo = new FontAwesome.Sharp.IconButton();
 			this.btnStaff = new FontAwesome.Sharp.IconButton();
-			this.btnPosition = new FontAwesome.Sharp.IconButton();
+			this.btnInvoices = new FontAwesome.Sharp.IconButton();
+			this.btnCombo = new FontAwesome.Sharp.IconButton();
 			this.btnCustomers = new FontAwesome.Sharp.IconButton();
 			this.btnSettings = new FontAwesome.Sharp.IconButton();
 			this.btnRestaurant = new FontAwesome.Sharp.IconButton();
@@ -65,7 +64,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).BeginInit();
 			this.sidebarPanel.SuspendLayout();
 			this.navContainer.SuspendLayout();
-			this.contentPanel.SuspendLayout();
 			this.placeholderPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,7 +71,6 @@
 			// 
 			this.headerPanel.Controls.Add(this.logoPictureBox);
 			this.headerPanel.Controls.Add(this.userPanel);
-			this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.headerPanel.Location = new System.Drawing.Point(0, 0);
 			this.headerPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.headerPanel.Name = "headerPanel";
@@ -101,10 +98,10 @@
 			this.userPanel.Controls.Add(this.lblUserRole);
 			this.userPanel.Controls.Add(this.lblUserName);
 			this.userPanel.Controls.Add(this.avatarPictureBox);
-			this.userPanel.Location = new System.Drawing.Point(954, 22);
+			this.userPanel.Location = new System.Drawing.Point(955, 22);
 			this.userPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.userPanel.Name = "userPanel";
-			this.userPanel.Size = new System.Drawing.Size(395, 70);
+			this.userPanel.Size = new System.Drawing.Size(395, 86);
 			this.userPanel.TabIndex = 4;
 			// 
 			// userContextMenu
@@ -147,7 +144,7 @@
 			this.btnUserMenu.IconColor = System.Drawing.Color.DimGray;
 			this.btnUserMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnUserMenu.IconSize = 20;
-			this.btnUserMenu.Location = new System.Drawing.Point(248, 12);
+			this.btnUserMenu.Location = new System.Drawing.Point(332, 12);
 			this.btnUserMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnUserMenu.Name = "btnUserMenu";
 			this.btnUserMenu.Size = new System.Drawing.Size(40, 32);
@@ -160,7 +157,7 @@
 			this.lblUserRole.AutoSize = true;
 			this.lblUserRole.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblUserRole.ForeColor = System.Drawing.Color.Gray;
-			this.lblUserRole.Location = new System.Drawing.Point(64, 30);
+			this.lblUserRole.Location = new System.Drawing.Point(72, 44);
 			this.lblUserRole.Name = "lblUserRole";
 			this.lblUserRole.Size = new System.Drawing.Size(125, 20);
 			this.lblUserRole.TabIndex = 2;
@@ -171,7 +168,7 @@
 			this.lblUserName.AutoSize = true;
 			this.lblUserName.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblUserName.ForeColor = System.Drawing.Color.Black;
-			this.lblUserName.Location = new System.Drawing.Point(63, 9);
+			this.lblUserName.Location = new System.Drawing.Point(75, 13);
 			this.lblUserName.Name = "lblUserName";
 			this.lblUserName.Size = new System.Drawing.Size(113, 23);
 			this.lblUserName.TabIndex = 1;
@@ -181,10 +178,10 @@
 			// avatarPictureBox
 			// 
 			this.avatarPictureBox.BackColor = System.Drawing.Color.LightGray;
-			this.avatarPictureBox.Location = new System.Drawing.Point(8, 7);
+			this.avatarPictureBox.Location = new System.Drawing.Point(8, 13);
 			this.avatarPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.avatarPictureBox.Name = "avatarPictureBox";
-			this.avatarPictureBox.Size = new System.Drawing.Size(48, 48);
+			this.avatarPictureBox.Size = new System.Drawing.Size(54, 55);
 			this.avatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.avatarPictureBox.TabIndex = 0;
 			this.avatarPictureBox.TabStop = false;
@@ -198,7 +195,7 @@
 			this.btnToggleSidebar.IconChar = FontAwesome.Sharp.IconChar.None;
 			this.btnToggleSidebar.IconColor = System.Drawing.Color.White;
 			this.btnToggleSidebar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 594);
+			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 282);
 			this.btnToggleSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnToggleSidebar.Name = "btnToggleSidebar";
 			this.btnToggleSidebar.Size = new System.Drawing.Size(213, 39);
@@ -211,41 +208,34 @@
 			// 
 			this.sidebarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
 			this.sidebarPanel.Controls.Add(this.navContainer);
-			this.sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
 			this.sidebarPanel.Location = new System.Drawing.Point(0, 130);
 			this.sidebarPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.sidebarPanel.Name = "sidebarPanel";
-			this.sidebarPanel.Size = new System.Drawing.Size(240, 600);
+			this.sidebarPanel.Size = new System.Drawing.Size(271, 601);
 			this.sidebarPanel.TabIndex = 1;
 			// 
 			// navContainer
 			// 
 			this.navContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
 			this.navContainer.Controls.Add(this.btnDashboard);
-			this.navContainer.Controls.Add(this.btnInvoices);
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
-			this.navContainer.Controls.Add(this.btnCombo);
 			this.navContainer.Controls.Add(this.btnStaff);
-			this.navContainer.Controls.Add(this.btnPosition);
-			this.navContainer.Controls.Add(this.btnCustomers);
-			this.navContainer.Controls.Add(this.btnSettings);
-			this.navContainer.Controls.Add(this.btnRestaurant);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
-			this.navContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.navContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.navContainer.Location = new System.Drawing.Point(0, 0);
 			this.navContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.navContainer.Name = "navContainer";
 			this.navContainer.Padding = new System.Windows.Forms.Padding(16, 20, 16, 20);
-			this.navContainer.Size = new System.Drawing.Size(240, 600);
+			this.navContainer.Size = new System.Drawing.Size(268, 601);
 			this.navContainer.TabIndex = 1;
 			this.navContainer.WrapContents = false;
 			// 
 			// btnDashboard
 			// 
 			this.btnDashboard.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.btnDashboard.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnDashboard.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
 			this.btnDashboard.IconColor = System.Drawing.Color.White;
 			this.btnDashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -260,6 +250,86 @@
 			this.btnDashboard.UseVisualStyleBackColor = true;
 			this.btnDashboard.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnDashboard.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnTables
+			// 
+			this.btnTables.Font = new System.Drawing.Font("Times New Roman", 12F);
+			this.btnTables.IconChar = FontAwesome.Sharp.IconChar.Columns;
+			this.btnTables.IconColor = System.Drawing.Color.White;
+			this.btnTables.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnTables.IconSize = 24;
+			this.btnTables.Location = new System.Drawing.Point(19, 74);
+			this.btnTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnTables.Name = "btnTables";
+			this.btnTables.Size = new System.Drawing.Size(213, 48);
+			this.btnTables.TabIndex = 2;
+			this.btnTables.Tag = "Thiết lập nhà hàng";
+			this.btnTables.Text = "Thiết lập nhà hàng";
+			this.btnTables.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnTables.UseVisualStyleBackColor = true;
+			this.btnTables.Click += new System.EventHandler(this.btnTables_Click);
+			this.btnTables.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnTables.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnMenu
+			// 
+			this.btnMenu.Font = new System.Drawing.Font("Times New Roman", 12F);
+			this.btnMenu.IconChar = FontAwesome.Sharp.IconChar.Burger;
+			this.btnMenu.IconColor = System.Drawing.Color.White;
+			this.btnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnMenu.IconSize = 24;
+			this.btnMenu.Location = new System.Drawing.Point(19, 126);
+			this.btnMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnMenu.Name = "btnMenu";
+			this.btnMenu.Size = new System.Drawing.Size(213, 48);
+			this.btnMenu.TabIndex = 3;
+			this.btnMenu.Tag = "Thực đơn";
+			this.btnMenu.Text = "Thiết lập thực đơn";
+			this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnMenu.UseVisualStyleBackColor = true;
+			this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
+			this.btnMenu.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnMenu.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnOrders
+			// 
+			this.btnOrders.Font = new System.Drawing.Font("Times New Roman", 12F);
+			this.btnOrders.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
+			this.btnOrders.IconColor = System.Drawing.Color.White;
+			this.btnOrders.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnOrders.IconSize = 24;
+			this.btnOrders.Location = new System.Drawing.Point(19, 178);
+			this.btnOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnOrders.Name = "btnOrders";
+			this.btnOrders.Size = new System.Drawing.Size(213, 48);
+			this.btnOrders.TabIndex = 4;
+			this.btnOrders.Tag = "Bán hàng";
+			this.btnOrders.Text = "Bán hàng";
+			this.btnOrders.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnOrders.UseVisualStyleBackColor = true;
+			this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
+			this.btnOrders.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnOrders.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnStaff
+			// 
+			this.btnStaff.Font = new System.Drawing.Font("Times New Roman", 12F);
+			this.btnStaff.IconChar = FontAwesome.Sharp.IconChar.UserTie;
+			this.btnStaff.IconColor = System.Drawing.Color.White;
+			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnStaff.IconSize = 24;
+			this.btnStaff.Location = new System.Drawing.Point(19, 230);
+			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnStaff.Name = "btnStaff";
+			this.btnStaff.Size = new System.Drawing.Size(213, 48);
+			this.btnStaff.TabIndex = 6;
+			this.btnStaff.Tag = "Nhân viên";
+			this.btnStaff.Text = "Quản lý nhân viên";
+			this.btnStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnStaff.UseVisualStyleBackColor = true;
+			this.btnStaff.Click += new System.EventHandler(this.btnStaff_Click);
+			this.btnStaff.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnStaff.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnInvoices
 			// 
@@ -276,63 +346,9 @@
 			this.btnInvoices.Text = "Hóa đơn";
 			this.btnInvoices.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnInvoices.UseVisualStyleBackColor = true;
+			this.btnInvoices.Visible = false;
 			this.btnInvoices.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnInvoices.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnTables
-			// 
-			this.btnTables.IconChar = FontAwesome.Sharp.IconChar.Columns;
-			this.btnTables.IconColor = System.Drawing.Color.White;
-			this.btnTables.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnTables.IconSize = 24;
-			this.btnTables.Location = new System.Drawing.Point(19, 126);
-			this.btnTables.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnTables.Name = "btnTables";
-			this.btnTables.Size = new System.Drawing.Size(213, 48);
-			this.btnTables.TabIndex = 2;
-			this.btnTables.Tag = "Mặt bàn";
-			this.btnTables.Text = "Mặt bàn";
-			this.btnTables.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnTables.UseVisualStyleBackColor = true;
-			this.btnTables.Click += new System.EventHandler(this.btnTables_Click);
-			this.btnTables.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnTables.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnMenu
-			// 
-			this.btnMenu.IconChar = FontAwesome.Sharp.IconChar.Burger;
-			this.btnMenu.IconColor = System.Drawing.Color.White;
-			this.btnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnMenu.IconSize = 24;
-			this.btnMenu.Location = new System.Drawing.Point(19, 178);
-			this.btnMenu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnMenu.Name = "btnMenu";
-			this.btnMenu.Size = new System.Drawing.Size(213, 48);
-			this.btnMenu.TabIndex = 3;
-			this.btnMenu.Tag = "Mặt hàng";
-			this.btnMenu.Text = "Mặt hàng";
-			this.btnMenu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnMenu.UseVisualStyleBackColor = true;
-			this.btnMenu.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnMenu.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnOrders
-			// 
-			this.btnOrders.IconChar = FontAwesome.Sharp.IconChar.BowlFood;
-			this.btnOrders.IconColor = System.Drawing.Color.White;
-			this.btnOrders.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnOrders.IconSize = 24;
-			this.btnOrders.Location = new System.Drawing.Point(19, 230);
-			this.btnOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnOrders.Name = "btnOrders";
-			this.btnOrders.Size = new System.Drawing.Size(213, 48);
-			this.btnOrders.TabIndex = 4;
-			this.btnOrders.Tag = "Thực đơn";
-			this.btnOrders.Text = "Thực đơn";
-			this.btnOrders.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnOrders.UseVisualStyleBackColor = true;
-			this.btnOrders.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnOrders.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnCombo
 			// 
@@ -349,47 +365,9 @@
 			this.btnCombo.Text = "Combo";
 			this.btnCombo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCombo.UseVisualStyleBackColor = true;
+			this.btnCombo.Visible = false;
 			this.btnCombo.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnCombo.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnStaff
-			// 
-			this.btnStaff.IconChar = FontAwesome.Sharp.IconChar.UserTie;
-			this.btnStaff.IconColor = System.Drawing.Color.White;
-			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnStaff.IconSize = 24;
-			this.btnStaff.Location = new System.Drawing.Point(19, 334);
-			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnStaff.Name = "btnStaff";
-			this.btnStaff.Size = new System.Drawing.Size(213, 48);
-			this.btnStaff.TabIndex = 6;
-			this.btnStaff.Tag = "Nhân viên";
-			this.btnStaff.Text = "Nhân viên";
-			this.btnStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnStaff.UseVisualStyleBackColor = true;
-			this.btnStaff.Click += new System.EventHandler(this.btnStaff_Click);
-			this.btnStaff.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnStaff.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnPosition
-			// 
-			this.btnPosition.IconChar = FontAwesome.Sharp.IconChar.MapMarkerAlt;
-			this.btnPosition.IconColor = System.Drawing.Color.White;
-			this.btnPosition.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnPosition.IconSize = 24;
-			this.btnPosition.Location = new System.Drawing.Point(19, 386);
-			this.btnPosition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnPosition.Name = "btnPosition";
-			this.btnPosition.Size = new System.Drawing.Size(213, 48);
-			this.btnPosition.TabIndex = 7;
-			this.btnPosition.Tag = "Vị trí";
-			this.btnPosition.Text = "Vị trí";
-			this.btnPosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnPosition.UseVisualStyleBackColor = true;
-			this.btnPosition.Visible = false;
-			this.btnPosition.Click += new System.EventHandler(this.btnPosition_Click);
-			this.btnPosition.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnPosition.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnCustomers
 			// 
@@ -406,6 +384,7 @@
 			this.btnCustomers.Text = "Khách hàng";
 			this.btnCustomers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnCustomers.UseVisualStyleBackColor = true;
+			this.btnCustomers.Visible = false;
 			this.btnCustomers.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnCustomers.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -424,6 +403,7 @@
 			this.btnSettings.Text = "Hệ thống";
 			this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnSettings.UseVisualStyleBackColor = true;
+			this.btnSettings.Visible = false;
 			this.btnSettings.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnSettings.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
@@ -442,18 +422,17 @@
 			this.btnRestaurant.Text = "Thiết lập nhà hàng";
 			this.btnRestaurant.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnRestaurant.UseVisualStyleBackColor = true;
+			this.btnRestaurant.Visible = false;
 			this.btnRestaurant.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnRestaurant.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// contentPanel
 			// 
-			this.contentPanel.Controls.Add(this.placeholderPanel);
-			this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.contentPanel.Location = new System.Drawing.Point(240, 130);
-			this.contentPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.contentPanel.Location = new System.Drawing.Point(271, 130);
+			this.contentPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.contentPanel.Name = "contentPanel";
-			this.contentPanel.Padding = new System.Windows.Forms.Padding(32, 32, 32, 32);
-			this.contentPanel.Size = new System.Drawing.Size(1125, 600);
+			this.contentPanel.Padding = new System.Windows.Forms.Padding(5);
+			this.contentPanel.Size = new System.Drawing.Size(1121, 650);
 			this.contentPanel.TabIndex = 2;
 			// 
 			// placeholderPanel
@@ -465,11 +444,10 @@
 			this.placeholderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.placeholderPanel.Controls.Add(this.lblPlaceholderHint);
 			this.placeholderPanel.Controls.Add(this.lblPlaceholderTitle);
-			this.placeholderPanel.Location = new System.Drawing.Point(35, 26);
+			this.placeholderPanel.Location = new System.Drawing.Point(271, 130);
 			this.placeholderPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.placeholderPanel.Name = "placeholderPanel";
-			this.placeholderPanel.Padding = new System.Windows.Forms.Padding(32, 32, 32, 32);
-			this.placeholderPanel.Size = new System.Drawing.Size(1055, 539);
+			this.placeholderPanel.Size = new System.Drawing.Size(1099, 600);
 			this.placeholderPanel.TabIndex = 0;
 			// 
 			// lblPlaceholderHint
@@ -477,7 +455,7 @@
 			this.lblPlaceholderHint.AutoSize = true;
 			this.lblPlaceholderHint.Font = new System.Drawing.Font("Segoe UI", 10F);
 			this.lblPlaceholderHint.ForeColor = System.Drawing.Color.DimGray;
-			this.lblPlaceholderHint.Location = new System.Drawing.Point(37, 78);
+			this.lblPlaceholderHint.Location = new System.Drawing.Point(5, 46);
 			this.lblPlaceholderHint.Name = "lblPlaceholderHint";
 			this.lblPlaceholderHint.Size = new System.Drawing.Size(590, 23);
 			this.lblPlaceholderHint.TabIndex = 1;
@@ -487,7 +465,7 @@
 			// 
 			this.lblPlaceholderTitle.AutoSize = true;
 			this.lblPlaceholderTitle.Font = new System.Drawing.Font("Segoe UI Semibold", 14F, System.Drawing.FontStyle.Bold);
-			this.lblPlaceholderTitle.Location = new System.Drawing.Point(35, 34);
+			this.lblPlaceholderTitle.Location = new System.Drawing.Point(3, 2);
 			this.lblPlaceholderTitle.Name = "lblPlaceholderTitle";
 			this.lblPlaceholderTitle.Size = new System.Drawing.Size(197, 32);
 			this.lblPlaceholderTitle.TabIndex = 0;
@@ -498,6 +476,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1365, 730);
+			this.Controls.Add(this.placeholderPanel);
 			this.Controls.Add(this.contentPanel);
 			this.Controls.Add(this.sidebarPanel);
 			this.Controls.Add(this.headerPanel);
@@ -515,7 +494,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.avatarPictureBox)).EndInit();
 			this.sidebarPanel.ResumeLayout(false);
 			this.navContainer.ResumeLayout(false);
-			this.contentPanel.ResumeLayout(false);
 			this.placeholderPanel.ResumeLayout(false);
 			this.placeholderPanel.PerformLayout();
 			this.ResumeLayout(false);
@@ -542,7 +520,6 @@
         private FontAwesome.Sharp.IconButton btnOrders;
         private FontAwesome.Sharp.IconButton btnCombo;
         private FontAwesome.Sharp.IconButton btnStaff;
-        private FontAwesome.Sharp.IconButton btnPosition;
         private FontAwesome.Sharp.IconButton btnCustomers;
         private FontAwesome.Sharp.IconButton btnSettings;
         private FontAwesome.Sharp.IconButton btnRestaurant;

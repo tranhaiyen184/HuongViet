@@ -1,143 +1,120 @@
+using HuongViet.BLL;
+using HuongViet.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using HuongViet.BLL;
-using HuongViet.Models;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace HuongViet.GUI
 {
-    // Helper class for ComboBox display
-    public class FloorDisplayItem
-    {
-        public string FloorID { get; set; }
-        public string DisplayText { get; set; }
-        
-        public FloorDisplayItem(string floorId, string displayText)
-        {
-            FloorID = floorId;
-            DisplayText = displayText;
-        }
-        
-        public override string ToString()
-        {
-            return DisplayText;
-        }
-    }
-
     public partial class FrmTable : Form
     {
         private readonly TableBLL tableBLL;
-        private readonly FloorBLL floorBLL;
-        private readonly RoomBLL roomBLL;
+        private readonly AreaBLL areaBLL;
         private List<Table> tables;
-        private List<Floor> floors;
+        private List<Area> areas;
         private Table selectedTable;
+        private Area selectedArea;
         private bool isEditing = false;
-        
-        // Pagination properties
-        private int currentPage = 1;
-        private int pageSize = 20;
-        private int totalRecords = 0;
-        private int totalPages = 0;
-        private string currentSearchTerm = string.Empty;
-        private string currentFloorFilter = null;
-        private TableStatus? currentStatusFilter = null;
+        private bool isAreaEditing = false;
 
         public FrmTable()
         {
             InitializeComponent();
             tableBLL = new TableBLL();
-            floorBLL = new FloorBLL();
-            roomBLL = new RoomBLL();
+            areaBLL = new AreaBLL();
             InitializeForm();
-            LoadFloors();
+            LoadAreas();
             LoadTables();
-        }
-
-        protected override void SetVisibleCore(bool value)
-        {
-            base.SetVisibleCore(value);
         }
 
         private void InitializeForm()
         {
-            SetupDataGridView();
-            SetupPagination();
-            SetupFilters();
+            SetupControls();
+            SetupEventHandlers();
             ClearForm();
         }
 
-        private void SetupDataGridView()
+        private void SetupControls()
         {
-            dgvTables.RowHeadersVisible = false;
-            dgvTables.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvTables.MultiSelect = false;
-            dgvTables.AllowUserToAddRows = false;
-            dgvTables.AllowUserToDeleteRows = false;
-            dgvTables.ReadOnly = true;
-            dgvTables.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
-
-        private void SetupPagination()
-        {
-            cmbPageSize.SelectedIndex = 1; // Default to 20
-            pageSize = 20;
-        }
-
-        private void SetupFilters()
-        {
-            // Setup Floor filter - will be populated in LoadFloors()
-            cmbFilterFloor.DisplayMember = "DisplayText";
-            cmbFilterFloor.ValueMember = "FloorID";
+            // Setup default values
+            cmbTableStatus.SelectedIndex = 0;
+            nudCapacity.Value = 4;
             
-            // Setup Status filter
-            cmbFilterStatus.Items.AddRange(new object[] { "Tất cả", "Available", "Occupied", "Cleaning", "Unavailable" });
-            cmbFilterStatus.SelectedIndex = 0;
+            // Set initial button states
+            SetAreaButtonStates(false);
+            SetTableButtonStates(false);
         }
 
-        private void LoadFloors()
+        private void SetupEventHandlers()
+        {
+            // Area management events
+            btnAreaAdd.Click += btnAreaAdd_Click;
+            btnAreaEdit.Click += btnAreaEdit_Click;
+            btnAreaDelete.Click += btnAreaDelete_Click;
+            btnAreaSave.Click += btnAreaSave_Click;
+            btnAreaCancel.Click += btnAreaCancel_Click;
+            
+            // Table management events
+            btnTableAdd.Click += btnTableAdd_Click;
+            btnTableEdit.Click += btnTableEdit_Click;
+            btnTableDelete.Click += btnTableDelete_Click;
+            btnTableSave.Click += btnTableSave_Click;
+            btnTableCancel.Click += btnTableCancel_Click;
+        }
+
+        private void SetAreaButtonStates(bool editing)
+        {
+            isAreaEditing = editing;
+            btnAreaAdd.Enabled = !editing;
+            btnAreaEdit.Enabled = !editing && selectedArea != null;
+            btnAreaDelete.Enabled = !editing && selectedArea != null;
+            btnAreaSave.Enabled = editing;
+            btnAreaCancel.Enabled = editing;
+            txtAreaName.ReadOnly = !editing;
+        }
+
+        private void SetTableButtonStates(bool editing)
+        {
+            isEditing = editing;
+            btnTableAdd.Enabled = !editing;
+            btnTableEdit.Enabled = !editing && selectedTable != null;
+            btnTableDelete.Enabled = !editing && selectedTable != null;
+            btnTableSave.Enabled = editing;
+            btnTableCancel.Enabled = editing;
+
+            txtTableName.ReadOnly = !editing;
+            cmbFloor.Enabled = editing;
+            nudCapacity.ReadOnly = !editing;
+            cmbTableStatus.Enabled = editing;
+        }
+
+        private void LoadAreas()
         {
             try
             {
-                floors = tableBLL.GetAllFloors();
-                
-                // Setup Floor filter ComboBox
-                cmbFilterFloor.DataSource = null;
-                cmbFilterFloor.Items.Clear();
-                
-                // Create list with "Tất cả" option and all floors
-                var floorFilterList = new List<FloorDisplayItem>();
-                floorFilterList.Add(new FloorDisplayItem("", "Tất cả"));
-                
-                foreach (var floor in floors)
-                {
-                    floorFilterList.Add(new FloorDisplayItem(floor.FloorID, $"Tầng {floor.FloorNumber}"));
-                }
-                
-                cmbFilterFloor.DataSource = floorFilterList;
-                cmbFilterFloor.DisplayMember = "DisplayText";
-                cmbFilterFloor.ValueMember = "FloorID";
-                cmbFilterFloor.SelectedIndex = 0;
-                
-                // Setup Floor ComboBox in form
+                areas = tableBLL.GetAllAreas();
+
+                // Setup Area ComboBox in form
                 cmbFloor.DataSource = null;
                 cmbFloor.DisplayMember = "DisplayText";
-                cmbFloor.ValueMember = "FloorID";
-                
-                var floorFormList = new List<FloorDisplayItem>();
-                foreach (var floor in floors)
+                cmbFloor.ValueMember = "AreaID";
+
+                var areaFormList = new List<AreaDisplayItem>();
+                foreach (var area in areas)
                 {
-                    floorFormList.Add(new FloorDisplayItem(floor.FloorID, $"Tầng {floor.FloorNumber}"));
+                    areaFormList.Add(new AreaDisplayItem(area.AreaID, area.AreaName));
                 }
-                
-                cmbFloor.DataSource = floorFormList;
+
+                cmbFloor.DataSource = areaFormList;
                 cmbFloor.SelectedIndex = -1;
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách tầng: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách khu vực: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -146,102 +123,95 @@ namespace HuongViet.GUI
         {
             try
             {
-                LoadTablesWithPaging();
+                tables = tableBLL.GetAllTables();
+                BindDataGridView();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}",
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void LoadTablesWithPaging()
+        
+
+
+		private void BindDataGridView()
         {
             try
             {
-                this.Cursor = Cursors.WaitCursor;
+                treeViewTables.Nodes.Clear();
 
-                var criteria = new SearchCriteria
+                if (areas == null || areas.Count == 0)
                 {
-                    SearchTerm = currentSearchTerm,
-                    PageNumber = currentPage,
-                    PageSize = pageSize
-                };
+                    MessageBox.Show("Chưa có khu vực nào. Vui lòng thêm khu vực trước.", 
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
-                string floorId = currentFloorFilter;
-                if (floorId == "")
-                    floorId = null;
+                
+                foreach (var area in areas)
+                {
+					
+					var areaNode = new TreeNode(area.AreaName);
+                    areaNode.Tag = area;
+                    areaNode.NodeFont = new Font("SEGOE UI", 12F, FontStyle.Bold);
+                    areaNode.ForeColor = Color.DarkBlue;
 
-                var result = tableBLL.SearchTables(criteria, floorId, currentStatusFilter);
-                tables = result.Data ?? new List<Table>();
-                totalRecords = result.TotalRecords;
-                totalPages = result.TotalPages;
+                    // Tìm các bàn thuộc khu vực này
+                    var tablesInArea = tables?.Where(t => t.AreaID == area.AreaID).OrderBy(t => t.TableName).ToList() ?? new List<Table>();
 
-                BindDataGridView();
-                UpdatePaginationInfo();
-                UpdatePaginationButtons();
+                    if (tablesInArea.Any())
+                    {
+                        // Thêm các bàn vào node khu vực
+                        foreach (var table in tablesInArea)
+                        {
+                            var tableNode = new TreeNode($"{table.TableName} - {GetStatusText(table.TableStatus)} - Sức chứa: {table.Capacity}");
+                            tableNode.Tag = table;
+
+                            // Màu sắc theo trạng thái
+                            switch (table.TableStatus)
+                            {
+                                case TableStatus.Available:
+                                    tableNode.ForeColor = Color.Green;
+                                    break;
+                                case TableStatus.Occupied:
+                                    tableNode.ForeColor = Color.Red;
+                                    break;
+                                case TableStatus.Cleaning:
+                                    tableNode.ForeColor = Color.Orange;
+                                    break;
+                                case TableStatus.Unavailable:
+                                    tableNode.ForeColor = Color.Gray;
+                                    break;
+                            }
+
+                            areaNode.Nodes.Add(tableNode);
+                        }
+                    }
+                    else
+                    {
+                        // Khu vực chưa có bàn
+                        var emptyNode = new TreeNode("(Chưa có bàn)");
+                        emptyNode.ForeColor = Color.Gray;
+                        emptyNode.NodeFont = new Font("Times New Roman", 12F, FontStyle.Italic);
+                        areaNode.Nodes.Add(emptyNode);
+                    }
+
+                    treeViewTables.Nodes.Add(areaNode);
+                }
+
+                // Mở rộng tất cả nodes
+                treeViewTables.ExpandAll();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi hiển thị dữ liệu: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-                tables = new List<Table>();
-                totalRecords = 0;
-                totalPages = 0;
-                currentPage = 1;
-                BindDataGridView();
-                UpdatePaginationInfo();
-                UpdatePaginationButtons();
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
             }
         }
 
-        private void BindDataGridView()
-        {
-            dgvTables.DataSource = null;
-            
-            if (tables != null && tables.Count > 0)
-            {
-                var displayData = tables.Select(t => new
-                {
-                    TableID = t.TableID,
-                    TableName = t.TableName,
-                    FloorNumber = t.Floor?.FloorNumber ?? 0,
-                    FloorDisplay = t.Floor != null ? $"Tầng {t.Floor.FloorNumber}" : "Chưa xác định",
-                    TableStatus = GetStatusDisplayText(t.TableStatus),
-                    Capacity = t.Capacity,
-                    CurrentOrderID = t.CurrentOrderID ?? "",
-                    CreatedAt = t.CreatedAt.ToString("dd/MM/yyyy HH:mm")
-                }).ToList();
-
-                dgvTables.DataSource = displayData;
-                
-                if (dgvTables.Columns.Count > 0)
-                {
-                    dgvTables.Columns["TableID"].Visible = false;
-                    dgvTables.Columns["FloorNumber"].Visible = false;
-                    dgvTables.Columns["TableName"].HeaderText = "Tên bàn";
-                    dgvTables.Columns["FloorDisplay"].HeaderText = "Tầng";
-                    dgvTables.Columns["TableStatus"].HeaderText = "Trạng thái";
-                    dgvTables.Columns["Capacity"].HeaderText = "Sức chứa";
-                    dgvTables.Columns["CurrentOrderID"].HeaderText = "Order hiện tại";
-                    dgvTables.Columns["CreatedAt"].HeaderText = "Ngày tạo";
-                    
-                    dgvTables.Columns["TableName"].FillWeight = 20;
-                    dgvTables.Columns["FloorDisplay"].FillWeight = 15;
-                    dgvTables.Columns["TableStatus"].FillWeight = 15;
-                    dgvTables.Columns["Capacity"].FillWeight = 10;
-                    dgvTables.Columns["CurrentOrderID"].FillWeight = 20;
-                    dgvTables.Columns["CreatedAt"].FillWeight = 20;
-                }
-            }
-        }
-
-        private string GetStatusDisplayText(TableStatus status)
+        private string GetStatusText(TableStatus status)
         {
             switch (status)
             {
@@ -254,100 +224,50 @@ namespace HuongViet.GUI
                 case TableStatus.Unavailable:
                     return "Không khả dụng";
                 default:
-                    return status.ToString();
+                    return "Không xác định";
             }
-        }
-
-        private TableStatus GetStatusFromDisplayText(string displayText)
-        {
-            switch (displayText)
-            {
-                case "Trống":
-                    return TableStatus.Available;
-                case "Đang sử dụng":
-                    return TableStatus.Occupied;
-                case "Đang dọn dẹp":
-                    return TableStatus.Cleaning;
-                case "Không khả dụng":
-                    return TableStatus.Unavailable;
-                default:
-                    return (TableStatus)Enum.Parse(typeof(TableStatus), displayText);
-            }
-        }
-
-        private void UpdatePaginationInfo()
-        {
-            lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {tables?.Count ?? 0} / {totalRecords} bàn";
-        }
-
-        private void UpdatePaginationButtons()
-        {
-            bool canGoBack = currentPage > 1;
-            bool canGoForward = currentPage < totalPages;
-            
-            btnFirstPage.Enabled = canGoBack;
-            btnPrevPage.Enabled = canGoBack;
-            btnNextPage.Enabled = canGoForward;
-            btnLastPage.Enabled = canGoForward;
         }
 
         private void ClearForm()
         {
+            ClearTableForm();
+            ClearAreaForm();
+        }
+
+        private void ClearTableForm()
+        {
+            selectedTable = null;
             txtTableName.Clear();
             cmbFloor.SelectedIndex = -1;
-            nudCapacity.Value = 1;
-            cmbTableStatus.SelectedIndex = 0; // Default to Available
-            selectedTable = null;
-            isEditing = false;
-            
-            btnAdd.Enabled = true;
-            btnEdit.Enabled = true;
-            btnDelete.Enabled = false;
-            btnSave.Enabled = false;
-            btnCancel.Enabled = false;
-            
-            EnableEditMode(false);
+            nudCapacity.Value = 4;
+            cmbTableStatus.SelectedIndex = 0;
+            SetTableButtonStates(false);
         }
 
-        private void EnableEditMode(bool enable)
+        private void ClearAreaForm()
         {
-            txtTableName.ReadOnly = !enable;
-            txtTableName.BackColor = enable ? SystemColors.Window : SystemColors.Control;
-            cmbFloor.Enabled = enable;
-            nudCapacity.Enabled = enable;
-            cmbTableStatus.Enabled = enable;
-            
-            btnAdd.Enabled = !enable;
-            btnEdit.Enabled = !enable && selectedTable != null;
-            btnDelete.Enabled = !enable && selectedTable != null;
-            btnSave.Enabled = enable;
-            btnCancel.Enabled = enable;
-            
-            dgvTables.Enabled = !enable;
+            selectedArea = null;
+            txtAreaName.Clear();
+            SetAreaButtonStates(false);
         }
 
-        private void dgvTables_SelectionChanged(object sender, EventArgs e)
+        private void treeViewTables_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (dgvTables.SelectedRows.Count > 0 && !isEditing)
+            if (e.Node != null && !isEditing)
             {
-                var row = dgvTables.SelectedRows[0];
-                string tableId = row.Cells["TableID"].Value.ToString();
-                
-                selectedTable = tables.FirstOrDefault(t => t.TableID == tableId);
-                
-                if (selectedTable != null)
+                if (e.Node.Tag is Table table)
                 {
+                    selectedTable = table;
+
                     txtTableName.Text = selectedTable.TableName;
-                    
-                    if (!string.IsNullOrEmpty(selectedTable.FloorID))
-                        cmbFloor.SelectedValue = selectedTable.FloorID;
+
+                    if (!string.IsNullOrEmpty(selectedTable.AreaID))
+                        cmbFloor.SelectedValue = selectedTable.AreaID;
                     else
                         cmbFloor.SelectedIndex = -1;
-                    
+
                     nudCapacity.Value = selectedTable.Capacity;
-                    
-                    // Set status
+
                     int statusIndex = 0;
                     switch (selectedTable.TableStatus)
                     {
@@ -365,402 +285,328 @@ namespace HuongViet.GUI
                             break;
                     }
                     cmbTableStatus.SelectedIndex = statusIndex;
-                    
-                    btnEdit.Enabled = true;
-                    btnDelete.Enabled = true;
+
+                    SetTableButtonStates(false);
                 }
-            }
-            else if (!isEditing)
-            {
-                ClearForm();
-            }
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            selectedTable = null;
-            isEditing = true;
-            ClearForm();
-            EnableEditMode(true);
-            txtTableName.Focus();
-        }
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            if (selectedTable != null)
-            {
-                isEditing = true;
-                EnableEditMode(true);
-                txtTableName.Focus();
-                txtTableName.SelectAll();
-            }
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (selectedTable == null) return;
-
-            var result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa bàn '{selectedTable.TableName}'?",
-                "Xác nhận xóa",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                try
+                else if (e.Node.Tag is Area area)
                 {
-                    bool success = tableBLL.DeleteTable(selectedTable.TableID);
-                    if (success)
+                    selectedArea = area;
+                    txtAreaName.Text = area.AreaName;
+                    SetAreaButtonStates(false);
+
+                    if (!isEditing)
                     {
-                        MessageBox.Show("Xóa bàn thành công!", "Thành công", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadTablesWithPaging();
-                        ClearForm();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không thể xóa bàn!", "Lỗi", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string validationError = ValidateInput();
-                if (!string.IsNullOrEmpty(validationError))
-                {
-                    MessageBox.Show(validationError, "Lỗi nhập liệu", 
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    txtTableName.Focus();
-                    return;
-                }
-
-                Table table = selectedTable ?? new Table();
-                table.TableName = txtTableName.Text.Trim();
-                table.FloorID = cmbFloor.SelectedValue?.ToString();
-                table.Capacity = (int)nudCapacity.Value;
-                
-                // Get status from combo box
-                string statusText = cmbTableStatus.SelectedItem?.ToString();
-                if (!string.IsNullOrEmpty(statusText))
-                {
-                    table.TableStatus = GetStatusFromDisplayText(statusText);
-                }
-
-                bool success;
-                string message;
-
-                if (selectedTable == null) // Add new
-                {
-                    success = tableBLL.AddTable(table);
-                    message = success ? "Thêm bàn thành công!" : "Không thể thêm bàn!";
-                }
-                else // Update existing
-                {
-                    success = tableBLL.UpdateTable(table);
-                    message = success ? "Cập nhật bàn thành công!" : "Không thể cập nhật bàn!";
-                }
-
-                if (success)
-                {
-                    MessageBox.Show(message, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadTablesWithPaging();
-                    ClearForm();
-                    EnableEditMode(false);
-                }
-                else
-                {
-                    MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            if (selectedTable != null)
-            {
-                txtTableName.Text = selectedTable.TableName;
-                
-                if (!string.IsNullOrEmpty(selectedTable.FloorID))
-                    cmbFloor.SelectedValue = selectedTable.FloorID;
-                else
-                    cmbFloor.SelectedIndex = -1;
-                
-                nudCapacity.Value = selectedTable.Capacity;
-                
-                // Set status
-                int statusIndex = 0;
-                switch (selectedTable.TableStatus)
-                {
-                    case TableStatus.Available:
-                        statusIndex = 0;
-                        break;
-                    case TableStatus.Occupied:
-                        statusIndex = 1;
-                        break;
-                    case TableStatus.Cleaning:
-                        statusIndex = 2;
-                        break;
-                    case TableStatus.Unavailable:
-                        statusIndex = 3;
-                        break;
-                }
-                cmbTableStatus.SelectedIndex = statusIndex;
-            }
-            else
-            {
-                ClearForm();
-            }
-            
-            isEditing = false;
-            EnableEditMode(false);
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            SearchTables();
-        }
-
-        private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                SearchTables();
-                e.Handled = true;
-            }
-        }
-
-        private void SearchTables()
-        {
-            try
-            {
-                currentSearchTerm = txtSearch.Text.Trim();
-                currentPage = 1;
-                
-                // Get filter values
-                if (cmbFilterFloor.SelectedItem is FloorDisplayItem selectedItem)
-                {
-                    if (string.IsNullOrEmpty(selectedItem.FloorID))
-                    {
-                        currentFloorFilter = null; // "Tất cả"
-                    }
-                    else
-                    {
-                        currentFloorFilter = selectedItem.FloorID;
+                        ClearTableForm();
+                        cmbFloor.SelectedValue = area.AreaID;
                     }
                 }
                 else
                 {
-                    currentFloorFilter = null;
-                }
-                
-                if (cmbFilterStatus.SelectedIndex == 0)
-                    currentStatusFilter = null;
-                else
-                {
-                    string statusText = cmbFilterStatus.SelectedItem?.ToString();
-                    if (!string.IsNullOrEmpty(statusText))
+                    if (!isEditing)
                     {
-                        currentStatusFilter = GetStatusFromDisplayText(statusText);
+                        ClearTableForm();
                     }
                 }
-                
-                LoadTablesWithPaging();
-                ClearForm();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            txtSearch.Clear();
-            cmbFilterFloor.SelectedIndex = 0;
-            cmbFilterStatus.SelectedIndex = 0;
-            currentSearchTerm = string.Empty;
-            currentFloorFilter = null;
-            currentStatusFilter = null;
-            currentPage = 1;
+            LoadAreas();
             LoadTables();
+            BindDataGridView();
             ClearForm();
         }
 
-        private void cmbFilterFloor_SelectedIndexChanged(object sender, EventArgs e)
+        private void FrmTable_Load(object sender, EventArgs e)
         {
-            if (cmbFilterFloor.SelectedIndex >= 0)
+            // Form load event
+        }
+
+        // Area Management Event Handlers
+        private void btnAreaAdd_Click(object sender, EventArgs e)
+        {
+            ClearAreaForm();
+            SetAreaButtonStates(true);
+            txtAreaName.Focus();
+        }
+
+        private void btnAreaEdit_Click(object sender, EventArgs e)
+        {
+            if (selectedArea != null)
             {
-                SearchTables();
+                SetAreaButtonStates(true);
+                txtAreaName.Focus();
             }
         }
 
-        private void cmbFilterStatus_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnAreaDelete_Click(object sender, EventArgs e)
         {
-            if (cmbFilterStatus.SelectedIndex >= 0)
+            if (selectedArea != null)
             {
-                SearchTables();
-            }
-        }
-
-        #region Pagination Event Handlers
-
-        private void btnFirstPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage = 1;
-                LoadTablesWithPaging();
-                ClearForm();
-            }
-        }
-
-        private void btnPrevPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-                LoadTablesWithPaging();
-                ClearForm();
-            }
-        }
-
-        private void btnNextPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage < totalPages)
-            {
-                currentPage++;
-                LoadTablesWithPaging();
-                ClearForm();
-            }
-        }
-
-        private void btnLastPage_Click(object sender, EventArgs e)
-        {
-            if (currentPage < totalPages && totalPages > 0)
-            {
-                currentPage = totalPages;
-                LoadTablesWithPaging();
-                ClearForm();
-            }
-        }
-
-        private void cmbPageSize_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbPageSize.SelectedItem != null)
-            {
-                int newPageSize = int.Parse(cmbPageSize.SelectedItem.ToString());
-                if (newPageSize != pageSize)
+                var result = MessageBox.Show($"Bạn có chắc chắn muốn xóa khu vực '{selectedArea.AreaName}'?",
+                    "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    
+                if (result == DialogResult.Yes)
                 {
-                    pageSize = newPageSize;
-                    currentPage = 1;
-                    LoadTablesWithPaging();
-                    ClearForm();
+                    try
+                    {
+                        bool success = areaBLL.DeleteArea(selectedArea.AreaID);
+                        if (success)
+                        {
+                            MessageBox.Show("Xóa khu vực thành công!", "Thông báo", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadAreas();
+                            LoadTables();
+                            BindDataGridView();
+                            ClearAreaForm();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không thể xóa khu vực!", "Lỗi", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi xóa khu vực: {ex.Message}", "Lỗi", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
-        #endregion
+        private void btnAreaSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtAreaName.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tên khu vực!", "Thông báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtAreaName.Focus();
+                return;
+            }
 
-        #region Validation
+            try
+            {
+                bool success = false;
+                
+                if (selectedArea == null) // Add new
+                {
+                    var newArea = new Area
+                    {
+                        AreaID = Guid.NewGuid().ToString(),
+                        AreaName = txtAreaName.Text.Trim()
+                    };
+                    
+                    success = areaBLL.AddArea(newArea);
+                    
+                    if (success)
+                    {
+                        MessageBox.Show("Thêm khu vực thành công!", "Thông báo", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else // Edit existing
+                {
+                    selectedArea.AreaName = txtAreaName.Text.Trim();
+                    success = areaBLL.UpdateArea(selectedArea);
+                    
+                    if (success)
+                    {
+                        MessageBox.Show("Cập nhật khu vực thành công!", "Thông báo", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                
+                if (success)
+                {
+                    LoadAreas();
+                    LoadTables();
+                    BindDataGridView();
+                    SetAreaButtonStates(false);
+                }
+                else
+                {
+                    MessageBox.Show("Không thể lưu khu vực!", "Lỗi", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lưu khu vực: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-        private string ValidateInput()
+        private void btnAreaCancel_Click(object sender, EventArgs e)
+        {
+            SetAreaButtonStates(false);
+            if (selectedArea != null)
+            {
+                txtAreaName.Text = selectedArea.AreaName;
+            }
+            else
+            {
+                ClearAreaForm();
+            }
+        }
+
+        // Table Management Event Handlers
+        private void btnTableAdd_Click(object sender, EventArgs e)
+        {
+            ClearTableForm();
+            SetTableButtonStates(true);
+            txtTableName.Focus();
+        }
+
+        private void btnTableEdit_Click(object sender, EventArgs e)
+        {
+            if (selectedTable != null)
+            {
+                SetTableButtonStates(true);
+                txtTableName.Focus();
+            }
+        }
+
+        private void btnTableDelete_Click(object sender, EventArgs e)
+        {
+            if (selectedTable != null)
+            {
+                var result = MessageBox.Show($"Bạn có chắc chắn muốn xóa bàn '{selectedTable.TableName}'?",
+                    "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    
+                if (result == DialogResult.Yes)
+                {
+                    try
+                    {
+                        bool success = tableBLL.DeleteTable(selectedTable.TableID);
+                        if (success)
+                        {
+                            MessageBox.Show("Xóa bàn thành công!", "Thông báo", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadTables();
+                            BindDataGridView();
+                            ClearTableForm();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không thể xóa bàn!", "Lỗi", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi xóa bàn: {ex.Message}", "Lỗi", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnTableSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtTableName.Text))
-                return "Vui lòng nhập tên bàn!";
+            {
+                MessageBox.Show("Vui lòng nhập tên bàn!", "Thông báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTableName.Focus();
+                return;
+            }
 
-            if (txtTableName.Text.Trim().Length > 20)
-                return "Tên bàn không được vượt quá 20 ký tự!";
+            if (cmbFloor.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn khu vực!", "Thông báo", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbFloor.Focus();
+                return;
+            }
 
-            if (cmbFloor.SelectedIndex < 0)
-                return "Vui lòng chọn tầng!";
-
-            if (nudCapacity.Value <= 0)
-                return "Sức chứa phải lớn hơn 0!";
-
-            return null;
-        }
-
-        #endregion
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
             try
             {
-                if (tableBLL != null)
+                bool success = false;
+                TableStatus status = (TableStatus)cmbTableStatus.SelectedIndex;
+                
+                if (selectedTable == null) // Add new
                 {
-                    // Dispose any resources if needed
-                }
-            }
-            catch
-            {
-                // Ignore cleanup errors
-            }
-            finally
-            {
-                base.OnFormClosed(e);
-            }
-        }
-
-        #region Floor Management
-
-        private void btnManageFloors_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                using (var form = new FrmFloorManagement())
-                {
-                    if (form.ShowDialog() == DialogResult.OK)
+                    var newTable = new Table
                     {
-                        LoadFloors(); // Reload floors after changes
+                        TableID = Guid.NewGuid().ToString(),
+                        TableName = txtTableName.Text.Trim(),
+                        AreaID = cmbFloor.SelectedValue.ToString(),
+                        Capacity = (int)nudCapacity.Value,
+                        TableStatus = status
+                    };
+                    
+                    success = tableBLL.AddTable(newTable);
+                    
+                    if (success)
+                    {
+                        MessageBox.Show("Thêm bàn thành công!", "Thông báo", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
+                }
+                else // Edit existing
+                {
+                    selectedTable.TableName = txtTableName.Text.Trim();
+                    selectedTable.AreaID = cmbFloor.SelectedValue.ToString();
+                    selectedTable.Capacity = (int)nudCapacity.Value;
+                    selectedTable.TableStatus = status;
+                    
+                    success = tableBLL.UpdateTable(selectedTable);
+                    
+                    if (success)
+                    {
+                        MessageBox.Show("Cập nhật bàn thành công!", "Thông báo", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                
+                if (success)
+                {
+                    LoadTables();
+                    BindDataGridView();
+                    SetTableButtonStates(false);
+                }
+                else
+                {
+                    MessageBox.Show("Không thể lưu bàn!", "Lỗi", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi mở form quản lý tầng: {ex.Message}", 
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi lưu bàn: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        #endregion
-
-        #region Room Management
-
-        private void btnManageRooms_Click(object sender, EventArgs e)
+        private void btnTableCancel_Click(object sender, EventArgs e)
         {
-            try
+            SetTableButtonStates(false);
+            if (selectedTable != null)
             {
-                using (var form = new FrmRoomManagement())
-                {
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        // Optionally reload data if needed
-                    }
-                }
+                txtTableName.Text = selectedTable.TableName;
+                cmbFloor.SelectedValue = selectedTable.AreaID;
+                nudCapacity.Value = selectedTable.Capacity;
+                cmbTableStatus.SelectedIndex = (int)selectedTable.TableStatus;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Lỗi khi mở form quản lý phòng: {ex.Message}", 
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ClearTableForm();
             }
         }
+    }
 
-        #endregion
+    // Helper class for ComboBox display
+    public class AreaDisplayItem
+    {
+        public string AreaID { get; set; }
+        public string DisplayText { get; set; }
+
+        public AreaDisplayItem(string areaId, string displayText)
+        {
+            AreaID = areaId;
+            DisplayText = displayText;
+        }
     }
 }
-

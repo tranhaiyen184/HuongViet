@@ -145,7 +145,6 @@ namespace HuongViet.GUI
         private void UpdatePaginationInfo()
         {
             lblPageInfo.Text = $"Trang {currentPage} / {Math.Max(1, totalPages)} (Tổng: {totalRecords} bản ghi)";
-            lblStatus.Text = $"Hiển thị {roles?.Count ?? 0} / {totalRecords} vai trò";
         }
 
         private void UpdatePaginationButtons()

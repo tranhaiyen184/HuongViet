@@ -8,12 +8,12 @@ namespace HuongViet.BLL
     public class TableBLL
     {
         private readonly TableDAL tableDAL;
-        private readonly FloorDAL floorDAL;
+        private readonly AreaDAL areaDAL;
 
         public TableBLL()
         {
             tableDAL = new TableDAL();
-            floorDAL = new FloorDAL();
+            areaDAL = new AreaDAL();
         }
 
         /// <summary>
@@ -53,18 +53,18 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
-        /// Lấy danh sách bàn theo tầng
+        /// Lấy danh sách bàn theo khu vực
         /// </summary>
-        /// <param name="floorId">ID tầng</param>
+        /// <param name="areaId">ID khu vực</param>
         /// <returns>Danh sách bàn</returns>
-        public List<Table> GetTablesByFloor(string floorId)
+        public List<Table> GetTablesByArea(string areaId)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(floorId))
+                if (string.IsNullOrWhiteSpace(areaId))
                     return new List<Table>();
 
-                return tableDAL.GetByFloorId(floorId);
+                return tableDAL.GetByAreaId(areaId);
             }
             catch (Exception ex)
             {
@@ -105,10 +105,10 @@ namespace HuongViet.BLL
                     throw new Exception(validationError);
                 }
 
-                // Check if table name already exists on the same floor
-                if (tableDAL.IsTableNameExists(table.TableName, table.FloorID))
+                // Check if table name already exists in the same area
+                if (tableDAL.IsTableNameExists(table.TableName, table.AreaID))
                 {
-                    throw new Exception("Tên bàn đã tồn tại trên tầng này!");
+                    throw new Exception("Tên bàn đã tồn tại trong khu vực này!");
                 }
 
                 // Generate ID if not provided
@@ -150,10 +150,10 @@ namespace HuongViet.BLL
                     throw new Exception("Bàn không tồn tại!");
                 }
 
-                // Check if table name already exists on the same floor (excluding current table)
-                if (tableDAL.IsTableNameExists(table.TableName, table.FloorID, table.TableID))
+                // Check if table name already exists in the same area (excluding current table)
+                if (tableDAL.IsTableNameExists(table.TableName, table.AreaID, table.TableID))
                 {
-                    throw new Exception("Tên bàn đã tồn tại trên tầng này!");
+                    throw new Exception("Tên bàn đã tồn tại trong khu vực này!");
                 }
 
                 table.UpdatedAt = DateTime.Now;
@@ -164,6 +164,16 @@ namespace HuongViet.BLL
             {
                 throw new Exception($"Lỗi khi cập nhật bàn: {ex.Message}");
             }
+        }
+
+        /// <summary>
+        /// Cập nhật bàn (alias cho UpdateTable để tương thích với POSBLL)
+        /// </summary>
+        /// <param name="table">Thông tin bàn</param>
+        /// <returns>True nếu thành công</returns>
+        public bool Update(Table table)
+        {
+            return UpdateTable(table);
         }
 
         /// <summary>
@@ -224,18 +234,18 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
-        /// Lấy danh sách tầng (để hiển thị trong ComboBox)
+        /// Lấy danh sách khu vực (để hiển thị trong ComboBox)
         /// </summary>
-        /// <returns>Danh sách tầng</returns>
-        public List<Floor> GetAllFloors()
+        /// <returns>Danh sách khu vực</returns>
+        public List<Area> GetAllAreas()
         {
             try
             {
-                return floorDAL.GetAll();
+                return areaDAL.GetAll();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi khi lấy danh sách tầng: {ex.Message}");
+                throw new Exception($"Lỗi khi lấy danh sách khu vực: {ex.Message}");
             }
         }
 
@@ -243,10 +253,10 @@ namespace HuongViet.BLL
         /// Tìm kiếm bàn với phân trang
         /// </summary>
         /// <param name="criteria">Tiêu chí tìm kiếm và phân trang</param>
-        /// <param name="floorId">Lọc theo tầng (null = tất cả)</param>
+        /// <param name="areaId">Lọc theo khu vực (null = tất cả)</param>
         /// <param name="status">Lọc theo trạng thái (null = tất cả)</param>
         /// <returns>Kết quả phân trang</returns>
-        public PagedResult<Table> SearchTables(SearchCriteria criteria, string floorId = null, TableStatus? status = null)
+        public PagedResult<Table> SearchTables(SearchCriteria criteria, string areaId = null, TableStatus? status = null)
         {
             try
             {
@@ -271,7 +281,7 @@ namespace HuongViet.BLL
                     criteria.PageSize = 20;
                 }
 
-                return tableDAL.Search(criteria, floorId, status);
+                return tableDAL.Search(criteria, areaId, status);
             }
             catch (Exception ex)
             {
@@ -297,13 +307,13 @@ namespace HuongViet.BLL
             if (table.TableName.Length > 20)
                 return "Tên bàn không được vượt quá 20 ký tự!";
 
-            if (string.IsNullOrWhiteSpace(table.FloorID))
-                return "Vui lòng chọn tầng!";
+            if (string.IsNullOrWhiteSpace(table.AreaID))
+                return "Vui lòng chọn khu vực!";
 
-            // Check if floor exists
-            var floor = floorDAL.GetById(table.FloorID);
-            if (floor == null)
-                return "Tầng không tồn tại!";
+            // Check if area exists
+            var area = areaDAL.GetById(table.AreaID);
+            if (area == null)
+                return "Khu vực không tồn tại!";
 
             if (table.Capacity <= 0)
                 return "Sức chứa phải lớn hơn 0!";

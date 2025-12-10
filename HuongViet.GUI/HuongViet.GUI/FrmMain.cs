@@ -45,6 +45,60 @@ namespace HuongViet.GUI
             _currentUser = currentUser;
             InitializeLayoutState();
             UpdateUserInfo();
+            
+            // Add Resize event handler to update layout
+            this.Resize += FrmMain_Resize;
+        }
+        
+        private void FrmMain_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                return;
+                
+            int headerHeight = headerPanel.Height;
+            int formHeight = this.ClientSize.Height;
+            int formWidth = this.ClientSize.Width;
+            
+            // Update header panel
+            headerPanel.Location = new Point(0, 0);
+            headerPanel.Size = new Size(formWidth, headerHeight);
+            
+            // Update sidebar panel
+            sidebarPanel.Location = new Point(0, headerHeight);
+            sidebarPanel.Height = formHeight - headerHeight;
+            
+            // Update navContainer
+            navContainer.Size = new Size(sidebarPanel.Width, sidebarPanel.Height);
+            
+            // Update content panel
+            contentPanel.Location = new Point(sidebarPanel.Width, headerHeight);
+            contentPanel.Size = new Size(formWidth - sidebarPanel.Width, formHeight - headerHeight);
+            
+            // Update tab control size
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Size = new Size(contentPanel.Width, contentPanel.Height);
+                
+                // Update all child forms size
+                foreach (TabPage tabPage in _mainTabControl.TabPages)
+                {
+                    foreach (Control control in tabPage.Controls)
+                    {
+                        if (control is Form childForm)
+                        {
+                            childForm.Size = new Size(tabPage.Width, tabPage.Height);
+                        }
+                    }
+                }
+            }
+            
+            // Update placeholder panel size
+            if (placeholderPanel != null && placeholderPanel.Visible)
+            {
+                placeholderPanel.Size = new Size(
+                    contentPanel.Width - contentPanel.Padding.Left - contentPanel.Padding.Right,
+                    contentPanel.Height - contentPanel.Padding.Top - contentPanel.Padding.Bottom);
+            }
         }
 
         private void InitializeLayoutState()
@@ -70,6 +124,9 @@ namespace HuongViet.GUI
 
             // Initialize sub-menu for Staff
             InitializeStaffSubMenu();
+            
+            // Initialize sub-menu for Menu
+            InitializeMenuSubMenu();
             
             UpdateSidebarState(force: true);
             
@@ -252,11 +309,11 @@ namespace HuongViet.GUI
             }
         }
         
-        private void InitializeStaffSubMenu()
+        private void InitializeMenuSubMenu()
         {
-            // Create sub-menu panel for Staff
+            // Create sub-menu panel for Menu
             Panel subMenuPanel = new Panel();
-            subMenuPanel.Name = "subMenuStaff";
+            subMenuPanel.Name = "subMenuFood";
             subMenuPanel.Height = 0; // Start collapsed
             subMenuPanel.Visible = false;
             subMenuPanel.Margin = new Padding(8, 0, 8, 0);
@@ -265,7 +322,203 @@ namespace HuongViet.GUI
             subMenuPanel.Width = 240;
             subMenuPanel.BackColor = SidebarBackground;
             
-            // Create Department sub-item
+            // Create Category sub-item
+            IconButton btnCategory = new IconButton();
+            btnCategory.Name = "btnCategory";
+            btnCategory.Text = "Thể loại";
+            btnCategory.Tag = "Thể loại";
+            btnCategory.IconChar = IconChar.Circle;
+            btnCategory.IconColor = MenuItemText;
+            btnCategory.IconFont = IconFont.Auto;
+            btnCategory.IconSize = 6;
+            btnCategory.FlatAppearance.BorderSize = 0;
+            btnCategory.FlatStyle = FlatStyle.Flat;
+            btnCategory.UseVisualStyleBackColor = false;
+            btnCategory.ForeColor = MenuItemText;
+            btnCategory.BackColor = SubMenuItemBackground;
+            btnCategory.TextAlign = ContentAlignment.MiddleLeft;
+            btnCategory.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCategory.Padding = new Padding(48, 10, 16, 10);
+            btnCategory.Margin = new Padding(0, 4, 0, 0);
+            btnCategory.Height = 40;
+            btnCategory.Width = 224;
+            btnCategory.Dock = DockStyle.None;
+            btnCategory.Location = new Point(8, 0);
+            btnCategory.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnCategory.Font = new Font("Segoe UI", 9F);
+            btnCategory.Click += BtnCategory_Click;
+            ApplyModernButtonStyle(btnCategory, true);
+            
+            // Create Unit sub-item
+            IconButton btnUnit = new IconButton();
+            btnUnit.Name = "btnUnit";
+            btnUnit.Text = "Đơn vị tính";
+            btnUnit.Tag = "Đơn vị tính";
+            btnUnit.IconChar = IconChar.Circle;
+            btnUnit.IconColor = MenuItemText;
+            btnUnit.IconFont = IconFont.Auto;
+            btnUnit.IconSize = 6;
+            btnUnit.FlatAppearance.BorderSize = 0;
+            btnUnit.FlatStyle = FlatStyle.Flat;
+            btnUnit.UseVisualStyleBackColor = false;
+            btnUnit.ForeColor = MenuItemText;
+            btnUnit.BackColor = SubMenuItemBackground;
+            btnUnit.TextAlign = ContentAlignment.MiddleLeft;
+            btnUnit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnUnit.Padding = new Padding(48, 10, 16, 10);
+            btnUnit.Margin = new Padding(0, 4, 0, 0);
+            btnUnit.Height = 40;
+            btnUnit.Width = 224;
+            btnUnit.Dock = DockStyle.None;
+            btnUnit.Location = new Point(8, 44);
+            btnUnit.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnUnit.Font = new Font("Segoe UI", 9F);
+            btnUnit.Click += BtnUnit_Click;
+            ApplyModernButtonStyle(btnUnit, true);
+            
+            // Create Item sub-item
+            IconButton btnItemMenu = new IconButton();
+            btnItemMenu.Name = "btnItemMenu";
+            btnItemMenu.Text = "Món ăn";
+            btnItemMenu.Tag = "Món ăn";
+            btnItemMenu.IconChar = IconChar.Circle;
+            btnItemMenu.IconColor = MenuItemText;
+            btnItemMenu.IconFont = IconFont.Auto;
+            btnItemMenu.IconSize = 6;
+            btnItemMenu.FlatAppearance.BorderSize = 0;
+            btnItemMenu.FlatStyle = FlatStyle.Flat;
+            btnItemMenu.UseVisualStyleBackColor = false;
+            btnItemMenu.ForeColor = MenuItemText;
+            btnItemMenu.BackColor = SubMenuItemBackground;
+            btnItemMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnItemMenu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnItemMenu.Padding = new Padding(48, 10, 16, 10);
+            btnItemMenu.Margin = new Padding(0, 4, 0, 0);
+            btnItemMenu.Height = 40;
+            btnItemMenu.Width = 224;
+            btnItemMenu.Dock = DockStyle.None;
+            btnItemMenu.Location = new Point(8, 88);
+            btnItemMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnItemMenu.Font = new Font("Segoe UI", 9F);
+            btnItemMenu.Click += BtnItemMenu_Click;
+            ApplyModernButtonStyle(btnItemMenu, true);
+            
+            IconButton btnServiceMenu = new IconButton();
+            btnServiceMenu.Name = "btnServiceMenu";
+            btnServiceMenu.Text = "Dịch vụ";
+            btnServiceMenu.Tag = "Dịch vụ";
+            btnServiceMenu.IconChar = IconChar.Circle;
+            btnServiceMenu.IconColor = MenuItemText;
+            btnServiceMenu.IconFont = IconFont.Auto;
+            btnServiceMenu.IconSize = 6;
+            btnServiceMenu.FlatAppearance.BorderSize = 0;
+            btnServiceMenu.FlatStyle = FlatStyle.Flat;
+            btnServiceMenu.UseVisualStyleBackColor = false;
+            btnServiceMenu.ForeColor = MenuItemText;
+            btnServiceMenu.BackColor = SubMenuItemBackground;
+            btnServiceMenu.TextAlign = ContentAlignment.MiddleLeft;
+            btnServiceMenu.ImageAlign = ContentAlignment.MiddleLeft;
+            btnServiceMenu.Padding = new Padding(48, 10, 16, 10);
+            btnServiceMenu.Margin = new Padding(0, 4, 0, 0);
+            btnServiceMenu.Height = 40;
+            btnServiceMenu.Width = 224;
+            btnServiceMenu.Dock = DockStyle.None;
+            btnServiceMenu.Location = new Point(8, 132);
+            btnServiceMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnServiceMenu.Font = new Font("Segoe UI", 9F);
+            btnServiceMenu.Click += BtnServiceMenu_Click;
+            ApplyModernButtonStyle(btnServiceMenu, true);
+            
+            subMenuPanel.Controls.Add(btnCategory);
+            subMenuPanel.Controls.Add(btnUnit);
+            subMenuPanel.Controls.Add(btnItemMenu);
+            subMenuPanel.Controls.Add(btnServiceMenu);
+            
+            subMenuPanel.Height = btnCategory.Height + btnUnit.Height + btnItemMenu.Height + btnServiceMenu.Height + 20;
+            int menuIndex = navContainer.Controls.IndexOf(btnMenu);
+            if (menuIndex >= 0)
+            {
+                navContainer.Controls.Add(subMenuPanel);
+                navContainer.Controls.SetChildIndex(subMenuPanel, menuIndex + 1);
+            }
+            
+            _subMenuPanels[btnMenu] = subMenuPanel;
+            _menuExpandedState[btnMenu] = false;
+            
+            if (btnMenu.Tag == null || !btnMenu.Tag.ToString().StartsWith("Thực đơn"))
+            {
+                btnMenu.Tag = "Thực đơn";
+            }
+        }
+        
+        private void BtnCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmCategory(), "Quản lý thể loại", "category");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý thể loại: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnUnit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmUnit(), "Quản lý đơn vị tính", "unit");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý đơn vị tính: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnItemMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmItem(), "Quản lý món ăn", "item");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý món ăn: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void BtnServiceMenu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmService(), "Quản lý dịch vụ", "service");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form quản lý dịch vụ: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void InitializeStaffSubMenu()
+        {
+            Panel subMenuPanel = new Panel();
+            subMenuPanel.Name = "subMenuStaff";
+            subMenuPanel.Height = 0; 
+            subMenuPanel.Visible = false;
+            subMenuPanel.Margin = new Padding(8, 0, 8, 0);
+            subMenuPanel.Padding = new Padding(0);
+            subMenuPanel.AutoSize = false;
+            subMenuPanel.Width = 240;
+            subMenuPanel.BackColor = SidebarBackground;
+            
             IconButton btnDepartment = new IconButton();
             btnDepartment.Name = "btnDepartment";
             btnDepartment.Text = "Phòng ban";
@@ -276,7 +529,7 @@ namespace HuongViet.GUI
             btnDepartment.IconSize = 6;
             btnDepartment.FlatAppearance.BorderSize = 0;
             btnDepartment.FlatStyle = FlatStyle.Flat;
-            btnDepartment.UseVisualStyleBackColor = false; // Important!
+            btnDepartment.UseVisualStyleBackColor = false; 
             btnDepartment.ForeColor = MenuItemText;
             btnDepartment.BackColor = SubMenuItemBackground;
             btnDepartment.TextAlign = ContentAlignment.MiddleLeft;
@@ -285,13 +538,13 @@ namespace HuongViet.GUI
             btnDepartment.Margin = new Padding(0, 4, 0, 0);
             btnDepartment.Height = 40;
             btnDepartment.Width = 224;
-            btnDepartment.Dock = DockStyle.Top;
+            btnDepartment.Dock = DockStyle.None;
+            btnDepartment.Location = new Point(8, 0);
             btnDepartment.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnDepartment.Font = new Font("Segoe UI", 9F);
             btnDepartment.Click += BtnDepartment_Click;
             ApplyModernButtonStyle(btnDepartment, true);
             
-            // Create Position sub-item
             IconButton btnPositionSub = new IconButton();
             btnPositionSub.Name = "btnPositionSub";
             btnPositionSub.Text = "Vị trí";
@@ -302,7 +555,7 @@ namespace HuongViet.GUI
             btnPositionSub.IconSize = 6;
             btnPositionSub.FlatAppearance.BorderSize = 0;
             btnPositionSub.FlatStyle = FlatStyle.Flat;
-            btnPositionSub.UseVisualStyleBackColor = false; // Important!
+            btnPositionSub.UseVisualStyleBackColor = false;
             btnPositionSub.ForeColor = MenuItemText;
             btnPositionSub.BackColor = SubMenuItemBackground;
             btnPositionSub.TextAlign = ContentAlignment.MiddleLeft;
@@ -311,13 +564,13 @@ namespace HuongViet.GUI
             btnPositionSub.Margin = new Padding(0, 4, 0, 0);
             btnPositionSub.Height = 40;
             btnPositionSub.Width = 224;
-            btnPositionSub.Dock = DockStyle.Top;
+            btnPositionSub.Dock = DockStyle.None;
+            btnPositionSub.Location = new Point(8, 44);
             btnPositionSub.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnPositionSub.Font = new Font("Segoe UI", 9F);
             btnPositionSub.Click += BtnPositionSub_Click;
             ApplyModernButtonStyle(btnPositionSub, true);
             
-            // Create User (Nhân viên) sub-item
             IconButton btnUser = new IconButton();
             btnUser.Name = "btnUser";
             btnUser.Text = "Nhân viên";
@@ -328,7 +581,7 @@ namespace HuongViet.GUI
             btnUser.IconSize = 6;
             btnUser.FlatAppearance.BorderSize = 0;
             btnUser.FlatStyle = FlatStyle.Flat;
-            btnUser.UseVisualStyleBackColor = false; // Important!
+            btnUser.UseVisualStyleBackColor = false;
             btnUser.ForeColor = MenuItemText;
             btnUser.BackColor = SubMenuItemBackground;
             btnUser.TextAlign = ContentAlignment.MiddleLeft;
@@ -337,13 +590,13 @@ namespace HuongViet.GUI
             btnUser.Margin = new Padding(0, 4, 0, 0);
             btnUser.Height = 40;
             btnUser.Width = 224;
-            btnUser.Dock = DockStyle.Top;
+            btnUser.Dock = DockStyle.None;
+            btnUser.Location = new Point(8, 88);
             btnUser.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnUser.Font = new Font("Segoe UI", 9F);
             btnUser.Click += BtnUser_Click;
             ApplyModernButtonStyle(btnUser, true);
             
-            // Create Role (Vai trò) sub-item
             IconButton btnRole = new IconButton();
             btnRole.Name = "btnRole";
             btnRole.Text = "Vai trò";
@@ -354,7 +607,7 @@ namespace HuongViet.GUI
             btnRole.IconSize = 6;
             btnRole.FlatAppearance.BorderSize = 0;
             btnRole.FlatStyle = FlatStyle.Flat;
-            btnRole.UseVisualStyleBackColor = false; // Important!
+            btnRole.UseVisualStyleBackColor = false;
             btnRole.ForeColor = MenuItemText;
             btnRole.BackColor = SubMenuItemBackground;
             btnRole.TextAlign = ContentAlignment.MiddleLeft;
@@ -363,22 +616,20 @@ namespace HuongViet.GUI
             btnRole.Margin = new Padding(0, 4, 0, 0);
             btnRole.Height = 40;
             btnRole.Width = 224;
-            btnRole.Dock = DockStyle.Top;
+            btnRole.Dock = DockStyle.None;
+            btnRole.Location = new Point(8, 132);
             btnRole.TextImageRelation = TextImageRelation.ImageBeforeText;
             btnRole.Font = new Font("Segoe UI", 9F);
             btnRole.Click += BtnRole_Click;
             ApplyModernButtonStyle(btnRole, true);
             
-            // Add sub-items to panel (in reverse order for Dock.Top)
-            subMenuPanel.Controls.Add(btnRole);
-            subMenuPanel.Controls.Add(btnUser);
-            subMenuPanel.Controls.Add(btnPositionSub);
             subMenuPanel.Controls.Add(btnDepartment);
+            subMenuPanel.Controls.Add(btnPositionSub);
+            subMenuPanel.Controls.Add(btnUser);
+            subMenuPanel.Controls.Add(btnRole);
             
-            // Calculate total height (including margins)
-            subMenuPanel.Height = btnDepartment.Height + btnPositionSub.Height + btnUser.Height + btnRole.Height + 16; // 16 for margins
+            subMenuPanel.Height = btnDepartment.Height + btnPositionSub.Height + btnUser.Height + btnRole.Height + 16;
             
-            // Find btnStaff in navContainer and insert sub-menu after it
             int staffIndex = navContainer.Controls.IndexOf(btnStaff);
             if (staffIndex >= 0)
             {
@@ -386,11 +637,9 @@ namespace HuongViet.GUI
                 navContainer.Controls.SetChildIndex(subMenuPanel, staffIndex + 1);
             }
             
-            // Store references
             _subMenuPanels[btnStaff] = subMenuPanel;
             _menuExpandedState[btnStaff] = false;
             
-            // Ensure btnStaff tag is set correctly
             if (btnStaff.Tag == null || !btnStaff.Tag.ToString().StartsWith("Nhân viên"))
             {
                 btnStaff.Tag = "Nhân viên";
@@ -456,7 +705,6 @@ namespace HuongViet.GUI
         
         private void SetActiveSubMenuItem(IconButton button)
         {
-            // Reset previous active sub-item
             if (_activeSubMenuItem != null && _activeSubMenuItem != button)
             {
                 _activeSubMenuItem.BackColor = SubMenuItemBackground;
@@ -464,8 +712,7 @@ namespace HuongViet.GUI
                 _activeSubMenuItem.IconColor = MenuItemText;
                 _activeSubMenuItem.Invalidate();
             }
-            
-            // Set new active sub-item
+          
             _activeSubMenuItem = button;
             if (button != null)
             {
@@ -478,7 +725,7 @@ namespace HuongViet.GUI
         
         private void SetActiveMenuItem(IconButton button)
         {
-            // Reset previous active item
+           
             if (_activeMenuItem != null && _activeMenuItem != button)
             {
                 _activeMenuItem.BackColor = MenuItemBackground;
@@ -487,7 +734,6 @@ namespace HuongViet.GUI
                 _activeMenuItem.Invalidate();
             }
             
-            // Set new active item
             _activeMenuItem = button;
             if (button != null)
             {
@@ -500,12 +746,12 @@ namespace HuongViet.GUI
 
         private void navButton_MouseEnter(object sender, EventArgs e)
         {
-            // Handled by ModernButton_MouseEnter
+          
         }
 
         private void navButton_MouseLeave(object sender, EventArgs e)
         {
-            // Handled by ModernButton_MouseLeave
+           
         }
 
         private void btnToggleSidebar_Click(object sender, EventArgs e)
@@ -516,7 +762,24 @@ namespace HuongViet.GUI
 
         private void UpdateSidebarState(bool force = false)
         {
+            int headerHeight = headerPanel.Height;
+            int formHeight = this.ClientSize.Height;
+            int formWidth = this.ClientSize.Width;
+
             sidebarPanel.Width = _sidebarExpanded ? ExpandedSidebarWidth : CollapsedSidebarWidth;
+            sidebarPanel.Location = new Point(0, headerHeight);
+            sidebarPanel.Height = formHeight - headerHeight;
+
+            navContainer.Location = new Point(0, 0);
+            navContainer.Size = new Size(sidebarPanel.Width, sidebarPanel.Height);
+
+            contentPanel.Location = new Point(sidebarPanel.Width, headerHeight);
+            contentPanel.Size = new Size(formWidth - sidebarPanel.Width, formHeight - headerHeight);
+
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Size = new Size(contentPanel.Width, contentPanel.Height);
+            }
 
             foreach (var button in _navigationButtons)
             {
@@ -526,13 +789,11 @@ namespace HuongViet.GUI
                 if (!isToggleButton)
                 {
                     var label = button.Tag?.ToString() ?? string.Empty;
-                    // Clean label if it contains pipe separator
                     if (label.Contains("|"))
                     {
                         label = label.Split('|')[0];
                     }
-                    
-                    // Special handling for expandable menus
+
                     if (_subMenuPanels.ContainsKey(button) && _sidebarExpanded)
                     {
                         bool isExpanded = _menuExpandedState.ContainsKey(button) && _menuExpandedState[button];
@@ -542,12 +803,11 @@ namespace HuongViet.GUI
                     {
                         button.Text = _sidebarExpanded ? label : string.Empty;
                     }
-                    
+
                     button.Padding = _sidebarExpanded ? new Padding(16, 0, 16, 0) : new Padding(0);
                     button.TextAlign = _sidebarExpanded ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
                     button.ImageAlign = _sidebarExpanded ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
-                    
-                    // Apply modern spacing
+
                     if (_sidebarExpanded)
                     {
                         button.Margin = new Padding(8, 4, 8, 4);
@@ -569,11 +829,9 @@ namespace HuongViet.GUI
                 }
 
                 button.Width = sidebarPanel.Width - horizontalPadding;
-                
-                // Ensure colors are maintained
+
                 if (!isToggleButton)
                 {
-                    // Re-apply colors if not active
                     if (button != _activeMenuItem && button != _activeSubMenuItem)
                     {
                         bool isSubItem = _subMenuPanels.Values.Any(panel => panel.Controls.Contains(button));
@@ -590,44 +848,47 @@ namespace HuongViet.GUI
                             button.IconColor = MenuItemText;
                         }
                     }
-                    button.UseVisualStyleBackColor = false; // Ensure this is false
-                    button.Invalidate(); // Refresh button
+                    button.UseVisualStyleBackColor = false;
+                    button.Invalidate();
                 }
-            }
-            
-            // Update sub-menu visibility and width
-            foreach (var kvp in _subMenuPanels)
-            {
-                bool shouldBeVisible = _sidebarExpanded && 
-                    (_menuExpandedState.ContainsKey(kvp.Key) && _menuExpandedState[kvp.Key]);
-                kvp.Value.Visible = shouldBeVisible;
-                kvp.Value.Width = sidebarPanel.Width;
-                
-                // Update sub-menu items
-                foreach (Control control in kvp.Value.Controls)
+
+                foreach (var kvp in _subMenuPanels)
                 {
-                    if (control is IconButton subBtn)
+                    bool shouldBeVisible = _sidebarExpanded &&
+                        (_menuExpandedState.ContainsKey(kvp.Key) && _menuExpandedState[kvp.Key]);
+                    kvp.Value.Visible = shouldBeVisible;
+                    kvp.Value.Width = sidebarPanel.Width;
+
+                    foreach (Control control in kvp.Value.Controls)
                     {
-                        subBtn.Width = _sidebarExpanded ? sidebarPanel.Width - 32 : 0; // Account for margins
-                        subBtn.Text = _sidebarExpanded ? (subBtn.Tag?.ToString() ?? string.Empty) : string.Empty;
+                        if (control is IconButton subBtn)
+                        {
+                            subBtn.Width = _sidebarExpanded ? sidebarPanel.Width - 32 : 0;
+                            subBtn.Text = _sidebarExpanded ? (subBtn.Tag?.ToString() ?? string.Empty) : string.Empty;
+                        }
                     }
                 }
-            }
 
-            navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
-            
-            // Update chevron in button text
-            if (_subMenuPanels.ContainsKey(btnStaff))
-            {
-                bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
-                UpdateStaffChevron(isExpanded);
-            }
-            
-            navContainer.Refresh();
+                navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
 
-            if (force)
-            {
-                sidebarPanel.PerformLayout();
+                if (_subMenuPanels.ContainsKey(btnStaff))
+                {
+                    bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
+                    UpdateStaffChevron(isExpanded);
+                }
+
+                if (_subMenuPanels.ContainsKey(btnMenu))
+                {
+                    bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                    UpdateMenuChevron(isExpanded);
+                }
+
+                navContainer.Refresh();
+
+                if (force)
+                {
+                    sidebarPanel.PerformLayout();
+                }
             }
         }
 
@@ -641,8 +902,6 @@ namespace HuongViet.GUI
         {
             if (_currentUser != null)
             {
-                // Update user display (assuming you have labels for user info)
-                // You may need to check if these controls exist in your form
                 try
                 {
                     if (this.Controls.Find("lblUserName", true).FirstOrDefault() is Label lblUserName)
@@ -657,7 +916,6 @@ namespace HuongViet.GUI
                 }
                 catch
                 {
-                    // Ignore if controls don't exist
                 }
             }
         }
@@ -709,26 +967,18 @@ namespace HuongViet.GUI
 
         private void InitializeTabControl()
         {
-            // Create and configure TabControl
             _mainTabControl = new TabControl();
             _mainTabControl.Dock = DockStyle.Fill;
             _mainTabControl.Alignment = TabAlignment.Top;
             _mainTabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
             _mainTabControl.SizeMode = TabSizeMode.Fixed;
-            _mainTabControl.ItemSize = new Size(150, 30);
-            _mainTabControl.Padding = new Point(20, 4);
-            _mainTabControl.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            _mainTabControl.ItemSize = new Size(0, 1);
+            _mainTabControl.Appearance = TabAppearance.FlatButtons;
             
-            
-            // Add event handlers
             _mainTabControl.DrawItem += TabControl_DrawItem;
             _mainTabControl.MouseDown += TabControl_MouseDown;
             _mainTabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
             
-            // Hide initially
-            _mainTabControl.Visible = false;
-            
-            // Add to content panel
             contentPanel.Controls.Add(_mainTabControl);
         }
 
@@ -738,24 +988,20 @@ namespace HuongViet.GUI
             TabPage tabPage = tabControl.TabPages[e.Index];
             Rectangle tabRect = tabControl.GetTabRect(e.Index);
             
-            // Colors
             Color backColor = e.State == DrawItemState.Selected ? SystemColors.Highlight : SystemColors.Window;
             Color textColor = e.State == DrawItemState.Selected ? SystemColors.HighlightText : SystemColors.ControlText;
             Color borderColor = SystemColors.ControlDark;
             
-            // Fill background
             using (SolidBrush brush = new SolidBrush(backColor))
             {
                 e.Graphics.FillRectangle(brush, tabRect);
             }
             
-            // Draw border
             using (Pen pen = new Pen(borderColor, 1))
             {
                 e.Graphics.DrawRectangle(pen, tabRect);
             }
             
-            // Draw text
             string tabText = tabPage.Text;
             if (tabText.Length > 15)
             {
@@ -765,7 +1011,6 @@ namespace HuongViet.GUI
             TextRenderer.DrawText(e.Graphics, tabText, tabControl.Font, tabRect, textColor, 
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             
-            // Draw close button (X)
             if (tabControl.TabPages.Count > 0)
             {
                 Rectangle closeRect = new Rectangle(tabRect.Right - 20, tabRect.Top + 8, 14, 14);
@@ -799,7 +1044,6 @@ namespace HuongViet.GUI
         {
             if (_mainTabControl.SelectedTab != null)
             {
-                // Update section title
                 if (this.Controls.Find("lblSectionTitle", true).FirstOrDefault() is Label lblSectionTitle)
                 {
                     lblSectionTitle.Text = _mainTabControl.SelectedTab.Text;
@@ -809,10 +1053,8 @@ namespace HuongViet.GUI
 
         private void LoadChildFormInTab(Form childForm, string title, string tabKey)
         {
-            // Check if tab already exists
             if (_openTabs.ContainsKey(tabKey))
             {
-                // Switch to existing tab
                 for (int i = 0; i < _mainTabControl.TabPages.Count; i++)
                 {
                     if (_mainTabControl.TabPages[i].Name == tabKey)
@@ -823,33 +1065,30 @@ namespace HuongViet.GUI
                 }
             }
 
-            // Hide placeholder panel
             placeholderPanel.Visible = false;
             _mainTabControl.Visible = true;
             _mainTabControl.BringToFront();
 
-            // Create new tab page
             TabPage tabPage = new TabPage(title);
             tabPage.Name = tabKey;
             tabPage.Padding = new Padding(3);
 
-            // Configure child form
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
-            childForm.Dock = DockStyle.Fill;
+            childForm.Dock = DockStyle.None;
+            childForm.Location = new Point(0, 0);
 
-            // Add form to tab page
             tabPage.Controls.Add(childForm);
-            childForm.Show();
 
-            // Add tab page to tab control
             _mainTabControl.TabPages.Add(tabPage);
             _mainTabControl.SelectedTab = tabPage;
+            
+            Rectangle tabPageClientRect = tabPage.DisplayRectangle;
+            childForm.Size = new Size(tabPageClientRect.Width, tabPageClientRect.Height);
+            childForm.Show();
 
-            // Store reference
             _openTabs[tabKey] = childForm;
 
-            // Update section title
             if (this.Controls.Find("lblSectionTitle", true).FirstOrDefault() is Label lblSectionTitle)
             {
                 lblSectionTitle.Text = title;
@@ -858,14 +1097,11 @@ namespace HuongViet.GUI
 
         private void ShowPlaceholder()
         {
-            // Hide tab control
             _mainTabControl.Visible = false;
 
-            // Show placeholder panel
             placeholderPanel.Visible = true;
             placeholderPanel.BringToFront();
 
-            // Reset section title
             if (this.Controls.Find("lblSectionTitle", true).FirstOrDefault() is Label lblSectionTitle)
             {
                 lblSectionTitle.Text = "Hệ thống quản lý";
@@ -879,7 +1115,7 @@ namespace HuongViet.GUI
                 TabPage tabPage = _mainTabControl.TabPages[tabIndex];
                 string tabKey = tabPage.Name;
 
-                // Dispose form if exists
+               
                 if (_openTabs.ContainsKey(tabKey))
                 {
                     Form form = _openTabs[tabKey];
@@ -888,10 +1124,8 @@ namespace HuongViet.GUI
                     _openTabs.Remove(tabKey);
                 }
 
-                // Remove tab page
                 _mainTabControl.TabPages.RemoveAt(tabIndex);
 
-                // If no tabs left, show placeholder
                 if (_mainTabControl.TabPages.Count == 0)
                 {
                     ShowPlaceholder();
@@ -899,41 +1133,51 @@ namespace HuongViet.GUI
             }
         }
 
-        private void CloseAllTabs()
-        {
-            while (_mainTabControl.TabPages.Count > 0)
-            {
-                CloseTab(0);
-            }
-        }
-
-        private void lblRoleDescription_Click(object sender, EventArgs e)
-        {
-
-        }
-
+      
         private void lblUserName_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void btnDashboard_Click(object sender, EventArgs e)
-        {
-            ShowPlaceholder();
-        }
 
-        // Additional navigation methods for other buttons
         private void btnMenu_Click(object sender, EventArgs e)
         {
-            try
+            if (!_sidebarExpanded)
             {
-                // TODO: Implement Menu management form
-                MessageBox.Show("Tính năng quản lý thực đơn sẽ được triển khai sau.", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            catch (Exception ex)
+            
+            SetActiveMenuItem(btnMenu);
+            
+            if (_subMenuPanels.ContainsKey(btnMenu))
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                _menuExpandedState[btnMenu] = !isExpanded;
+                
+                _subMenuPanels[btnMenu].Visible = !isExpanded;
+                
+                UpdateMenuChevron(!isExpanded);
+                
+                navContainer.PerformLayout();
+                navContainer.Refresh();
+            }
+        }
+        
+        private void UpdateMenuChevron(bool isExpanded)
+        {
+            string baseText = btnMenu.Tag?.ToString() ?? "Thực đơn";
+            if (baseText.Contains("|"))
+            {
+                baseText = baseText.Split('|')[0];
+            }
+            
+            if (_sidebarExpanded)
+            {
+                btnMenu.Text = baseText + "  " + (isExpanded ? "▲" : "▼");
+            }
+            else
+            {
+                btnMenu.Text = string.Empty;
             }
         }
 
@@ -941,13 +1185,13 @@ namespace HuongViet.GUI
         {
             try
             {
-                // TODO: Implement Orders management form
-                MessageBox.Show("Tính năng quản lý đơn hàng sẽ được triển khai sau.", "Thông báo", 
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                SetActiveMenuItem(btnOrders);
+                LoadChildFormInTab(new FrmPOS(), "Bán hàng", "pos");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi mở form bán hàng: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -965,44 +1209,24 @@ namespace HuongViet.GUI
             }
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            // Clean up all tabs
-            CloseAllTabs();
-            
-            // Dispose tab control
-            if (_mainTabControl != null)
-            {
-                _mainTabControl.Dispose();
-            }
-            
-            base.OnFormClosed(e);
-        }
-
         private void btnStaff_Click(object sender, EventArgs e)
         {
-            // Only toggle if sidebar is expanded
+        
             if (!_sidebarExpanded)
             {
                 return;
             }
             
-            // Set as active menu item
+           
             SetActiveMenuItem(btnStaff);
             
-            // Toggle sub-menu expansion
+         
             if (_subMenuPanels.ContainsKey(btnStaff))
             {
                 bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
                 _menuExpandedState[btnStaff] = !isExpanded;
-                
-                // Show/hide sub-menu
-                _subMenuPanels[btnStaff].Visible = !isExpanded;
-                
-                // Update chevron in button text/icon area
+                _subMenuPanels[btnStaff].Visible = !isExpanded;            
                 UpdateStaffChevron(!isExpanded);
-                
-                // Force layout update
                 navContainer.PerformLayout();
                 navContainer.Refresh();
             }
@@ -1010,7 +1234,7 @@ namespace HuongViet.GUI
         
         private void UpdateStaffChevron(bool isExpanded)
         {
-            // Update button text to include chevron
+           
             string baseText = btnStaff.Tag?.ToString() ?? "Nhân viên";
             if (baseText.Contains("|"))
             {
@@ -1019,7 +1243,7 @@ namespace HuongViet.GUI
             
             if (_sidebarExpanded)
             {
-                // Add chevron to text (using Unicode arrow)
+               
                 btnStaff.Text = baseText + "  " + (isExpanded ? "▲" : "▼");
             }
             else
@@ -1028,11 +1252,10 @@ namespace HuongViet.GUI
             }
         }
 
-        // Keep btnPosition_Click for backward compatibility but it should not be called
+     
         private void btnPosition_Click(object sender, EventArgs e)
         {
-            // This should not be called as btnPosition is now hidden
-            // Redirect to sub-menu item
+           
             BtnPositionSub_Click(sender, e);
         }
 

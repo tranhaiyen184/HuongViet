@@ -8,12 +8,12 @@ namespace HuongViet.BLL
     public class RoomBLL
     {
         private readonly RoomDAL roomDAL;
-        private readonly FloorDAL floorDAL;
+        private readonly AreaDAL areaDAL;
 
         public RoomBLL()
         {
             roomDAL = new RoomDAL();
-            floorDAL = new FloorDAL();
+            areaDAL = new AreaDAL();
         }
 
         /// <summary>
@@ -53,18 +53,18 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
-        /// Lấy danh sách phòng theo tầng
+        /// Lấy danh sách phòng theo khu vực
         /// </summary>
-        /// <param name="floorId">ID tầng</param>
+        /// <param name="areaId">ID khu vực</param>
         /// <returns>Danh sách phòng</returns>
-        public List<Room> GetRoomsByFloor(string floorId)
+        public List<Room> GetRoomsByArea(string areaId)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(floorId))
+                if (string.IsNullOrWhiteSpace(areaId))
                     return new List<Room>();
 
-                return roomDAL.GetByFloorId(floorId);
+                return roomDAL.GetByAreaId(areaId);
             }
             catch (Exception ex)
             {
@@ -88,10 +88,10 @@ namespace HuongViet.BLL
                     throw new Exception(validationError);
                 }
 
-                // Check if room name already exists on the same floor
-                if (roomDAL.IsRoomNameExists(room.RoomName, room.FloorID))
+                // Check if room name already exists in the same area
+                if (roomDAL.IsRoomNameExists(room.RoomName, room.AreaID))
                 {
-                    throw new Exception("Tên phòng đã tồn tại trên tầng này!");
+                    throw new Exception("Tên phòng đã tồn tại trong khu vực này!");
                 }
 
                 // Generate ID if not provided
@@ -133,10 +133,10 @@ namespace HuongViet.BLL
                     throw new Exception("Phòng không tồn tại!");
                 }
 
-                // Check if room name already exists on the same floor (excluding current room)
-                if (roomDAL.IsRoomNameExists(room.RoomName, room.FloorID, room.RoomID))
+                // Check if room name already exists in the same area (excluding current room)
+                if (roomDAL.IsRoomNameExists(room.RoomName, room.AreaID, room.RoomID))
                 {
-                    throw new Exception("Tên phòng đã tồn tại trên tầng này!");
+                    throw new Exception("Tên phòng đã tồn tại trong khu vực này!");
                 }
 
                 room.UpdatedAt = DateTime.Now;
@@ -178,18 +178,18 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
-        /// Lấy danh sách tầng (để hiển thị trong ComboBox)
+        /// Lấy danh sách khu vực (để hiển thị trong ComboBox)
         /// </summary>
-        /// <returns>Danh sách tầng</returns>
-        public List<Floor> GetAllFloors()
+        /// <returns>Danh sách khu vực</returns>
+        public List<Area> GetAllAreas()
         {
             try
             {
-                return floorDAL.GetAll();
+                return areaDAL.GetAll();
             }
             catch (Exception ex)
             {
-                throw new Exception($"Lỗi khi lấy danh sách tầng: {ex.Message}");
+                throw new Exception($"Lỗi khi lấy danh sách khu vực: {ex.Message}");
             }
         }
 
@@ -211,13 +211,13 @@ namespace HuongViet.BLL
             if (room.RoomName.Length > 30)
                 return "Tên phòng không được vượt quá 30 ký tự!";
 
-            if (string.IsNullOrWhiteSpace(room.FloorID))
-                return "Vui lòng chọn tầng!";
+            if (string.IsNullOrWhiteSpace(room.AreaID))
+                return "Vui lòng chọn khu vực!";
 
-            // Check if floor exists
-            var floor = floorDAL.GetById(room.FloorID);
-            if (floor == null)
-                return "Tầng không tồn tại!";
+            // Check if area exists
+            var area = areaDAL.GetById(room.AreaID);
+            if (area == null)
+                return "Khu vực không tồn tại!";
 
             if (room.PricePerHour < 0)
                 return "Giá mỗi giờ phải lớn hơn hoặc bằng 0!";
