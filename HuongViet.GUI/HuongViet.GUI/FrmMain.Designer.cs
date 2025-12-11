@@ -238,14 +238,7 @@
 			// btnDashboard
 			// 
 			this.btnDashboard.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.btnDashboard.Font = new System.Drawing.Font("Times New Roman			📁 Tầng 1 (Font đậm, màu xanh dương)
-			   ├─ Bàn 1 - Trống - Sức chứa: 4 (màu xanh lá)
-			   └─ Bàn 2 - Đang sử dụng - Sức chứa: 6 - Đơn: ORD000002 (màu đỏ)
-			📁 Tầng 2
-			   ├─ Bàn 3 - Trống - Sức chứa: 4
-			   └─ Bàn 4 - Trống - Sức chứa: 4
-			📁 Sảnh Trước
-			   └─ ...", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnDashboard.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
 			this.btnDashboard.IconColor = System.Drawing.Color.White;
 			this.btnDashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
