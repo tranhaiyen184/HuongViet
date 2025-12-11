@@ -54,6 +54,7 @@
 			this.btnCustomers = new FontAwesome.Sharp.IconButton();
 			this.btnSettings = new FontAwesome.Sharp.IconButton();
 			this.btnRestaurant = new FontAwesome.Sharp.IconButton();
+			this.btnVouchers = new FontAwesome.Sharp.IconButton();
 			this.contentPanel = new System.Windows.Forms.Panel();
 			this.placeholderPanel = new System.Windows.Forms.Panel();
 			this.lblPlaceholderHint = new System.Windows.Forms.Label();
@@ -225,6 +226,7 @@
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
+			this.navContainer.Controls.Add(this.btnVouchers);
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
@@ -447,6 +449,25 @@
 			this.btnRestaurant.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnRestaurant.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
+			// btnVouchers
+			// 
+			this.btnVouchers.IconChar = FontAwesome.Sharp.IconChar.Tags;
+			this.btnVouchers.IconColor = System.Drawing.Color.White;
+			this.btnVouchers.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnVouchers.IconSize = 24;
+			this.btnVouchers.Location = new System.Drawing.Point(19, 282);
+			this.btnVouchers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnVouchers.Name = "btnVouchers";
+			this.btnVouchers.Size = new System.Drawing.Size(213, 48);
+			this.btnVouchers.TabIndex = 5;
+			this.btnVouchers.Tag = "Voucher";
+			this.btnVouchers.Text = "Voucher";
+			this.btnVouchers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnVouchers.UseVisualStyleBackColor = true;
+			this.btnVouchers.Click += new System.EventHandler(this.btnVouchers_Click);
+			this.btnVouchers.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnVouchers.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
 			// contentPanel
 			// 
 			this.contentPanel.Controls.Add(this.placeholderPanel);
@@ -545,6 +566,7 @@
         private FontAwesome.Sharp.IconButton btnCombo;
         private FontAwesome.Sharp.IconButton btnStaff;
         private FontAwesome.Sharp.IconButton btnPosition;
+        private FontAwesome.Sharp.IconButton btnVouchers;
         private FontAwesome.Sharp.IconButton btnCustomers;
         private FontAwesome.Sharp.IconButton btnSettings;
         private FontAwesome.Sharp.IconButton btnRestaurant;

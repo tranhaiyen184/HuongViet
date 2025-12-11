@@ -123,7 +123,6 @@
     <Compile Include="FrmDepartment.Designer.cs">
       <DependentUpon>FrmDepartment.cs</DependentUpon>
     </Compile>
-
     <Compile Include="FrmItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +194,12 @@
     </Compile>
     <Compile Include="FrmPOS.Designer.cs">
       <DependentUpon>FrmPOS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVoucher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVoucher.Designer.cs">
+      <DependentUpon>FrmVoucher.cs</DependentUpon>
     </Compile>
     <Compile Include="SessionManager.cs" />
     <Compile Include="Program.cs" />
