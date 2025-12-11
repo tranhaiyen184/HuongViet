@@ -1285,6 +1285,20 @@ namespace HuongViet.GUI
             }
         }
 
+        private void btnReservations_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveMenuItem(btnReservations);
+                LoadChildFormInTab(new FrmReservation(), "Đặt bàn trước", "reservation");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form đặt bàn trước: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnTables_Click(object sender, EventArgs e)
         {
             try
