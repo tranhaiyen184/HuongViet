@@ -28,6 +28,7 @@ namespace HuongViet.GUI
                         
                         // Pass logged in user to main form
                         Application.Run(new FrmMain(loginForm.LoggedInUser));
+                        //Application.Run(new FrmReservation());
                     }
                 }
             }

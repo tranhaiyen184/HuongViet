@@ -47,6 +47,8 @@
 			this.btnTables = new FontAwesome.Sharp.IconButton();
 			this.btnMenu = new FontAwesome.Sharp.IconButton();
 			this.btnOrders = new FontAwesome.Sharp.IconButton();
+			this.btnReservations = new FontAwesome.Sharp.IconButton();
+			this.btnCombo = new FontAwesome.Sharp.IconButton();
 			this.btnStaff = new FontAwesome.Sharp.IconButton();
 			this.btnPosition = new FontAwesome.Sharp.IconButton();
 			this.btnInvoices = new FontAwesome.Sharp.IconButton();
@@ -197,7 +199,7 @@
 			this.btnToggleSidebar.IconChar = FontAwesome.Sharp.IconChar.None;
 			this.btnToggleSidebar.IconColor = System.Drawing.Color.White;
 			this.btnToggleSidebar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 334);
+			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 594);
 			this.btnToggleSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnToggleSidebar.Name = "btnToggleSidebar";
 			this.btnToggleSidebar.Size = new System.Drawing.Size(213, 39);
@@ -223,6 +225,7 @@
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
+			this.navContainer.Controls.Add(this.btnReservations);
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
@@ -314,6 +317,25 @@
 			this.btnOrders.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnOrders.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
+			// btnCombo
+			// 
+			this.btnCombo.IconChar = FontAwesome.Sharp.IconChar.LayerGroup;
+			this.btnCombo.IconColor = System.Drawing.Color.White;
+			this.btnCombo.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnCombo.IconSize = 24;
+			this.btnCombo.Location = new System.Drawing.Point(19, 282);
+			this.btnCombo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnCombo.Name = "btnCombo";
+			this.btnCombo.Size = new System.Drawing.Size(213, 48);
+			this.btnCombo.TabIndex = 5;
+			this.btnCombo.Tag = "Combo";
+			this.btnCombo.Text = "Combo";
+			this.btnCombo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnCombo.UseVisualStyleBackColor = true;
+			this.btnCombo.Visible = false;
+			this.btnCombo.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnCombo.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
 			// btnStaff
 			// 
 			this.btnStaff.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -321,7 +343,7 @@
 			this.btnStaff.IconColor = System.Drawing.Color.White;
 			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnStaff.IconSize = 24;
-			this.btnStaff.Location = new System.Drawing.Point(19, 230);
+			this.btnStaff.Location = new System.Drawing.Point(19, 334);
 			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnStaff.Name = "btnStaff";
 			this.btnStaff.Size = new System.Drawing.Size(213, 48);
@@ -341,7 +363,7 @@
 			this.btnPosition.IconColor = System.Drawing.Color.White;
 			this.btnPosition.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnPosition.IconSize = 24;
-			this.btnPosition.Location = new System.Drawing.Point(19, 282);
+			this.btnPosition.Location = new System.Drawing.Point(19, 386);
 			this.btnPosition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnPosition.Name = "btnPosition";
 			this.btnPosition.Size = new System.Drawing.Size(213, 48);
@@ -402,7 +424,7 @@
 			this.btnCustomers.IconColor = System.Drawing.Color.White;
 			this.btnCustomers.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnCustomers.IconSize = 24;
-			this.btnCustomers.Location = new System.Drawing.Point(19, 438);
+			this.btnCustomers.Location = new System.Drawing.Point(19, 490);
 			this.btnCustomers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnCustomers.Name = "btnCustomers";
 			this.btnCustomers.Size = new System.Drawing.Size(213, 48);
@@ -422,7 +444,7 @@
 			this.btnSettings.IconColor = System.Drawing.Color.White;
 			this.btnSettings.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnSettings.IconSize = 24;
-			this.btnSettings.Location = new System.Drawing.Point(19, 490);
+			this.btnSettings.Location = new System.Drawing.Point(19, 542);
 			this.btnSettings.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnSettings.Name = "btnSettings";
 			this.btnSettings.Size = new System.Drawing.Size(213, 48);
@@ -442,7 +464,7 @@
 			this.btnRestaurant.IconColor = System.Drawing.Color.White;
 			this.btnRestaurant.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnRestaurant.IconSize = 24;
-			this.btnRestaurant.Location = new System.Drawing.Point(19, 542);
+			this.btnRestaurant.Location = new System.Drawing.Point(19, 594);
 			this.btnRestaurant.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnRestaurant.Name = "btnRestaurant";
 			this.btnRestaurant.Size = new System.Drawing.Size(213, 48);
@@ -549,6 +571,7 @@
         private FontAwesome.Sharp.IconButton btnTables;
         private FontAwesome.Sharp.IconButton btnMenu;
         private FontAwesome.Sharp.IconButton btnOrders;
+        private FontAwesome.Sharp.IconButton btnReservations;
         private FontAwesome.Sharp.IconButton btnCombo;
         private FontAwesome.Sharp.IconButton btnStaff;
         private FontAwesome.Sharp.IconButton btnPosition;
