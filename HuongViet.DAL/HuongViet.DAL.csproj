@@ -106,6 +106,7 @@
     <Compile Include="TableDAL.cs" />
     <Compile Include="UnitDAL.cs" />
     <Compile Include="UserDAL.cs" />
+    <Compile Include="VoucherDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
