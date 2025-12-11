@@ -249,6 +249,20 @@ Table "Accumulated Points" {
   created_at timestamp [default: `now()`]
 }
 
+Table Vouchers {
+  id char(36) [primary key]
+  code varchar(64) [not null, unique]
+  percentage decimal(5,2) [not null, note: 'Percentage discount (0-100)']
+  description text
+  start_at datetime [note: 'Start date/time for voucher validity']
+  end_at datetime [note: 'End date/time for voucher validity']
+  usage_limit integer [note: 'Maximum number of times voucher can be used']
+  usage_count integer [not null, default: 0]
+  active boolean [not null, default: true]
+  created_at datetime [not null, default: `now()`]
+  updated_at datetime [not null, default: `now()`]
+}
+
 // Relationships
 Ref: User.PositionID > Position.PositionID // many-to-one (User holds Position)
 Ref: Position.DepartmentID > Department.DepartmentID // many-to-one

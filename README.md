@@ -288,5 +288,19 @@ CREATE TABLE accumulated_points (
     CONSTRAINT fk_accumpoint_customer FOREIGN KEY (CustomerID)
         REFERENCES customers(CustomerID)
 );
+
+CREATE TABLE vouchers (
+    id CHAR(36) NOT NULL PRIMARY KEY,
+    code VARCHAR(64) NOT NULL UNIQUE,
+    percentage DECIMAL(5,2) NOT NULL CHECK (percentage > 0 AND percentage <= 100),
+    description TEXT,
+    start_at DATETIME DEFAULT NULL,
+    end_at DATETIME DEFAULT NULL,
+    usage_limit INT DEFAULT NULL,
+    usage_count INT NOT NULL DEFAULT 0,
+    active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 ```
 
