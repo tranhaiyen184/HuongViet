@@ -43,16 +43,15 @@
 			this.btnToggleSidebar = new FontAwesome.Sharp.IconButton();
 			this.sidebarPanel = new System.Windows.Forms.Panel();
 			this.navContainer = new System.Windows.Forms.FlowLayoutPanel();
-			this.btnDashboard = new FontAwesome.Sharp.IconButton();
+			this.btnReport = new FontAwesome.Sharp.IconButton();
 			this.btnTables = new FontAwesome.Sharp.IconButton();
 			this.btnMenu = new FontAwesome.Sharp.IconButton();
 			this.btnOrders = new FontAwesome.Sharp.IconButton();
 			this.btnReservations = new FontAwesome.Sharp.IconButton();
-			this.btnCombo = new FontAwesome.Sharp.IconButton();
 			this.btnStaff = new FontAwesome.Sharp.IconButton();
 			this.btnPosition = new FontAwesome.Sharp.IconButton();
-			this.btnInvoices = new FontAwesome.Sharp.IconButton();
 			this.btnCombo = new FontAwesome.Sharp.IconButton();
+			this.btnInvoices = new FontAwesome.Sharp.IconButton();
 			this.btnCustomers = new FontAwesome.Sharp.IconButton();
 			this.btnSettings = new FontAwesome.Sharp.IconButton();
 			this.btnRestaurant = new FontAwesome.Sharp.IconButton();
@@ -199,7 +198,7 @@
 			this.btnToggleSidebar.IconChar = FontAwesome.Sharp.IconChar.None;
 			this.btnToggleSidebar.IconColor = System.Drawing.Color.White;
 			this.btnToggleSidebar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 594);
+			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 334);
 			this.btnToggleSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnToggleSidebar.Name = "btnToggleSidebar";
 			this.btnToggleSidebar.Size = new System.Drawing.Size(213, 39);
@@ -221,7 +220,7 @@
 			// navContainer
 			// 
 			this.navContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
-			this.navContainer.Controls.Add(this.btnDashboard);
+			this.navContainer.Controls.Add(this.btnReport);
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
@@ -238,28 +237,29 @@
 			this.navContainer.TabIndex = 1;
 			this.navContainer.WrapContents = false;
 			// 
-			// btnDashboard
+			// btnReport
 			// 
-			this.btnDashboard.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.btnDashboard.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnDashboard.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
-			this.btnDashboard.IconColor = System.Drawing.Color.White;
-			this.btnDashboard.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnDashboard.IconSize = 26;
-			this.btnDashboard.Location = new System.Drawing.Point(19, 22);
-			this.btnDashboard.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnDashboard.Name = "btnDashboard";
-			this.btnDashboard.Size = new System.Drawing.Size(213, 48);
-			this.btnDashboard.TabIndex = 0;
-			this.btnDashboard.Text = "Thống kê";
-			this.btnDashboard.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnDashboard.UseVisualStyleBackColor = true;
-			this.btnDashboard.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnDashboard.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			this.btnReport.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.btnReport.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnReport.IconChar = FontAwesome.Sharp.IconChar.ChartLine;
+			this.btnReport.IconColor = System.Drawing.Color.White;
+			this.btnReport.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnReport.IconSize = 26;
+			this.btnReport.Location = new System.Drawing.Point(19, 22);
+			this.btnReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnReport.Name = "btnReport";
+			this.btnReport.Size = new System.Drawing.Size(213, 48);
+			this.btnReport.TabIndex = 0;
+			this.btnReport.Text = "Thống kê";
+			this.btnReport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnReport.UseVisualStyleBackColor = true;
+			this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+			this.btnReport.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnReport.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnTables
 			// 
-			this.btnTables.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnTables.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnTables.IconChar = FontAwesome.Sharp.IconChar.Columns;
 			this.btnTables.IconColor = System.Drawing.Color.White;
 			this.btnTables.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -279,7 +279,7 @@
 			// 
 			// btnMenu
 			// 
-			this.btnMenu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnMenu.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnMenu.IconChar = FontAwesome.Sharp.IconChar.Burger;
 			this.btnMenu.IconColor = System.Drawing.Color.White;
 			this.btnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -299,7 +299,7 @@
 			// 
 			// btnOrders
 			// 
-			this.btnOrders.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnOrders.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnOrders.IconChar = FontAwesome.Sharp.IconChar.CashRegister;
 			this.btnOrders.IconColor = System.Drawing.Color.White;
 			this.btnOrders.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -316,6 +316,67 @@
 			this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
 			this.btnOrders.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnOrders.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnReservations
+			// 
+			this.btnReservations.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.btnReservations.IconChar = FontAwesome.Sharp.IconChar.CalendarCheck;
+			this.btnReservations.IconColor = System.Drawing.Color.White;
+			this.btnReservations.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnReservations.IconSize = 24;
+			this.btnReservations.Location = new System.Drawing.Point(19, 230);
+			this.btnReservations.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnReservations.Name = "btnReservations";
+			this.btnReservations.Size = new System.Drawing.Size(213, 48);
+			this.btnReservations.TabIndex = 5;
+			this.btnReservations.Tag = "Đặt bàn";
+			this.btnReservations.Text = "Đặt bàn";
+			this.btnReservations.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnReservations.UseVisualStyleBackColor = true;
+			this.btnReservations.Click += new System.EventHandler(this.btnReservations_Click);
+			this.btnReservations.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnReservations.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnStaff
+			// 
+			this.btnStaff.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.btnStaff.IconChar = FontAwesome.Sharp.IconChar.UserTie;
+			this.btnStaff.IconColor = System.Drawing.Color.White;
+			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnStaff.IconSize = 24;
+			this.btnStaff.Location = new System.Drawing.Point(19, 230);
+			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnStaff.Name = "btnStaff";
+			this.btnStaff.Size = new System.Drawing.Size(213, 48);
+			this.btnStaff.TabIndex = 6;
+			this.btnStaff.Tag = "Nhân viên";
+			this.btnStaff.Text = "Nhân viên";
+			this.btnStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnStaff.UseVisualStyleBackColor = true;
+			this.btnStaff.Click += new System.EventHandler(this.btnStaff_Click);
+			this.btnStaff.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnStaff.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
+			// btnPosition
+			// 
+			this.btnPosition.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.btnPosition.IconChar = FontAwesome.Sharp.IconChar.MapMarkerAlt;
+			this.btnPosition.IconColor = System.Drawing.Color.White;
+			this.btnPosition.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnPosition.IconSize = 24;
+			this.btnPosition.Location = new System.Drawing.Point(19, 282);
+			this.btnPosition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnPosition.Name = "btnPosition";
+			this.btnPosition.Size = new System.Drawing.Size(213, 48);
+			this.btnPosition.TabIndex = 7;
+			this.btnPosition.Tag = "Vị trí";
+			this.btnPosition.Text = "Vị trí";
+			this.btnPosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnPosition.UseVisualStyleBackColor = true;
+			this.btnPosition.Visible = false;
+			this.btnPosition.Click += new System.EventHandler(this.btnPosition_Click);
+			this.btnPosition.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnPosition.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnCombo
 			// 
@@ -335,47 +396,6 @@
 			this.btnCombo.Visible = false;
 			this.btnCombo.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnCombo.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnStaff
-			// 
-			this.btnStaff.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnStaff.IconChar = FontAwesome.Sharp.IconChar.UserTie;
-			this.btnStaff.IconColor = System.Drawing.Color.White;
-			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnStaff.IconSize = 24;
-			this.btnStaff.Location = new System.Drawing.Point(19, 334);
-			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnStaff.Name = "btnStaff";
-			this.btnStaff.Size = new System.Drawing.Size(213, 48);
-			this.btnStaff.TabIndex = 6;
-			this.btnStaff.Tag = "Nhân viên";
-			this.btnStaff.Text = "Nhân viên";
-			this.btnStaff.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnStaff.UseVisualStyleBackColor = true;
-			this.btnStaff.Click += new System.EventHandler(this.btnStaff_Click);
-			this.btnStaff.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnStaff.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnPosition
-			// 
-			this.btnPosition.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnPosition.IconChar = FontAwesome.Sharp.IconChar.MapMarkerAlt;
-			this.btnPosition.IconColor = System.Drawing.Color.White;
-			this.btnPosition.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnPosition.IconSize = 24;
-			this.btnPosition.Location = new System.Drawing.Point(19, 386);
-			this.btnPosition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnPosition.Name = "btnPosition";
-			this.btnPosition.Size = new System.Drawing.Size(213, 48);
-			this.btnPosition.TabIndex = 7;
-			this.btnPosition.Tag = "Vị trí";
-			this.btnPosition.Text = "Vị trí";
-			this.btnPosition.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnPosition.UseVisualStyleBackColor = true;
-			this.btnPosition.Visible = false;
-			this.btnPosition.Click += new System.EventHandler(this.btnPosition_Click);
-			this.btnPosition.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnPosition.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnInvoices
 			// 
@@ -396,26 +416,6 @@
 			this.btnInvoices.Visible = false;
 			this.btnInvoices.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnInvoices.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
-			// 
-			// btnCombo
-			// 
-			this.btnCombo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnCombo.IconChar = FontAwesome.Sharp.IconChar.LayerGroup;
-			this.btnCombo.IconColor = System.Drawing.Color.White;
-			this.btnCombo.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnCombo.IconSize = 24;
-			this.btnCombo.Location = new System.Drawing.Point(19, 282);
-			this.btnCombo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btnCombo.Name = "btnCombo";
-			this.btnCombo.Size = new System.Drawing.Size(213, 48);
-			this.btnCombo.TabIndex = 5;
-			this.btnCombo.Tag = "Combo";
-			this.btnCombo.Text = "Combo";
-			this.btnCombo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnCombo.UseVisualStyleBackColor = true;
-			this.btnCombo.Visible = false;
-			this.btnCombo.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
-			this.btnCombo.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
 			// btnCustomers
 			// 
@@ -566,7 +566,7 @@
         private System.Windows.Forms.PictureBox logoPictureBox;
         private FontAwesome.Sharp.IconButton btnToggleSidebar;
         private System.Windows.Forms.FlowLayoutPanel navContainer;
-        private FontAwesome.Sharp.IconButton btnDashboard;
+        private FontAwesome.Sharp.IconButton btnReport;
         private FontAwesome.Sharp.IconButton btnInvoices;
         private FontAwesome.Sharp.IconButton btnTables;
         private FontAwesome.Sharp.IconButton btnMenu;

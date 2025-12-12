@@ -101,6 +101,7 @@
     <Compile Include="OrderDAL.cs" />
     <Compile Include="PermissionDAL.cs" />
     <Compile Include="PositionDAL.cs" />
+    <Compile Include="ReportDAL.cs" />
     <Compile Include="ReservationDAL.cs" />
     <Compile Include="RoleDAL.cs" />
     <Compile Include="RoomDAL.cs" />

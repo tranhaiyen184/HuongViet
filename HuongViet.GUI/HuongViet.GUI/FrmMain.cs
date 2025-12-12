@@ -22,6 +22,7 @@ namespace HuongViet.GUI
         // Menu expansion state
         private Dictionary<IconButton, bool> _menuExpandedState = new Dictionary<IconButton, bool>();
         private Dictionary<IconButton, Panel> _subMenuPanels = new Dictionary<IconButton, Panel>();
+        private IconButton btnRevenueReport;
         
         // Modern color scheme
         private readonly Color SidebarBackground = Color.FromArgb(245, 247, 250); // Light gray
@@ -45,6 +46,7 @@ namespace HuongViet.GUI
             _currentUser = currentUser;
             InitializeLayoutState();
             UpdateUserInfo();
+            this.Shown += FrmMain_Shown;
             
             // Add Resize event handler to update layout
             this.Resize += FrmMain_Resize;
@@ -127,6 +129,9 @@ namespace HuongViet.GUI
             
             // Initialize sub-menu for Menu
             InitializeMenuSubMenu();
+
+            // Initialize sub-menu for Report
+            InitializeReportSubMenu();
             
             UpdateSidebarState(force: true);
             
@@ -450,6 +455,91 @@ namespace HuongViet.GUI
                 btnMenu.Tag = "Thực đơn";
             }
         }
+
+        private void InitializeReportSubMenu()
+        {
+            Panel subMenuPanel = new Panel();
+            subMenuPanel.Name = "subMenuReport";
+            subMenuPanel.Height = 0;
+            subMenuPanel.Visible = false;
+            subMenuPanel.Margin = new Padding(8, 0, 8, 0);
+            subMenuPanel.Padding = new Padding(0);
+            subMenuPanel.AutoSize = false;
+            subMenuPanel.Width = 240;
+            subMenuPanel.BackColor = SidebarBackground;
+
+            btnRevenueReport = new IconButton();
+            btnRevenueReport.Name = "btnRevenueReport";
+            btnRevenueReport.Text = "Thống kê doanh thu";
+            btnRevenueReport.Tag = "Thống kê doanh thu";
+            btnRevenueReport.IconChar = IconChar.Circle;
+            btnRevenueReport.IconColor = MenuItemText;
+            btnRevenueReport.IconFont = IconFont.Auto;
+            btnRevenueReport.IconSize = 6;
+            btnRevenueReport.FlatAppearance.BorderSize = 0;
+            btnRevenueReport.FlatStyle = FlatStyle.Flat;
+            btnRevenueReport.UseVisualStyleBackColor = false;
+            btnRevenueReport.ForeColor = MenuItemText;
+            btnRevenueReport.BackColor = SubMenuItemBackground;
+            btnRevenueReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnRevenueReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRevenueReport.Padding = new Padding(48, 10, 16, 10);
+            btnRevenueReport.Margin = new Padding(0, 4, 0, 0);
+            btnRevenueReport.Height = 40;
+            btnRevenueReport.Width = 224;
+            btnRevenueReport.Dock = DockStyle.None;
+            btnRevenueReport.Location = new Point(8, 0);
+            btnRevenueReport.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnRevenueReport.Font = new Font("Segoe UI", 9F);
+            btnRevenueReport.Click += BtnRevenueReport_Click;
+            ApplyModernButtonStyle(btnRevenueReport, true);
+
+            IconButton btnBestSellingReport = new IconButton();
+            btnBestSellingReport.Name = "btnBestSellingReport";
+            btnBestSellingReport.Text = "Sản phẩm bán chạy";
+            btnBestSellingReport.Tag = "Sản phẩm bán chạy";
+            btnBestSellingReport.IconChar = IconChar.Circle;
+            btnBestSellingReport.IconColor = MenuItemText;
+            btnBestSellingReport.IconFont = IconFont.Auto;
+            btnBestSellingReport.IconSize = 6;
+            btnBestSellingReport.FlatAppearance.BorderSize = 0;
+            btnBestSellingReport.FlatStyle = FlatStyle.Flat;
+            btnBestSellingReport.UseVisualStyleBackColor = false;
+            btnBestSellingReport.ForeColor = MenuItemText;
+            btnBestSellingReport.BackColor = SubMenuItemBackground;
+            btnBestSellingReport.TextAlign = ContentAlignment.MiddleLeft;
+            btnBestSellingReport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBestSellingReport.Padding = new Padding(48, 10, 16, 10);
+            btnBestSellingReport.Margin = new Padding(0, 4, 0, 0);
+            btnBestSellingReport.Height = 40;
+            btnBestSellingReport.Width = 224;
+            btnBestSellingReport.Dock = DockStyle.None;
+            btnBestSellingReport.Location = new Point(8, 44);
+            btnBestSellingReport.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnBestSellingReport.Font = new Font("Segoe UI", 9F);
+            btnBestSellingReport.Click += BtnBestSellingReport_Click;
+            ApplyModernButtonStyle(btnBestSellingReport, true);
+
+            subMenuPanel.Controls.Add(btnRevenueReport);
+            subMenuPanel.Controls.Add(btnBestSellingReport);
+
+            subMenuPanel.Height = btnRevenueReport.Height + btnBestSellingReport.Height + 12;
+
+            int reportIndex = navContainer.Controls.IndexOf(btnReport);
+            if (reportIndex >= 0)
+            {
+                navContainer.Controls.Add(subMenuPanel);
+                navContainer.Controls.SetChildIndex(subMenuPanel, reportIndex + 1);
+            }
+
+            _subMenuPanels[btnReport] = subMenuPanel;
+            _menuExpandedState[btnReport] = false;
+
+            if (btnReport.Tag == null || !btnReport.Tag.ToString().StartsWith("Thống kê"))
+            {
+                btnReport.Tag = "Thống kê";
+            }
+        }
         
         private void BtnCategory_Click(object sender, EventArgs e)
         {
@@ -504,6 +594,43 @@ namespace HuongViet.GUI
             {
                 MessageBox.Show($"Lỗi khi mở form quản lý dịch vụ: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnRevenueReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmRevenueReport(), "Thống kê doanh thu", "report");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở thống kê doanh thu: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnBestSellingReport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveSubMenuItem(sender as IconButton);
+                LoadChildFormInTab(new FrmBestSellingReport(), "Báo cáo sản phẩm", "bestSellingReport");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở báo cáo sản phẩm: {ex.Message}", 
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FrmMain_Shown(object sender, EventArgs e)
+        {
+            // Open revenue report by default when the main form appears
+            if (btnRevenueReport != null)
+            {
+                BtnRevenueReport_Click(btnRevenueReport, EventArgs.Empty);
             }
         }
         
@@ -871,6 +998,12 @@ namespace HuongViet.GUI
 
                 navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
 
+                if (_subMenuPanels.ContainsKey(btnReport))
+                {
+                    bool isExpanded = _menuExpandedState.ContainsKey(btnReport) && _menuExpandedState[btnReport];
+                    UpdateReportChevron(isExpanded);
+                }
+
                 if (_subMenuPanels.ContainsKey(btnStaff))
                 {
                     bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
@@ -1181,6 +1314,24 @@ namespace HuongViet.GUI
             }
         }
 
+        private void UpdateReportChevron(bool isExpanded)
+        {
+            string baseText = btnReport.Tag?.ToString() ?? "Thống kê";
+            if (baseText.Contains("|"))
+            {
+                baseText = baseText.Split('|')[0];
+            }
+
+            if (_sidebarExpanded)
+            {
+                btnReport.Text = baseText + "  " + (isExpanded ? "▲" : "▼");
+            }
+            else
+            {
+                btnReport.Text = string.Empty;
+            }
+        }
+
         private void btnOrders_Click(object sender, EventArgs e)
         {
             try
@@ -1281,6 +1432,31 @@ namespace HuongViet.GUI
 		private void btnTables_Click_1(object sender, EventArgs e)
 		{
 
+		}
+
+		private void btnDashboard_Click(object sender, EventArgs e)
+		{
+			ShowPlaceholder();
+		}
+
+		private void btnReport_Click(object sender, EventArgs e)
+		{
+            if (!_sidebarExpanded)
+            {
+                return;
+            }
+
+            SetActiveMenuItem(btnReport);
+
+            if (_subMenuPanels.ContainsKey(btnReport))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnReport) && _menuExpandedState[btnReport];
+                _menuExpandedState[btnReport] = !isExpanded;
+                _subMenuPanels[btnReport].Visible = !isExpanded;
+                UpdateReportChevron(!isExpanded);
+                navContainer.PerformLayout();
+                navContainer.Refresh();
+            }
 		}
 	}
 }

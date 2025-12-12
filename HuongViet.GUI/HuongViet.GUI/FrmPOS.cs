@@ -18,7 +18,6 @@ namespace HuongViet.GUI
         private List<Item> items;
         private List<OrderDetail> currentOrderDetails;
         private Table selectedTable;
-       private string currentAreaFilter;
         private string currentStaffId;
 
         public FrmPOS()

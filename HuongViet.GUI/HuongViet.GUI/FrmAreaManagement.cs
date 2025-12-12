@@ -12,7 +12,6 @@ namespace HuongViet.GUI
         private readonly AreaBLL areaBLL;
         private List<Area> areas;
         private Area selectedArea;
-        private bool isEditing = false;
 
         public FrmAreaManagement()
         {
@@ -92,7 +91,6 @@ namespace HuongViet.GUI
         {
             txtAreaName.Clear();
             selectedArea = null;
-            isEditing = false;
             
             btnAdd.Enabled = true;
             btnEdit.Enabled = false;
@@ -149,7 +147,6 @@ namespace HuongViet.GUI
                     btnDelete.Enabled = true;
                     btnSave.Enabled = false;
                     btnCancel.Enabled = false;
-                    isEditing = false;
                 }
             }
         }
@@ -157,7 +154,6 @@ namespace HuongViet.GUI
         private void btnAdd_Click(object sender, EventArgs e)
         {
             selectedArea = null;
-            isEditing = true;
             ClearForm();
             EnableEditMode(true);
             txtAreaName.Focus();
@@ -167,7 +163,6 @@ namespace HuongViet.GUI
         {
             if (selectedArea != null)
             {
-                isEditing = true;
                 EnableEditMode(true);
                 txtAreaName.Focus();
                 txtAreaName.SelectAll();

@@ -23,14 +23,13 @@ namespace HuongViet.BLL
                     from = referenceDate.Date;
                     to = referenceDate.Date.AddDays(1).AddTicks(-1);
                     break;
-                case ReportType.Weekly:
-                    int diff = (7 + (referenceDate.DayOfWeek - DayOfWeek.Monday)) % 7;
-                    from = referenceDate.AddDays(-diff).Date;                     // Start of week (Monday)
-                    to = from.AddDays(7).AddTicks(-1);                            // End of week (Sunday 23:59:59.9999999)
-                    break;
                 case ReportType.Monthly:
                     from = new DateTime(referenceDate.Year, referenceDate.Month, 1);
                     to = from.AddMonths(1).AddTicks(-1);
+                    break;
+                case ReportType.Yearly:
+                    from = new DateTime(referenceDate.Year, 1, 1);
+                    to = from.AddYears(1).AddTicks(-1);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(reportType), "Loại báo cáo không hợp lệ.");
@@ -67,6 +66,23 @@ namespace HuongViet.BLL
             }
         }
 
+        public List<ReportingBestSellingItem> GetBestSalerItems(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                if (startDate > endDate)
+                    throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+
+                DateTime from = startDate.Date;
+                DateTime to = endDate.Date.AddDays(1).AddTicks(-1);
+                return reportDAL.GetBestSalerItems(from, to);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy báo cáo mặt hàng bán chạy: {ex.Message}");
+            }
+        }
+
         public int GetTotalRevenue(ReportType reportType)
         {
             try
@@ -82,6 +98,23 @@ namespace HuongViet.BLL
             }
         }
 
+        public int GetTotalRevenue(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                if (startDate > endDate)
+                    throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+
+                DateTime from = startDate.Date;
+                DateTime to = endDate.Date.AddDays(1).AddTicks(-1);
+                return reportDAL.GetTotalRevenue(from, to);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy tổng doanh thu: {ex.Message}");
+            }
+        }
+
         public List<int> GetDailyRevenue(ReportType reportType)
         {
             try
@@ -89,7 +122,7 @@ namespace HuongViet.BLL
                 var (from, to) = GetDateRange(reportType, DateTime.Now);
                 if (from > to)
                     throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
-                return reportDAL.GetDailyRevenue(from, to);
+                return BuildDailySeries(from, to);
             }
             catch (Exception ex)
             {
@@ -97,11 +130,84 @@ namespace HuongViet.BLL
             }
         }
 
+        public List<int> GetMonthlyRevenueTotals(int year)
+        {
+            try
+            {
+                var monthlyTotals = new List<int>(12);
+                for (int month = 1; month <= 12; month++)
+                {
+                    var from = new DateTime(year, month, 1);
+                    var to = from.AddMonths(1).AddTicks(-1);
+                    monthlyTotals.Add(reportDAL.GetTotalRevenue(from, to));
+                }
+                return monthlyTotals;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy doanh thu theo tháng trong năm: {ex.Message}");
+            }
+        }
+
+        public List<int> GetYearlyRevenueTotals(int startYear, int yearCount)
+        {
+            if (yearCount <= 0)
+                throw new ArgumentException("Số năm phải lớn hơn 0.");
+
+            try
+            {
+                var yearlyTotals = new List<int>(yearCount);
+                for (int i = 0; i < yearCount; i++)
+                {
+                    int year = startYear + i;
+                    var from = new DateTime(year, 1, 1);
+                    var to = from.AddYears(1).AddTicks(-1);
+                    yearlyTotals.Add(reportDAL.GetTotalRevenue(from, to));
+                }
+                return yearlyTotals;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy doanh thu theo năm: {ex.Message}");
+            }
+        }
+
+        public List<int> GetDailyRevenue(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                if (startDate > endDate)
+                    throw new ArgumentException("Ngày bắt đầu phải nhỏ hơn hoặc bằng ngày kết thúc.");
+
+                DateTime from = startDate.Date;
+                DateTime to = endDate.Date.AddDays(1).AddTicks(-1);
+                return BuildDailySeries(from, to);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi lấy doanh thu theo ngày: {ex.Message}");
+            }
+        }
+
+        private List<int> BuildDailySeries(DateTime fromDateInclusive, DateTime toDateInclusive)
+        {
+            var map = reportDAL.GetDailyRevenue(fromDateInclusive, toDateInclusive);
+            var series = new List<int>();
+            for (var d = fromDateInclusive.Date; d <= toDateInclusive.Date; d = d.AddDays(1))
+            {
+                if (map.TryGetValue(d, out var value))
+                    series.Add(value);
+                else
+                    series.Add(0);
+            }
+            return series;
+        }
+
         public enum ReportType
         {
             Daily,
-            Weekly,
-            Monthly
+            Monthly,
+            Yearly
         }
     }
 }

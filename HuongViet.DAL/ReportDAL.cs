@@ -64,48 +64,44 @@ namespace HuongViet.DAL
 
         public List<ReportingBestSellingItem> GetBestSalerItems(DateTime from, DateTime to)
         {
-            string query = @"
+			string query = @"
 SELECT
     i.ItemID,
     i.ItemName,
-    COALESCE(SUM(od.Quantity), 0) AS TotalQuantitySold,
-    COALESCE(SUM(od.TotalAmount), 0) AS TotalRevenue,
-    
-    -- Quantity percentage
-    CASE 
-        WHEN SUM(SUM(od.Quantity)) OVER () = 0 THEN 0
-        ELSE 
-            (COALESCE(SUM(od.Quantity), 0) * 100.0) 
-            / NULLIF(SUM(SUM(od.Quantity)) OVER (), 0)
-    END AS QuantityPercent,
+    SUM(od.Quantity) AS TotalQuantitySold,
+    SUM(od.TotalAmount) AS TotalRevenue,
 
-    -- Revenue percentage
-    CASE 
-        WHEN SUM(SUM(od.TotalAmount)) OVER () = 0 THEN 0
-        ELSE 
-            (COALESCE(SUM(od.TotalAmount), 0) * 100.0) 
-            / NULLIF(SUM(SUM(od.TotalAmount)) OVER (), 0)
-    END AS RevenuePercent
+    -- % theo số lượng
+    (SUM(od.Quantity) * 100.0) 
+        / NULLIF(SUM(SUM(od.Quantity)) OVER (), 0) AS QuantityPercent,
 
-FROM items i
-LEFT JOIN order_details od 
-    ON i.ItemID = od.ItemID
-LEFT JOIN orders o
-    ON od.OrderID = o.OrderID
-    AND o.OrderStatus = 'Completed'
+    -- % theo doanh thu
+    (SUM(od.TotalAmount) * 100.0) 
+        / NULLIF(SUM(SUM(od.TotalAmount)) OVER (), 0) AS RevenuePercent
+
+FROM orders o
+INNER JOIN order_details od 
+    ON o.OrderID = od.OrderID
+INNER JOIN items i 
+    ON od.ItemID = i.ItemID
+
+WHERE
+    o.OrderStatus = 'Completed'
     AND o.DeletedAt IS NULL
-    AND o.OrderDate BETWEEN @FromDate AND @ToDate
+    AND o.OrderDate >= @FromDate
+    AND o.OrderDate < DATE_ADD(@ToDate, INTERVAL 1 DAY)
 
-GROUP BY 
+GROUP BY
     i.ItemID, i.ItemName
-ORDER BY 
+ORDER BY
     TotalQuantitySold DESC;
 ";
 
-            var parameters = new MySqlParameter[]
+
+			var parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@FromDate", MySqlDbType.DateTime) { Value = from },
-                new MySqlParameter("@ToDate", MySqlDbType.DateTime) { Value = to }
+                new MySqlParameter("@FromDate", MySqlDbType.Date) { Value = from.Date },
+                new MySqlParameter("@ToDate", MySqlDbType.Date) { Value = to.Date }
             };
 
             var table = dbHelper.ExecuteQuery(query, parameters);
@@ -114,7 +110,7 @@ ORDER BY
                 return ConvertDataTableToList(table);
             }
 
-            return null;
+            return new List<ReportingBestSellingItem>();
         }
 
         public int GetTotalRevenue(DateTime from, DateTime to)
@@ -147,7 +143,7 @@ WHERE
             return 0;
         }
 
-        public List<int> GetDailyRevenue(DateTime from, DateTime to)
+        public Dictionary<DateTime, int> GetDailyRevenue(DateTime from, DateTime to)
         {
             string query = @"
 SELECT
@@ -171,19 +167,14 @@ ORDER BY
                 new MySqlParameter("@ToDate", MySqlDbType.DateTime) { Value = to }
             };
             var table = dbHelper.ExecuteQuery(query, parameters);
-            List<int> dailyRevenues = new List<int>();
+            var dailyRevenues = new Dictionary<DateTime, int>();
             if (table != null && table.Rows.Count > 0)
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    if (row["DailyRevenue"] != DBNull.Value)
-                    {
-                        dailyRevenues.Add(Convert.ToInt32(row["DailyRevenue"]));
-                    }
-                    else
-                    {
-                        dailyRevenues.Add(0);
-                    }
+                    var date = Convert.ToDateTime(row["RevenueDate"]).Date;
+                    var value = row["DailyRevenue"] != DBNull.Value ? Convert.ToInt32(row["DailyRevenue"]) : 0;
+                    dailyRevenues[date] = value;
                 }
             }
             return dailyRevenues;
