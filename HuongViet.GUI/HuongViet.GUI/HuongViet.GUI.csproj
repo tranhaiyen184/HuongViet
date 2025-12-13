@@ -233,6 +233,12 @@
     <Compile Include="FrmPOS.Designer.cs">
       <DependentUpon>FrmPOS.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmVoucher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVoucher.Designer.cs">
+      <DependentUpon>FrmVoucher.cs</DependentUpon>
+    </Compile>
     <Compile Include="SessionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

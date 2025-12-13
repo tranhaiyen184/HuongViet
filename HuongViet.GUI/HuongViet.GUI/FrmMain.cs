@@ -1374,6 +1374,33 @@ namespace HuongViet.GUI
             }
         }
 
+        private void btnVouchers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveMenuItem(btnVouchers);
+                LoadChildFormInTab(new FrmVoucher(), "Quản lý Voucher", "voucher");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form Voucher: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // Clean up all tabs
+            CloseAllTabs();
+            
+            // Dispose tab control
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Dispose();
+            }
+            
+            base.OnFormClosed(e);
+        }
+
         private void btnStaff_Click(object sender, EventArgs e)
         {
         
