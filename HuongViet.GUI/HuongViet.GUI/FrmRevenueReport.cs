@@ -13,7 +13,6 @@ namespace HuongViet.GUI
         private readonly ReportBLL reportBLL = new ReportBLL();
         private ReportBLL.ReportType currentReportType = ReportBLL.ReportType.Daily;
         private bool isInitializing;
-
         private DateTime dailyStart;
         private DateTime dailyEnd;
         private int monthlyYear;
