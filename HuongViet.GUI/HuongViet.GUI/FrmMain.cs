@@ -1387,20 +1387,6 @@ namespace HuongViet.GUI
             }
         }
 
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            // Clean up all tabs
-            CloseAllTabs();
-            
-            // Dispose tab control
-            if (_mainTabControl != null)
-            {
-                _mainTabControl.Dispose();
-            }
-            
-            base.OnFormClosed(e);
-        }
-
         private void btnStaff_Click(object sender, EventArgs e)
         {
         
