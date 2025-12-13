@@ -996,7 +996,22 @@ namespace HuongViet.GUI
                     }
                 }
 
-                navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
+            navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
+            
+            // Update chevron in button text/icon area
+            if (_subMenuPanels.ContainsKey(btnStaff))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
+                UpdateStaffChevron(isExpanded);
+            }
+            
+            if (_subMenuPanels.ContainsKey(btnMenu))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                UpdateMenuChevron(isExpanded);
+            }
+            
+            navContainer.Refresh();
 
                 if (_subMenuPanels.ContainsKey(btnReport))
                 {
@@ -1372,6 +1387,33 @@ namespace HuongViet.GUI
                 MessageBox.Show($"Lỗi khi mở form quản lý bàn: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnVouchers_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveMenuItem(btnVouchers);
+                LoadChildFormInTab(new FrmVoucher(), "Quản lý Voucher", "voucher");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form Voucher: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // Clean up all tabs
+            CloseAllTabs();
+            
+            // Dispose tab control
+            if (_mainTabControl != null)
+            {
+                _mainTabControl.Dispose();
+            }
+            
+            base.OnFormClosed(e);
         }
 
         private void btnStaff_Click(object sender, EventArgs e)

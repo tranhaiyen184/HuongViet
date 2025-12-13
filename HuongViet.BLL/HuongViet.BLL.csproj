@@ -61,6 +61,7 @@
     <Compile Include="TableBLL.cs" />
     <Compile Include="UnitBLL.cs" />
     <Compile Include="UserBLL.cs" />
+    <Compile Include="VoucherBLL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
