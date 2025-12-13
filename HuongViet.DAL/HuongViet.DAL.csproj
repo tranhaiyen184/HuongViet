@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="AccumulatedPointsDAL.cs" />
     <Compile Include="AreaDAL.cs" />
+    <Compile Include="BackupRepository.cs" />
     <Compile Include="CategoryDAL.cs" />
     <Compile Include="CustomerDAL.cs" />
     <Compile Include="DatabaseHelper.cs" />
