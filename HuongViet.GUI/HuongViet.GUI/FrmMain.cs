@@ -1402,6 +1402,19 @@ namespace HuongViet.GUI
             }
         }
 
+        private void btnBackup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SetActiveMenuItem(btnBackup);
+                LoadChildFormInTab(new Form1(), "Sao lưu Dữ liệu", "backup");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi mở form sao lưu dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void btnStaff_Click(object sender, EventArgs e)
         {
         

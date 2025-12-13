@@ -56,6 +56,7 @@
 			this.btnSettings = new FontAwesome.Sharp.IconButton();
 			this.btnRestaurant = new FontAwesome.Sharp.IconButton();
 			this.btnVouchers = new FontAwesome.Sharp.IconButton();
+			this.btnBackup = new FontAwesome.Sharp.IconButton();
 			this.contentPanel = new System.Windows.Forms.Panel();
 			this.placeholderPanel = new System.Windows.Forms.Panel();
 			this.lblPlaceholderHint = new System.Windows.Forms.Label();
@@ -227,6 +228,7 @@
 			this.navContainer.Controls.Add(this.btnOrders);
 			this.navContainer.Controls.Add(this.btnReservations);
 			this.navContainer.Controls.Add(this.btnVouchers);
+			this.navContainer.Controls.Add(this.btnBackup);
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
@@ -498,6 +500,26 @@
 			this.btnVouchers.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnVouchers.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
+			// btnBackup
+			// 
+			this.btnBackup.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.btnBackup.IconChar = FontAwesome.Sharp.IconChar.Database;
+			this.btnBackup.IconColor = System.Drawing.Color.White;
+			this.btnBackup.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnBackup.IconSize = 24;
+			this.btnBackup.Location = new System.Drawing.Point(19, 334);
+			this.btnBackup.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnBackup.Name = "btnBackup";
+			this.btnBackup.Size = new System.Drawing.Size(213, 48);
+			this.btnBackup.TabIndex = 11;
+			this.btnBackup.Tag = "Sao lưu Dữ liệu";
+			this.btnBackup.Text = "Sao lưu Dữ liệu";
+			this.btnBackup.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnBackup.UseVisualStyleBackColor = true;
+			this.btnBackup.Click += new System.EventHandler(this.btnBackup_Click);
+			this.btnBackup.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnBackup.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
 			// contentPanel
 			// 
 			this.contentPanel.Controls.Add(this.placeholderPanel);
@@ -600,6 +622,7 @@
         private FontAwesome.Sharp.IconButton btnCustomers;
         private FontAwesome.Sharp.IconButton btnSettings;
         private FontAwesome.Sharp.IconButton btnRestaurant;
+        private FontAwesome.Sharp.IconButton btnBackup;
         private System.Windows.Forms.Panel placeholderPanel;
         private System.Windows.Forms.Label lblPlaceholderHint;
         private System.Windows.Forms.Label lblPlaceholderTitle;
