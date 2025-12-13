@@ -996,7 +996,22 @@ namespace HuongViet.GUI
                     }
                 }
 
-                navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
+            navContainer.Padding = _sidebarExpanded ? new Padding(12, 16, 12, 16) : new Padding(4, 16, 4, 16);
+            
+            // Update chevron in button text/icon area
+            if (_subMenuPanels.ContainsKey(btnStaff))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnStaff) && _menuExpandedState[btnStaff];
+                UpdateStaffChevron(isExpanded);
+            }
+            
+            if (_subMenuPanels.ContainsKey(btnMenu))
+            {
+                bool isExpanded = _menuExpandedState.ContainsKey(btnMenu) && _menuExpandedState[btnMenu];
+                UpdateMenuChevron(isExpanded);
+            }
+            
+            navContainer.Refresh();
 
                 if (_subMenuPanels.ContainsKey(btnReport))
                 {

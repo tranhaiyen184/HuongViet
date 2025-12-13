@@ -225,8 +225,8 @@
 			this.navContainer.Controls.Add(this.btnTables);
 			this.navContainer.Controls.Add(this.btnMenu);
 			this.navContainer.Controls.Add(this.btnOrders);
-			this.navContainer.Controls.Add(this.btnVouchers);
 			this.navContainer.Controls.Add(this.btnReservations);
+			this.navContainer.Controls.Add(this.btnVouchers);
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
