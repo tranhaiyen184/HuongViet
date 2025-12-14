@@ -64,6 +64,14 @@ namespace HuongViet.GUI
             lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             lblTotalAmount.Text = "0";
             lblTableInfo.Text = "Chưa chọn bàn";
+            lblFormOfService.Visible = true;
+            
+            // Initialize form of service ComboBox
+            cmbFormOfService.Items.Clear();
+            cmbFormOfService.Items.Add("Tại chỗ");
+            cmbFormOfService.Items.Add("Mang đi");
+            cmbFormOfService.SelectedIndex = 0; // Default to "Tại chỗ" (DineIn)
+            cmbFormOfService.Enabled = false; // Disabled until table is selected
             
             // Initialize voucher and payment fields
             currentVoucher = null;
@@ -710,10 +718,21 @@ namespace HuongViet.GUI
                 selectedTable = tableInfo.Table;
                 
                 lblTableInfo.Text = $"Bàn: {selectedTable.TableName} - {selectedTable.Area?.AreaName ?? ""}";
+                cmbFormOfService.Enabled = true; // Enable when table is selected
                 
                 if (tableInfo.CurrentOrder != null)
                 {
                     currentOrderDetails = tableInfo.OrderDetails.ToList();
+                    
+                    // Update form of service ComboBox
+                    if (tableInfo.CurrentOrder.FormOfService == FormOfService.DineIn)
+                    {
+                        cmbFormOfService.SelectedIndex = 0; // "Tại chỗ"
+                    }
+                    else
+                    {
+                        cmbFormOfService.SelectedIndex = 1; // "Mang đi"
+                    }
                     
                     if (tableInfo.CurrentOrder.Customer != null)
                     {
@@ -736,6 +755,7 @@ namespace HuongViet.GUI
                     currentVoucher = null;
                     txbVoucher.Text = "";
                     txbCustomerMoney.Text = "";
+                    cmbFormOfService.SelectedIndex = 0; // Reset to default "Tại chỗ"
                     RefreshOrderDisplay();
                 }
             }
@@ -909,13 +929,19 @@ namespace HuongViet.GUI
                     detail.OrderID = orderId;
                 }
                 
+                // Get selected form of service from ComboBox
+                FormOfService selectedFormOfService = cmbFormOfService.SelectedIndex == 0 
+                    ? FormOfService.DineIn 
+                    : FormOfService.Takeaway;
+                
                 var order = posBLL.CreateOrUpdateTableOrder(
                     selectedTable.TableID,
                     customerName,
                     customerPhone,
                     currentStaffId,
                     currentOrderDetails,
-                    customer?.CustomerID
+                    customer?.CustomerID,
+                    selectedFormOfService
                 );
                 
                 MessageBox.Show("Lưu đơn hàng thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);

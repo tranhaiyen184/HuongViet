@@ -18,6 +18,8 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Label lblTableCount;
         private System.Windows.Forms.Label lblTableInfo;
         private System.Windows.Forms.Label lblDateTime;
+        private System.Windows.Forms.Label lblFormOfService;
+        private System.Windows.Forms.ComboBox cmbFormOfService;
         private System.Windows.Forms.Label lblTotalAmount;
         private System.Windows.Forms.TextBox txtCustomerName;
         private System.Windows.Forms.TextBox txtCustomerPhone;
@@ -68,6 +70,8 @@ namespace HuongViet.GUI
             this.lblChangeAmount = new System.Windows.Forms.Label();
             this.flowLayoutItems = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlOrderHeader = new System.Windows.Forms.Panel();
+            this.cmbFormOfService = new System.Windows.Forms.ComboBox();
+            this.lblFormOfService = new System.Windows.Forms.Label();
             this.lblTableInfo = new System.Windows.Forms.Label();
             this.lblDateTime = new System.Windows.Forms.Label();
             this.dgvOrder = new System.Windows.Forms.DataGridView();
@@ -398,6 +402,26 @@ namespace HuongViet.GUI
             this.pnlOrderHeader.Size = new System.Drawing.Size(1400, 40);
             this.pnlOrderHeader.TabIndex = 2;
             // 
+            // cmbFormOfService
+            // 
+            this.cmbFormOfService.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFormOfService.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.cmbFormOfService.FormattingEnabled = true;
+            this.cmbFormOfService.Location = new System.Drawing.Point(918, 17);
+            this.cmbFormOfService.Name = "cmbFormOfService";
+            this.cmbFormOfService.Size = new System.Drawing.Size(150, 28);
+            this.cmbFormOfService.TabIndex = 3;
+            // 
+            // lblFormOfService
+            // 
+            this.lblFormOfService.AutoSize = true;
+            this.lblFormOfService.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
+            this.lblFormOfService.Location = new System.Drawing.Point(827, 22);
+            this.lblFormOfService.Name = "lblFormOfService";
+            this.lblFormOfService.Size = new System.Drawing.Size(85, 16);
+            this.lblFormOfService.TabIndex = 2;
+            this.lblFormOfService.Text = "Loại phục vụ:";
+            // 
             // lblTableInfo
             // 
             this.lblTableInfo.AutoSize = true;
@@ -432,7 +456,9 @@ namespace HuongViet.GUI
             // 
             // pnlOrderFooter
             // 
+            this.pnlOrderFooter.Controls.Add(this.cmbFormOfService);
             this.pnlOrderFooter.Controls.Add(this.btnPayment);
+            this.pnlOrderFooter.Controls.Add(this.lblFormOfService);
             this.pnlOrderFooter.Controls.Add(this.btnSaveOrder);
             this.pnlOrderFooter.Controls.Add(this.lblCustomerPhone);
             this.pnlOrderFooter.Controls.Add(this.lblCustomerName);

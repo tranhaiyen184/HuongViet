@@ -166,7 +166,7 @@ namespace HuongViet.BLL
         /// Tạo hoặc cập nhật đơn hàng cho bàn
         /// </summary>
         public Order CreateOrUpdateTableOrder(string tableId, string customerName, string customerPhone, 
-            string staffId, List<OrderDetail> orderDetails, string customerId = null)
+            string staffId, List<OrderDetail> orderDetails, string customerId = null, FormOfService formOfService = FormOfService.DineIn)
         {
             try
             {
@@ -204,6 +204,7 @@ namespace HuongViet.BLL
                         order.CustomerName = customerName;
                         order.CustomerPhone = customerPhone;
                         order.CustomerID = customerId;
+                        order.FormOfService = formOfService;
                         order.UpdatedAt = DateTime.Now;
 
                         orderBLL.Update(order);
@@ -228,7 +229,7 @@ namespace HuongViet.BLL
                     OrderDate = DateTime.Now,
                     OrderTime = DateTime.Now,
                     OrderStatus = OrderStatus.Pending,
-                    FormOfService = FormOfService.DineIn,
+                    FormOfService = formOfService,
                     CustomerID = customerId,
                     CustomerName = customerName,
                     CustomerPhone = customerPhone,

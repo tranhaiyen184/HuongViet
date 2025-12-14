@@ -71,6 +71,12 @@ namespace HuongViet.GUI
                 yPos += normalFont.GetHeight() + 3;
             }
             
+            // Form of Service
+            string formOfServiceText = order.FormOfService == FormOfService.DineIn ? "Tại chỗ" : "Mang đi";
+            e.Graphics.DrawString($"Loại phục vụ: {formOfServiceText}", normalFont, Brushes.Black, 
+                new RectangleF(leftMargin, yPos, width, normalFont.GetHeight()), leftFormat);
+            yPos += normalFont.GetHeight() + 3;
+            
             // Customer Info
             if (!string.IsNullOrEmpty(order.CustomerName))
             {
