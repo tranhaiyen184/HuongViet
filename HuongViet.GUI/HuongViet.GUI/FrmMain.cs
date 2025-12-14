@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FontAwesome.Sharp;
+using HuongViet.BLL;
 using HuongViet.Models;
 
 namespace HuongViet.GUI
@@ -16,8 +17,11 @@ namespace HuongViet.GUI
         private bool _sidebarExpanded = true;
         private IReadOnlyCollection<IconButton> _navigationButtons = Array.Empty<IconButton>();
         private User _currentUser;
+        private readonly UserBLL _userBLL;
+        private readonly AuthBLL _authBLL;
         private TabControl _mainTabControl;
         private Dictionary<string, Form> _openTabs = new Dictionary<string, Form>();
+        private readonly HashSet<string> _userPermissionCodes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         
         // Menu expansion state
         private Dictionary<IconButton, bool> _menuExpandedState = new Dictionary<IconButton, bool>();
@@ -43,8 +47,12 @@ namespace HuongViet.GUI
         public FrmMain(User currentUser)
         {
             InitializeComponent();
+            _userBLL = new UserBLL();
+            _authBLL = new AuthBLL();
             _currentUser = currentUser;
             InitializeLayoutState();
+            LoadCurrentUserPermissions();
+            ApplyMenuPermissions();
             UpdateUserInfo();
             this.Shown += FrmMain_Shown;
             
@@ -330,8 +338,8 @@ namespace HuongViet.GUI
             // Create Category sub-item
             IconButton btnCategory = new IconButton();
             btnCategory.Name = "btnCategory";
-            btnCategory.Text = "Thể loại";
-            btnCategory.Tag = "Thể loại";
+            btnCategory.Text = "Danh mục";
+            btnCategory.Tag = "Danh mục";
             btnCategory.IconChar = IconChar.Circle;
             btnCategory.IconColor = MenuItemText;
             btnCategory.IconFont = IconFont.Auto;
@@ -408,38 +416,11 @@ namespace HuongViet.GUI
             btnItemMenu.Click += BtnItemMenu_Click;
             ApplyModernButtonStyle(btnItemMenu, true);
             
-            IconButton btnServiceMenu = new IconButton();
-            btnServiceMenu.Name = "btnServiceMenu";
-            btnServiceMenu.Text = "Dịch vụ";
-            btnServiceMenu.Tag = "Dịch vụ";
-            btnServiceMenu.IconChar = IconChar.Circle;
-            btnServiceMenu.IconColor = MenuItemText;
-            btnServiceMenu.IconFont = IconFont.Auto;
-            btnServiceMenu.IconSize = 6;
-            btnServiceMenu.FlatAppearance.BorderSize = 0;
-            btnServiceMenu.FlatStyle = FlatStyle.Flat;
-            btnServiceMenu.UseVisualStyleBackColor = false;
-            btnServiceMenu.ForeColor = MenuItemText;
-            btnServiceMenu.BackColor = SubMenuItemBackground;
-            btnServiceMenu.TextAlign = ContentAlignment.MiddleLeft;
-            btnServiceMenu.ImageAlign = ContentAlignment.MiddleLeft;
-            btnServiceMenu.Padding = new Padding(48, 10, 16, 10);
-            btnServiceMenu.Margin = new Padding(0, 4, 0, 0);
-            btnServiceMenu.Height = 40;
-            btnServiceMenu.Width = 224;
-            btnServiceMenu.Dock = DockStyle.None;
-            btnServiceMenu.Location = new Point(8, 132);
-            btnServiceMenu.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnServiceMenu.Font = new Font("Segoe UI", 9F);
-            btnServiceMenu.Click += BtnServiceMenu_Click;
-            ApplyModernButtonStyle(btnServiceMenu, true);
-            
             subMenuPanel.Controls.Add(btnCategory);
             subMenuPanel.Controls.Add(btnUnit);
             subMenuPanel.Controls.Add(btnItemMenu);
-            subMenuPanel.Controls.Add(btnServiceMenu);
-            
-            subMenuPanel.Height = btnCategory.Height + btnUnit.Height + btnItemMenu.Height + btnServiceMenu.Height + 20;
+			
+            subMenuPanel.Height = btnCategory.Height + btnUnit.Height + btnItemMenu.Height + 20;
             int menuIndex = navContainer.Controls.IndexOf(btnMenu);
             if (menuIndex >= 0)
             {
@@ -546,11 +527,11 @@ namespace HuongViet.GUI
             try
             {
                 SetActiveSubMenuItem(sender as IconButton);
-                LoadChildFormInTab(new FrmCategory(), "Quản lý thể loại", "category");
+                LoadChildFormInTab(new FrmCategory(), "Quản lý danh mục", "category");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi mở form quản lý thể loại: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi mở form quản lý danh mục: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -583,22 +564,14 @@ namespace HuongViet.GUI
             }
         }
         
-        private void BtnServiceMenu_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                SetActiveSubMenuItem(sender as IconButton);
-                LoadChildFormInTab(new FrmService(), "Quản lý dịch vụ", "service");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi mở form quản lý dịch vụ: {ex.Message}", 
-                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void BtnRevenueReport_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuReport))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveSubMenuItem(sender as IconButton);
@@ -613,6 +586,12 @@ namespace HuongViet.GUI
 
         private void BtnBestSellingReport_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuReport))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveSubMenuItem(sender as IconButton);
@@ -628,7 +607,7 @@ namespace HuongViet.GUI
         private void FrmMain_Shown(object sender, EventArgs e)
         {
             // Open revenue report by default when the main form appears
-            if (btnRevenueReport != null)
+            if (btnRevenueReport != null && HasPermission(PermissionConstants.MenuReport))
             {
                 BtnRevenueReport_Click(btnRevenueReport, EventArgs.Empty);
             }
@@ -726,8 +705,8 @@ namespace HuongViet.GUI
             
             IconButton btnRole = new IconButton();
             btnRole.Name = "btnRole";
-            btnRole.Text = "Vai trò";
-            btnRole.Tag = "Vai trò";
+            btnRole.Text = "Phân quyền";
+            btnRole.Tag = "Phân quyền";
             btnRole.IconChar = IconChar.Circle;
             btnRole.IconColor = MenuItemText;
             btnRole.IconFont = IconFont.Auto;
@@ -1040,6 +1019,106 @@ namespace HuongViet.GUI
             }
         }
 
+        private void LoadCurrentUserPermissions()
+        {
+            _userPermissionCodes.Clear();
+
+            if (_currentUser == null)
+            {
+                return;
+            }
+
+            IEnumerable<Permission> permissions = _currentUser.Role?.Permissions;
+
+            if ((permissions == null || !permissions.Any()) && !string.IsNullOrWhiteSpace(_currentUser.RoleID))
+            {
+                try
+                {
+                    var roleBll = new RoleBLL();
+                    var role = roleBll.GetRoleById(_currentUser.RoleID);
+                    _currentUser.Role = role;
+                    permissions = role?.Permissions;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Không thể tải quyền của tài khoản: {ex.Message}", "Lỗi quyền", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            if (permissions != null)
+            {
+                foreach (var permission in permissions)
+                {
+                    if (!string.IsNullOrWhiteSpace(permission?.PermissionCode))
+                    {
+                        _userPermissionCodes.Add(permission.PermissionCode);
+                    }
+                }
+            }
+        }
+
+        private bool HasPermission(string permissionCode)
+        {
+            if (string.IsNullOrWhiteSpace(permissionCode))
+            {
+                return true;
+            }
+
+            if (_userPermissionCodes.Count == 0)
+            {
+                return true; // no permissions assigned, keep legacy behavior
+            }
+
+            return _userPermissionCodes.Contains(permissionCode);
+        }
+
+        private void ApplyMenuPermissions()
+        {
+            if (_navigationButtons == null || _navigationButtons.Count == 0)
+            {
+                _navigationButtons = navContainer.Controls.OfType<IconButton>().ToArray();
+            }
+
+            if (_userPermissionCodes.Count == 0)
+            {
+                return; // nothing to enforce
+            }
+
+            var permissionMap = new Dictionary<string, IconButton>
+            {
+                { PermissionConstants.MenuReport, btnReport },
+                { PermissionConstants.MenuTableSetup, btnTables },
+                { PermissionConstants.MenuFood, btnMenu },
+                { PermissionConstants.MenuSales, btnOrders },
+                { PermissionConstants.MenuReservation, btnReservations },
+                { PermissionConstants.MenuVoucher, btnVouchers },
+                { PermissionConstants.MenuStaff, btnStaff }
+            };
+
+            foreach (var kvp in permissionMap)
+            {
+                bool canAccess = HasPermission(kvp.Key);
+                IconButton button = kvp.Value;
+
+                button.Visible = canAccess;
+                button.Enabled = canAccess;
+
+                if (_subMenuPanels.TryGetValue(button, out Panel panel))
+                {
+                    panel.Visible = canAccess && _sidebarExpanded && _menuExpandedState.ContainsKey(button) && _menuExpandedState[button];
+                }
+            }
+
+            navContainer.PerformLayout();
+            navContainer.Refresh();
+        }
+
+        private void ShowAccessDeniedMessage()
+        {
+            MessageBox.Show("Bạn không có quyền truy cập chức năng này.", "Từ chối truy cập", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
 
         private void btnUserMenu_Click(object sender, EventArgs e)
         {
@@ -1070,34 +1149,385 @@ namespace HuongViet.GUI
 
         private void menuItemProfile_Click(object sender, EventArgs e)
         {
-            if (_currentUser != null)
-            {
-                string userInfo = $"Tên người dùng: {_currentUser.FirstName} {_currentUser.LastName}\n" +
-                                $"Tài khoản: {_currentUser.UserName}\n" +
-                                $"Số điện thoại: {_currentUser.PhoneNumber ?? "Chưa cập nhật"}\n" +
-                                $"Vai trò: {_currentUser.Role?.RoleName ?? "Chưa xác định"}\n" +
-                                $"Trạng thái: {(_currentUser.Status == UserStatus.active ? "Hoạt động" : "Không hoạt động")}";
-                
-                MessageBox.Show(userInfo, "Thông tin cá nhân", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
+            if (_currentUser == null)
             {
                 MessageBox.Show("Không có thông tin người dùng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ShowProfileUpdateDialog();
+        }
+
+        private void ShowProfileUpdateDialog()
+        {
+            using (var dialog = new Form())
+            {
+                dialog.Text = "Cập nhật thông tin";
+                dialog.StartPosition = FormStartPosition.CenterParent;
+                dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dialog.MaximizeBox = false;
+                dialog.MinimizeBox = false;
+                dialog.ClientSize = new Size(420, 280);
+
+                var lblLastName = new Label { Text = "Họ", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+                var lblFirstName = new Label { Text = "Tên", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+                var lblPhone = new Label { Text = "Số điện thoại", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+                var lblUserName = new Label { Text = "Tên đăng nhập", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+
+                var txtLastName = new TextBox { Text = _currentUser.LastName, Font = new Font("Segoe UI", 10F), Width = 250 };
+                var txtFirstName = new TextBox { Text = _currentUser.FirstName, Font = new Font("Segoe UI", 10F), Width = 250 };
+                var txtPhone = new TextBox { Text = _currentUser.PhoneNumber ?? string.Empty, Font = new Font("Segoe UI", 10F), Width = 250, MaxLength = 15 };
+                var txtUserName = new TextBox { Text = _currentUser.UserName, Font = new Font("Segoe UI", 10F), Width = 250 };
+
+                var btnSave = new Button { Text = "Lưu", DialogResult = DialogResult.None, Width = 100, Height = 36, Font = new Font("Segoe UI", 10F, FontStyle.Bold) };
+                var btnCancel = new Button { Text = "Hủy", DialogResult = DialogResult.Cancel, Width = 100, Height = 36, Font = new Font("Segoe UI", 10F) };
+
+                var layout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 2,
+                    RowCount = 6,
+                    Padding = new Padding(16),
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink
+                };
+
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+                layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+
+                layout.Controls.Add(lblLastName, 0, 0);
+                layout.Controls.Add(txtLastName, 1, 0);
+                layout.Controls.Add(lblFirstName, 0, 1);
+                layout.Controls.Add(txtFirstName, 1, 1);
+                layout.Controls.Add(lblPhone, 0, 2);
+                layout.Controls.Add(txtPhone, 1, 2);
+                layout.Controls.Add(lblUserName, 0, 3);
+                layout.Controls.Add(txtUserName, 1, 3);
+
+                var buttonPanel = new FlowLayoutPanel
+                {
+                    FlowDirection = FlowDirection.RightToLeft,
+                    Dock = DockStyle.Fill,
+                    AutoSize = true,
+                    Padding = new Padding(0, 12, 0, 0)
+                };
+
+                buttonPanel.Controls.Add(btnSave);
+                buttonPanel.Controls.Add(btnCancel);
+
+                layout.Controls.Add(buttonPanel, 1, 5);
+
+                dialog.Controls.Add(layout);
+
+                btnSave.Click += (s, e) =>
+                {
+                    string lastName = txtLastName.Text.Trim();
+                    string firstName = txtFirstName.Text.Trim();
+                    string phone = txtPhone.Text.Trim();
+                    string userName = txtUserName.Text.Trim();
+
+                    if (string.IsNullOrWhiteSpace(lastName))
+                    {
+                        MessageBox.Show("Họ không được để trống", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(firstName))
+                    {
+                        MessageBox.Show("Tên không được để trống", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(phone))
+                    {
+                        MessageBox.Show("Vui lòng nhập số điện thoại", "Thiếu thông tin", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (!phone.StartsWith("0") || phone.Length < 9 || phone.Length > 15 || !phone.All(char.IsDigit))
+                    {
+                        MessageBox.Show("Số điện thoại phải bắt đầu bằng 0, gồm 9-15 chữ số", "Sai định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(userName) || userName.Length < 3)
+                    {
+                        MessageBox.Show("Tên đăng nhập phải có ít nhất 3 ký tự", "Sai định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Check username uniqueness (excluding current user)
+                    var allUsers = _userBLL.GetAllUsers();
+                    bool usernameTaken = allUsers.Any(u => !string.Equals(u.UserID, _currentUser.UserID, StringComparison.OrdinalIgnoreCase)
+                                                        && string.Equals(u.UserName, userName, StringComparison.OrdinalIgnoreCase));
+                    if (usernameTaken)
+                    {
+                        MessageBox.Show("Tên đăng nhập đã tồn tại!", "Trùng dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Check phone uniqueness (excluding current user)
+                    if (_userBLL.IsPhoneExists(phone, _currentUser.UserID))
+                    {
+                        MessageBox.Show("số điện thoại này đã được sử dụng", "Trùng dữ liệu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    try
+                    {
+                        var updatedUser = new User
+                        {
+                            UserID = _currentUser.UserID,
+                            LastName = lastName,
+                            FirstName = firstName,
+                            PhoneNumber = phone,
+                            UserName = userName,
+                            Password = _currentUser.Password,
+                            PositionID = _currentUser.PositionID,
+                            RoleID = _currentUser.RoleID,
+                            Status = _currentUser.Status,
+                            CreatedAt = _currentUser.CreatedAt,
+                            Role = _currentUser.Role,
+                            Position = _currentUser.Position
+                        };
+
+                        _userBLL.UpdateUser(updatedUser);
+
+                        // Refresh local cache
+                        _currentUser = _userBLL.GetUserById(_currentUser.UserID) ?? updatedUser;
+                        UpdateUserInfo();
+
+                        MessageBox.Show("Cập nhật thông tin thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        dialog.DialogResult = DialogResult.OK;
+                        dialog.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+
+                dialog.AcceptButton = btnSave;
+                dialog.CancelButton = btnCancel;
+
+                dialog.ShowDialog(this);
+            }
+        }
+
+        private void ShowChangePasswordDialog()
+        {
+            using (var dialog = new Form())
+            {
+                dialog.Text = "Cập nhật mật khẩu";
+                dialog.StartPosition = FormStartPosition.CenterParent;
+                dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                dialog.MaximizeBox = false;
+                dialog.MinimizeBox = false;
+                dialog.ClientSize = new Size(420, 260);
+
+                var lblOldPassword = new Label { Text = "Mật khẩu cũ", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+                var lblNewPassword = new Label { Text = "Mật khẩu mới", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+                var lblConfirmPassword = new Label { Text = "Xác nhận mật khẩu", AutoSize = true, Font = new Font("Segoe UI", 10F) };
+
+                var txtOldPassword = new TextBox { Font = new Font("Segoe UI", 10F), Width = 250, UseSystemPasswordChar = true };
+                var txtNewPassword = new TextBox { Font = new Font("Segoe UI", 10F), Width = 250, UseSystemPasswordChar = true, MaxLength = 64 };
+                var txtConfirmPassword = new TextBox { Font = new Font("Segoe UI", 10F), Width = 250, UseSystemPasswordChar = true, MaxLength = 64 };
+
+                var lblOldError = new Label { ForeColor = Color.Red, AutoSize = true, Font = new Font("Segoe UI", 9F) };
+                var lblNewError = new Label { ForeColor = Color.Red, AutoSize = true, Font = new Font("Segoe UI", 9F) };
+                var lblConfirmError = new Label { ForeColor = Color.Red, AutoSize = true, Font = new Font("Segoe UI", 9F) };
+
+                var btnSave = new Button { Text = "Lưu", DialogResult = DialogResult.None, Width = 100, Height = 36, Font = new Font("Segoe UI", 10F, FontStyle.Bold) };
+                var btnCancel = new Button { Text = "Hủy", DialogResult = DialogResult.Cancel, Width = 100, Height = 36, Font = new Font("Segoe UI", 10F) };
+
+                var layout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 2,
+                    RowCount = 8,
+                    Padding = new Padding(16),
+                    AutoSize = true,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink
+                };
+
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+                layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+
+                for (int i = 0; i < 8; i++)
+                {
+                    layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                }
+
+                layout.Controls.Add(lblOldPassword, 0, 0);
+                layout.Controls.Add(txtOldPassword, 1, 0);
+                layout.Controls.Add(lblOldError, 1, 1);
+
+                layout.Controls.Add(lblNewPassword, 0, 2);
+                layout.Controls.Add(txtNewPassword, 1, 2);
+                layout.Controls.Add(lblNewError, 1, 3);
+
+                layout.Controls.Add(lblConfirmPassword, 0, 4);
+                layout.Controls.Add(txtConfirmPassword, 1, 4);
+                layout.Controls.Add(lblConfirmError, 1, 5);
+
+                var buttonPanel = new FlowLayoutPanel
+                {
+                    FlowDirection = FlowDirection.RightToLeft,
+                    Dock = DockStyle.Fill,
+                    AutoSize = true,
+                    Padding = new Padding(0, 12, 0, 0)
+                };
+
+                buttonPanel.Controls.Add(btnSave);
+                buttonPanel.Controls.Add(btnCancel);
+
+                layout.Controls.Add(buttonPanel, 1, 7);
+
+                dialog.Controls.Add(layout);
+
+                EventHandler clearErrors = (s, e) =>
+                {
+                    lblOldError.Text = string.Empty;
+                    lblNewError.Text = string.Empty;
+                    lblConfirmError.Text = string.Empty;
+                };
+
+                txtOldPassword.TextChanged += clearErrors;
+                txtNewPassword.TextChanged += clearErrors;
+                txtConfirmPassword.TextChanged += clearErrors;
+
+                btnSave.Click += (s, e) =>
+                {
+                    lblOldError.Text = string.Empty;
+                    lblNewError.Text = string.Empty;
+                    lblConfirmError.Text = string.Empty;
+
+                    string oldPassword = txtOldPassword.Text.Trim();
+                    string newPassword = txtNewPassword.Text.Trim();
+                    string confirmPassword = txtConfirmPassword.Text.Trim();
+
+                    bool hasError = false;
+
+                    if (string.IsNullOrWhiteSpace(oldPassword))
+                    {
+                        lblOldError.Text = "Vui lòng nhập mật khẩu cũ";
+                        hasError = true;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 3)
+                    {
+                        lblNewError.Text = "Mật khẩu mới phải có ít nhất 3 ký tự";
+                        hasError = true;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(confirmPassword))
+                    {
+                        lblConfirmError.Text = "Vui lòng xác nhận mật khẩu mới";
+                        hasError = true;
+                    }
+
+                    if (hasError)
+                    {
+                        return;
+                    }
+
+                    if (!string.Equals(newPassword, confirmPassword, StringComparison.Ordinal))
+                    {
+                        lblConfirmError.Text = "Mật khẩu chưa khớp";
+                        return;
+                    }
+
+                    try
+                    {
+                        _authBLL.ChangePassword(_currentUser.UserID, oldPassword, newPassword);
+
+                        // Refresh cached user (now holds hashed password)
+                        _currentUser = _userBLL.GetUserById(_currentUser.UserID) ?? _currentUser;
+
+                        MessageBox.Show("Cập nhật mật khẩu thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        dialog.DialogResult = DialogResult.OK;
+                        dialog.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Contains("Mật khẩu cũ không đúng"))
+                        {
+                            lblOldError.Text = "Mật khẩu không chính xác";
+                            return;
+                        }
+
+                        MessageBox.Show(ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+
+                dialog.AcceptButton = btnSave;
+                dialog.CancelButton = btnCancel;
+
+                dialog.ShowDialog(this);
             }
         }
 
         private void menuItemPassword_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Tính năng cập nhật mật khẩu sẽ được triển khai ở các phiên bản sau.",
-                "Cập nhật mật khẩu",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            if (_currentUser == null)
+            {
+                MessageBox.Show("Không có thông tin người dùng", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ShowChangePasswordDialog();
         }
 
         private void menuItemLogout_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            HandleLogout();
+        }
+
+        private void HandleLogout()
+        {
+            // Clear session info and open login screen instead of exiting the app
+            SessionManager.ClearSession();
+
+            // Close all opened tabs and show placeholder
+            CloseAllTabs();
+            ShowPlaceholder();
+
+            this.Hide();
+
+            using (var loginForm = new FrmLogin())
+            {
+                var result = loginForm.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    _currentUser = loginForm.LoggedInUser;
+                    SessionManager.CurrentUser = _currentUser;
+
+                    _userPermissionCodes.Clear();
+                    LoadCurrentUserPermissions();
+                    ApplyMenuPermissions();
+                    UpdateUserInfo();
+
+                    this.Show();
+                }
+                else
+                {
+                    // If user cancels at login, exit the application
+                    this.Close();
+                }
+            }
+        }
+
+        // Designer stub to satisfy legacy Paint handler reference
+        private void userPanel_Paint(object sender, PaintEventArgs e)
+        {
         }
 
         private void ShowUserContextMenu()
@@ -1281,8 +1711,17 @@ namespace HuongViet.GUI
             }
         }
 
-      
-        private void lblUserName_Click(object sender, EventArgs e)
+		private void CloseAllTabs()
+		{
+			while (_mainTabControl.TabPages.Count > 0)
+			{
+				CloseTab(0);
+			}
+		}
+
+
+
+		private void lblUserName_Click(object sender, EventArgs e)
         {
 
         }
@@ -1290,6 +1729,12 @@ namespace HuongViet.GUI
 
         private void btnMenu_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuFood))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             if (!_sidebarExpanded)
             {
                 return;
@@ -1349,6 +1794,12 @@ namespace HuongViet.GUI
 
         private void btnOrders_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuSales))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveMenuItem(btnOrders);
@@ -1363,6 +1814,12 @@ namespace HuongViet.GUI
 
         private void btnReservations_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuReservation))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveMenuItem(btnReservations);
@@ -1377,6 +1834,12 @@ namespace HuongViet.GUI
 
         private void btnTables_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuTableSetup))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveMenuItem(btnTables);
@@ -1391,6 +1854,12 @@ namespace HuongViet.GUI
 
         private void btnVouchers_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuVoucher))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             try
             {
                 SetActiveMenuItem(btnVouchers);
@@ -1417,6 +1886,12 @@ namespace HuongViet.GUI
 
         private void btnStaff_Click(object sender, EventArgs e)
         {
+            if (!HasPermission(PermissionConstants.MenuStaff))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
         
             if (!_sidebarExpanded)
             {
@@ -1482,6 +1957,12 @@ namespace HuongViet.GUI
 
 		private void btnReport_Click(object sender, EventArgs e)
 		{
+            if (!HasPermission(PermissionConstants.MenuReport))
+            {
+                ShowAccessDeniedMessage();
+                return;
+            }
+
             if (!_sidebarExpanded)
             {
                 return;

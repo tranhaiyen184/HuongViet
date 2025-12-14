@@ -259,6 +259,7 @@ namespace HuongViet.BLL
         {
             try
             {
+                EnsureMenuPermissions();
                 return permissionDAL.GetAll();
             }
             catch (Exception ex)
@@ -317,6 +318,28 @@ namespace HuongViet.BLL
             return "ROLE" + DateTime.Now.ToString("yyyyMMddHHmmss");
         }
 
+        private void EnsureMenuPermissions()
+        {
+            foreach (var menuPermission in PermissionConstants.MenuPermissionDisplayNames)
+            {
+                var existingPermission = permissionDAL.GetByPermissionCode(menuPermission.Key);
+
+                if (existingPermission == null)
+                {
+                    var permission = new Permission
+                    {
+                        PermissionID = GeneratePermissionId(),
+                        PermissionCode = menuPermission.Key,
+                        PermissionName = menuPermission.Value,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+
+                    permissionDAL.Insert(permission);
+                }
+            }
+        }
+
         /// <summary>
         /// Chuyển đổi tên vai trò thành mã vai trò (in hoa, cách nhau bằng _)
         /// Ví dụ: "Quản trị viên" -> "QUAN_TRI_VIEN"
@@ -344,6 +367,11 @@ namespace HuongViet.BLL
             normalized = Regex.Replace(normalized, @"_+", "_");
 
             return normalized;
+        }
+
+        private string GeneratePermissionId()
+        {
+            return "PERM" + Guid.NewGuid().ToString("N").ToUpperInvariant();
         }
 
         /// <summary>

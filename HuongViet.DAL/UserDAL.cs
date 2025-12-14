@@ -184,6 +184,24 @@ namespace HuongViet.DAL
             return count > 0;
         }
 
+        public bool IsPhoneExists(string phoneNumber, string excludeUserId = null)
+        {
+            string query = "SELECT COUNT(*) FROM users WHERE PhoneNumber = @phoneNumber AND DeletedAt IS NULL";
+            List<MySqlParameter> parameters = new List<MySqlParameter>
+            {
+                new MySqlParameter("@phoneNumber", phoneNumber)
+            };
+
+            if (!string.IsNullOrEmpty(excludeUserId))
+            {
+                query += " AND UserID != @excludeUserId";
+                parameters.Add(new MySqlParameter("@excludeUserId", excludeUserId));
+            }
+
+            int count = Convert.ToInt32(dbHelper.ExecuteScalar(query, parameters.ToArray()));
+            return count > 0;
+        }
+
         public List<User> GetUsersByRole(string roleId)
         {
             string query = "SELECT * FROM users WHERE RoleID = @roleId AND DeletedAt IS NULL";

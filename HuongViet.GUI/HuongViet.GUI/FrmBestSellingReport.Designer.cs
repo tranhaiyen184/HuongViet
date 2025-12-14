@@ -48,8 +48,8 @@ namespace HuongViet.GUI
 			this.pnlDateRange = new System.Windows.Forms.Panel();
 			this.lblDate = new System.Windows.Forms.Label();
 			this.dtpDate = new System.Windows.Forms.DateTimePicker();
-			this.btnRefresh = new System.Windows.Forms.Button();
 			this.btnExport = new System.Windows.Forms.Button();
+			this.btnRefresh = new System.Windows.Forms.Button();
 			this.btnApply = new System.Windows.Forms.Button();
 			this.lblTitle = new System.Windows.Forms.Label();
 			this.gbReportType = new System.Windows.Forms.GroupBox();
@@ -98,7 +98,7 @@ namespace HuongViet.GUI
 			this.pnlDateRange.Controls.Add(this.btnExport);
 			this.pnlDateRange.Controls.Add(this.btnRefresh);
 			this.pnlDateRange.Controls.Add(this.btnApply);
-			this.pnlDateRange.Location = new System.Drawing.Point(596, 56);
+			this.pnlDateRange.Location = new System.Drawing.Point(544, 52);
 			this.pnlDateRange.Name = "pnlDateRange";
 			this.pnlDateRange.Size = new System.Drawing.Size(954, 80);
 			this.pnlDateRange.TabIndex = 3;
@@ -124,21 +124,6 @@ namespace HuongViet.GUI
 			this.dtpDate.TabIndex = 1;
 			this.dtpDate.ValueChanged += new System.EventHandler(this.DateRange_ValueChanged);
 			// 
-			// btnRefresh
-			// 
-			this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
-			this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnRefresh.ForeColor = System.Drawing.Color.White;
-			this.btnRefresh.Location = new System.Drawing.Point(560, 17);
-			this.btnRefresh.Name = "btnRefresh";
-			this.btnRefresh.Size = new System.Drawing.Size(160, 43);
-			this.btnRefresh.TabIndex = 1;
-			this.btnRefresh.Text = "Làm mới";
-			this.btnRefresh.UseVisualStyleBackColor = false;
-			this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
-			// 
 			// btnExport
 			// 
 			this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -153,6 +138,21 @@ namespace HuongViet.GUI
 			this.btnExport.Text = "Xuất báo cáo";
 			this.btnExport.UseVisualStyleBackColor = false;
 			this.btnExport.Click += new System.EventHandler(this.BtnExport_Click);
+			// 
+			// btnRefresh
+			// 
+			this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRefresh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(152)))), ((int)(((byte)(219)))));
+			this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnRefresh.ForeColor = System.Drawing.Color.White;
+			this.btnRefresh.Location = new System.Drawing.Point(560, 17);
+			this.btnRefresh.Name = "btnRefresh";
+			this.btnRefresh.Size = new System.Drawing.Size(160, 43);
+			this.btnRefresh.TabIndex = 1;
+			this.btnRefresh.Text = "Làm mới";
+			this.btnRefresh.UseVisualStyleBackColor = false;
+			this.btnRefresh.Click += new System.EventHandler(this.BtnRefresh_Click);
 			// 
 			// btnApply
 			// 

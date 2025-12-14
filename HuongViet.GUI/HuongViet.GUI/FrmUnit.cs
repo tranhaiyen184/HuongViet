@@ -273,8 +273,29 @@ namespace HuongViet.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // TODO: Implement search functionality
-            LoadUnits();
+            try
+            {
+                string term = txtSearch.Text.Trim();
+
+                // Always start from the full list, then filter in-memory for simplicity
+                units = unitBLL.GetAll();
+
+                if (!string.IsNullOrEmpty(term))
+                {
+                    units = units
+                        .Where(u =>
+                            (!string.IsNullOrEmpty(u.UnitID) && u.UnitID.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                            (!string.IsNullOrEmpty(u.UnitName) && u.UnitName.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                        .ToList();
+                }
+
+                BindDataGridView();
+                ClearForm();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm đơn vị tính: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

@@ -59,6 +59,10 @@ namespace HuongViet.GUI
             dgvUsers.AllowUserToDeleteRows = false;
             dgvUsers.ReadOnly = true;
             dgvUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+			dgvUsers.EnableHeadersVisualStyles = false;
+			dgvUsers.ColumnHeadersDefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Bold);
+			dgvUsers.DefaultCellStyle.Font = new Font("Times New Roman", 12F, FontStyle.Regular);
         }
 
         private void SetupPagination()
@@ -168,7 +172,21 @@ namespace HuongViet.GUI
                 var result = userBLL.GetUsersWithPaging(criteria, positionId, currentStatusFilter);
                 users = result.Data ?? new List<User>();
                 totalRecords = result.TotalRecords;
-                totalPages = result.TotalPages;
+
+                // Ensure totalPages has a sensible minimum and fallback calculation
+                var calculatedTotalPages = result.TotalPages;
+                if (calculatedTotalPages <= 0 && totalRecords > 0)
+                {
+                    calculatedTotalPages = (int)Math.Ceiling((double)totalRecords / Math.Max(1, pageSize));
+                }
+
+                totalPages = Math.Max(1, calculatedTotalPages);
+
+                // Clamp current page if backend returned fewer pages than requested
+                if (currentPage > totalPages)
+                {
+                    currentPage = totalPages;
+                }
 
                 BindDataGridView();
                 UpdatePaginationInfo();
@@ -209,8 +227,7 @@ namespace HuongViet.GUI
                     PhoneNumber = u.PhoneNumber ?? "",
                     PositionName = u.Position?.PositionName ?? "Chưa xác định",
                     RoleName = u.Role?.RoleName ?? "Chưa xác định",
-                    Status = u.Status == UserStatus.active ? "Hoạt động" : "Không hoạt động",
-                    CreatedAt = u.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                    Status = u.Status == UserStatus.active ? "Hoạt động" : "Không hoạt động"
                 }).ToList();
 
                 dgvUsers.DataSource = displayData;
@@ -226,7 +243,10 @@ namespace HuongViet.GUI
                     dgvUsers.Columns["PositionName"].HeaderText = "Vị trí";
                     dgvUsers.Columns["RoleName"].HeaderText = "Vai trò";
                     dgvUsers.Columns["Status"].HeaderText = "Trạng thái";
-                    dgvUsers.Columns["CreatedAt"].HeaderText = "Ngày tạo";
+                    if (dgvUsers.Columns.Contains("CreatedAt"))
+                    {
+                        dgvUsers.Columns["CreatedAt"].Visible = false;
+                    }
                     
                     dgvUsers.Columns["FullName"].FillWeight = 20;
                     dgvUsers.Columns["UserName"].FillWeight = 15;
@@ -234,7 +254,6 @@ namespace HuongViet.GUI
                     dgvUsers.Columns["PositionName"].FillWeight = 15;
                     dgvUsers.Columns["RoleName"].FillWeight = 15;
                     dgvUsers.Columns["Status"].FillWeight = 10;
-                    dgvUsers.Columns["CreatedAt"].FillWeight = 13;
                 }
             }
         }
@@ -472,7 +491,7 @@ namespace HuongViet.GUI
                 User user = selectedUser ?? new User();
                 user.LastName = txtLastName.Text.Trim();
                 user.FirstName = txtFirstName.Text.Trim();
-                user.PhoneNumber = string.IsNullOrWhiteSpace(txtPhoneNumber.Text) ? null : txtPhoneNumber.Text.Trim();
+                user.PhoneNumber = txtPhoneNumber.Text.Trim();
                 user.UserName = txtUserName.Text.Trim();
                 user.Password = txtPassword.Text.Trim();
                 user.PositionID = cmbPosition.SelectedValue?.ToString();
@@ -695,6 +714,19 @@ namespace HuongViet.GUI
             if (string.IsNullOrWhiteSpace(txtFirstName.Text))
                 return "Vui lòng nhập tên!";
 
+            var phone = txtPhoneNumber.Text.Trim();
+            if (string.IsNullOrWhiteSpace(phone))
+                return "Vui lòng nhập số điện thoại!";
+
+            if (!phone.StartsWith("0"))
+                return "Số điện thoại phải bắt đầu bằng số 0!";
+
+            if (phone.Length < 9 || phone.Length > 15)
+                return "Số điện thoại phải từ 9 đến 15 ký tự!";
+
+            if (!phone.All(char.IsDigit))
+                return "Số điện thoại chỉ được chứa chữ số!";
+
             if (string.IsNullOrWhiteSpace(txtUserName.Text))
                 return "Vui lòng nhập tên đăng nhập!";
 
@@ -733,10 +765,15 @@ namespace HuongViet.GUI
                 base.OnFormClosed(e);
             }
         }
-    }
 
-    // Helper class for ComboBox display
-    public class PositionDisplayItem
+		private void dgvUsers_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
+	}
+
+	// Helper class for ComboBox display
+	public class PositionDisplayItem
     {
         public string PositionID { get; set; }
         public string PositionName { get; set; }

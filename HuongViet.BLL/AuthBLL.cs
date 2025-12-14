@@ -1,23 +1,26 @@
 using HuongViet.DAL;
 using HuongViet.Models;
 using System;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace HuongViet.BLL
 {
     public class AuthBLL
     {
         private readonly UserDAL userDAL;
+        private readonly RoleBLL roleBLL;
 
         public AuthBLL()
         {
             userDAL = new UserDAL();
+            roleBLL = new RoleBLL();
         }
 
         /// <summary>
         /// Đăng nhập người dùng
         /// </summary>
         /// <param name="userName">Tên đăng nhập</param>
-        /// <param name="password">Mật khẩu (không mã hóa)</param>
+        /// <param name="password">Mật khẩu (plain text nhập từ người dùng)</param>
         /// <returns>User nếu đăng nhập thành công, null nếu thất bại</returns>
         public User Login(string userName, string password)
         {
@@ -43,9 +46,22 @@ namespace HuongViet.BLL
                     throw new InvalidOperationException("Tài khoản đã bị khóa hoặc không hoạt động");
                 }
 
-                // So sánh mật khẩu (không mã hóa theo yêu cầu)
-                if (user.Password == password.Trim())
+                var inputPassword = password.Trim();
+
+                bool passwordMatches = VerifyPassword(inputPassword, user.Password);
+                bool storedIsPlainMatch = string.Equals(user.Password?.Trim(), inputPassword, StringComparison.Ordinal);
+
+                // Nâng cấp hash nếu đang lưu plain-text nhưng khớp
+                if (passwordMatches && storedIsPlainMatch)
                 {
+                    var upgradedHash = BCryptNet.HashPassword(inputPassword);
+                    userDAL.ChangePassword(user.UserID, upgradedHash);
+                    user.Password = upgradedHash;
+                }
+
+                if (passwordMatches)
+                {
+                    AttachRolePermissions(user);
                     return user; // Đăng nhập thành công
                 }
 
@@ -55,6 +71,17 @@ namespace HuongViet.BLL
             {
                 throw new Exception($"Lỗi khi đăng nhập: {ex.Message}");
             }
+        }
+
+        private void AttachRolePermissions(User user)
+        {
+            if (user == null || string.IsNullOrWhiteSpace(user.RoleID))
+            {
+                return;
+            }
+
+            var role = roleBLL.GetRoleById(user.RoleID);
+            user.Role = role;
         }
 
         /// <summary>
@@ -102,18 +129,46 @@ namespace HuongViet.BLL
                     throw new InvalidOperationException("Không tìm thấy người dùng");
                 }
 
-                // Kiểm tra mật khẩu cũ
-                if (user.Password != oldPassword.Trim())
+                string oldPlain = oldPassword.Trim();
+                string newPlain = newPassword.Trim();
+
+                bool oldMatches = VerifyPassword(oldPlain, user.Password);
+                if (!oldMatches)
                 {
                     throw new InvalidOperationException("Mật khẩu cũ không đúng");
                 }
 
-                // Cập nhật mật khẩu mới
-                return userDAL.ChangePassword(userId, newPassword.Trim());
+                // Cập nhật mật khẩu mới (hash)
+                string hashedNew = BCryptNet.HashPassword(newPlain);
+                return userDAL.ChangePassword(userId, hashedNew);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Lỗi khi đổi mật khẩu: {ex.Message}");
+            }
+        }
+
+        private bool VerifyPassword(string input, string stored)
+        {
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrWhiteSpace(stored))
+            {
+                return false;
+            }
+
+            // Nếu stored không phải bcrypt, fallback so sánh plain-text
+            if (!stored.StartsWith("$2"))
+            {
+                return string.Equals(stored.Trim(), input.Trim(), StringComparison.Ordinal);
+            }
+
+            try
+            {
+                return BCryptNet.Verify(input, stored);
+            }
+            catch
+            {
+                // Nếu salt/hash hỏng, tránh throw ra và cho phép xử lý tiếp theo (sẽ trả false)
+                return false;
             }
         }
 

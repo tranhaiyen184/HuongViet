@@ -50,7 +50,11 @@ namespace HuongViet.GUI
 
             if (allPermissions != null && allPermissions.Count > 0)
             {
-                foreach (var permission in allPermissions.OrderBy(p => p.PermissionName))
+                var orderedPermissions = allPermissions
+                    .OrderBy(p => PermissionConstants.MenuPermissionDisplayNames.ContainsKey(p.PermissionCode) ? 0 : 1)
+                    .ThenBy(p => p.PermissionName);
+
+                foreach (var permission in orderedPermissions)
                 {
                     var chkPermission = new CheckBox
                     {
@@ -104,7 +108,7 @@ namespace HuongViet.GUI
 
         private void UpdateSelectedCount()
         {
-            lblSelectedCount.Text = $"Đã chọn: {SelectedPermissions.Count} / {allPermissions?.Count ?? 0} quyền";
+            //lblSelectedCount.Text = $"Đã chọn: {SelectedPermissions.Count} / {allPermissions?.Count ?? 0} quyền";
         }
 
         private void btnSelectAll_Click(object sender, EventArgs e)
@@ -143,21 +147,7 @@ namespace HuongViet.GUI
             this.Close();
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
-        {
-            string searchTerm = txtSearch.Text.Trim().ToLower();
-            
-            foreach (Control control in flpPermissions.Controls)
-            {
-                if (control is CheckBox chk && chk.Tag is Permission permission)
-                {
-                    bool visible = string.IsNullOrEmpty(searchTerm) ||
-                        permission.PermissionName.ToLower().Contains(searchTerm) ||
-                        permission.PermissionCode.ToLower().Contains(searchTerm);
-                    chk.Visible = visible;
-                }
-            }
-        }
+      
     }
 }
 

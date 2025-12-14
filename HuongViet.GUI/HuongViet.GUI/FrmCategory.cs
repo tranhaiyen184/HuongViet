@@ -68,7 +68,7 @@ namespace HuongViet.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách thể loại: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách danh mục: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -90,8 +90,8 @@ namespace HuongViet.GUI
                 
                 if (dgvCategories.Columns.Count > 0)
                 {
-                    dgvCategories.Columns["CateID"].HeaderText = "Mã thể loại";
-                    dgvCategories.Columns["CateName"].HeaderText = "Tên thể loại";
+                    dgvCategories.Columns["CateID"].HeaderText = "Mã danh mục";
+                    dgvCategories.Columns["CateName"].HeaderText = "Tên danh mục";
                     dgvCategories.Columns["CateDescription"].HeaderText = "Mô tả";
                     
                     dgvCategories.Columns["CateID"].FillWeight = 20;
@@ -182,7 +182,7 @@ namespace HuongViet.GUI
             if (selectedCategory == null) return;
 
             var result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn xóa thể loại '{selectedCategory.CateName}'?",
+                $"Bạn có chắc chắn muốn xóa danh mục '{selectedCategory.CateName}'?",
                 "Xác nhận xóa",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
@@ -194,14 +194,14 @@ namespace HuongViet.GUI
                     bool success = categoryBLL.Delete(selectedCategory.CateID);
                     if (success)
                     {
-                        MessageBox.Show("Xóa thể loại thành công!", "Thành công", 
+                        MessageBox.Show("Xóa danh mục thành công!", "Thành công", 
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                         LoadCategories();
                         ClearForm();
                     }
                     else
                     {
-                        MessageBox.Show("Không thể xóa thể loại!", "Lỗi", 
+                        MessageBox.Show("Không thể xóa danh mục!", "Lỗi", 
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -218,7 +218,7 @@ namespace HuongViet.GUI
             {
                 if (string.IsNullOrWhiteSpace(txtCategoryName.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên thể loại!", "Lỗi nhập liệu", 
+                    MessageBox.Show("Vui lòng nhập tên danh mục!", "Lỗi nhập liệu", 
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     txtCategoryName.Focus();
                     return;
@@ -238,12 +238,12 @@ namespace HuongViet.GUI
                 if (selectedCategory == null) // Add new
                 {
                     success = categoryBLL.Insert(category);
-                    message = success ? "Thêm thể loại thành công!" : "Không thể thêm thể loại!";
+                    message = success ? "Thêm danh mục thành công!" : "Không thể thêm danh mục!";
                 }
                 else // Update existing
                 {
                     success = categoryBLL.Update(category);
-                    message = success ? "Cập nhật thể loại thành công!" : "Không thể cập nhật thể loại!";
+                    message = success ? "Cập nhật danh mục thành công!" : "Không thể cập nhật danh mục!";
                 }
 
                 if (success)
@@ -282,8 +282,30 @@ namespace HuongViet.GUI
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // TODO: Implement search functionality
-            LoadCategories();
+            try
+            {
+                string term = txtSearch.Text.Trim();
+
+                // Always start from the full list, then filter in-memory
+                categories = categoryBLL.GetAll();
+
+                if (!string.IsNullOrEmpty(term))
+                {
+                    categories = categories
+                        .Where(c =>
+                            (!string.IsNullOrEmpty(c.CateID) && c.CateID.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                            (!string.IsNullOrEmpty(c.CateName) && c.CateName.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                            (!string.IsNullOrEmpty(c.CateDescription) && c.CateDescription.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0))
+                        .ToList();
+                }
+
+                BindDataGridView();
+                ClearForm();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm danh mục: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -300,6 +322,11 @@ namespace HuongViet.GUI
                 e.Handled = true;
             }
         }
-    }
+
+		private void txtCategoryName_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
 

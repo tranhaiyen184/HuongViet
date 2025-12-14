@@ -48,6 +48,7 @@
 			this.btnMenu = new FontAwesome.Sharp.IconButton();
 			this.btnOrders = new FontAwesome.Sharp.IconButton();
 			this.btnReservations = new FontAwesome.Sharp.IconButton();
+			this.btnVouchers = new FontAwesome.Sharp.IconButton();
 			this.btnStaff = new FontAwesome.Sharp.IconButton();
 			this.btnPosition = new FontAwesome.Sharp.IconButton();
 			this.btnCombo = new FontAwesome.Sharp.IconButton();
@@ -76,6 +77,7 @@
 			// 
 			this.headerPanel.Controls.Add(this.logoPictureBox);
 			this.headerPanel.Controls.Add(this.userPanel);
+			this.headerPanel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.headerPanel.Location = new System.Drawing.Point(0, 0);
 			this.headerPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.headerPanel.Name = "headerPanel";
@@ -106,8 +108,9 @@
 			this.userPanel.Location = new System.Drawing.Point(954, 22);
 			this.userPanel.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
 			this.userPanel.Name = "userPanel";
-			this.userPanel.Size = new System.Drawing.Size(395, 70);
+			this.userPanel.Size = new System.Drawing.Size(395, 86);
 			this.userPanel.TabIndex = 4;
+			this.userPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.userPanel_Paint);
 			// 
 			// userContextMenu
 			// 
@@ -162,7 +165,7 @@
 			this.lblUserRole.AutoSize = true;
 			this.lblUserRole.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblUserRole.ForeColor = System.Drawing.Color.Gray;
-			this.lblUserRole.Location = new System.Drawing.Point(64, 30);
+			this.lblUserRole.Location = new System.Drawing.Point(94, 36);
 			this.lblUserRole.Name = "lblUserRole";
 			this.lblUserRole.Size = new System.Drawing.Size(125, 20);
 			this.lblUserRole.TabIndex = 2;
@@ -173,7 +176,7 @@
 			this.lblUserName.AutoSize = true;
 			this.lblUserName.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblUserName.ForeColor = System.Drawing.Color.Black;
-			this.lblUserName.Location = new System.Drawing.Point(63, 9);
+			this.lblUserName.Location = new System.Drawing.Point(91, 9);
 			this.lblUserName.Name = "lblUserName";
 			this.lblUserName.Size = new System.Drawing.Size(113, 23);
 			this.lblUserName.TabIndex = 1;
@@ -186,7 +189,7 @@
 			this.avatarPictureBox.Location = new System.Drawing.Point(8, 7);
 			this.avatarPictureBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.avatarPictureBox.Name = "avatarPictureBox";
-			this.avatarPictureBox.Size = new System.Drawing.Size(48, 48);
+			this.avatarPictureBox.Size = new System.Drawing.Size(62, 49);
 			this.avatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.avatarPictureBox.TabIndex = 0;
 			this.avatarPictureBox.TabStop = false;
@@ -200,7 +203,7 @@
 			this.btnToggleSidebar.IconChar = FontAwesome.Sharp.IconChar.None;
 			this.btnToggleSidebar.IconColor = System.Drawing.Color.White;
 			this.btnToggleSidebar.IconFont = FontAwesome.Sharp.IconFont.Auto;
-			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 334);
+			this.btnToggleSidebar.Location = new System.Drawing.Point(19, 438);
 			this.btnToggleSidebar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnToggleSidebar.Name = "btnToggleSidebar";
 			this.btnToggleSidebar.Size = new System.Drawing.Size(213, 39);
@@ -213,6 +216,7 @@
 			// 
 			this.sidebarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(250)))));
 			this.sidebarPanel.Controls.Add(this.navContainer);
+			this.sidebarPanel.Dock = System.Windows.Forms.DockStyle.Left;
 			this.sidebarPanel.Location = new System.Drawing.Point(0, 130);
 			this.sidebarPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.sidebarPanel.Name = "sidebarPanel";
@@ -232,6 +236,7 @@
 			this.navContainer.Controls.Add(this.btnStaff);
 			this.navContainer.Controls.Add(this.btnPosition);
 			this.navContainer.Controls.Add(this.btnToggleSidebar);
+			this.navContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.navContainer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.navContainer.Location = new System.Drawing.Point(0, 0);
 			this.navContainer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -273,8 +278,8 @@
 			this.btnTables.Name = "btnTables";
 			this.btnTables.Size = new System.Drawing.Size(213, 48);
 			this.btnTables.TabIndex = 2;
-			this.btnTables.Tag = "Mặt bàn";
-			this.btnTables.Text = "Mặt bàn";
+			this.btnTables.Tag = "Thiết lập bàn";
+			this.btnTables.Text = "Thiết lập bàn";
 			this.btnTables.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnTables.UseVisualStyleBackColor = true;
 			this.btnTables.Click += new System.EventHandler(this.btnTables_Click);
@@ -341,6 +346,26 @@
 			this.btnReservations.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
 			this.btnReservations.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
 			// 
+			// btnVouchers
+			// 
+			this.btnVouchers.Font = new System.Drawing.Font("Segoe UI", 12F);
+			this.btnVouchers.IconChar = FontAwesome.Sharp.IconChar.Tags;
+			this.btnVouchers.IconColor = System.Drawing.Color.White;
+			this.btnVouchers.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnVouchers.IconSize = 24;
+			this.btnVouchers.Location = new System.Drawing.Point(19, 282);
+			this.btnVouchers.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btnVouchers.Name = "btnVouchers";
+			this.btnVouchers.Size = new System.Drawing.Size(213, 48);
+			this.btnVouchers.TabIndex = 5;
+			this.btnVouchers.Tag = "Voucher";
+			this.btnVouchers.Text = "Voucher";
+			this.btnVouchers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnVouchers.UseVisualStyleBackColor = true;
+			this.btnVouchers.Click += new System.EventHandler(this.btnVouchers_Click);
+			this.btnVouchers.MouseEnter += new System.EventHandler(this.navButton_MouseEnter);
+			this.btnVouchers.MouseLeave += new System.EventHandler(this.navButton_MouseLeave);
+			// 
 			// btnStaff
 			// 
 			this.btnStaff.Font = new System.Drawing.Font("Segoe UI", 12F);
@@ -348,7 +373,7 @@
 			this.btnStaff.IconColor = System.Drawing.Color.White;
 			this.btnStaff.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnStaff.IconSize = 24;
-			this.btnStaff.Location = new System.Drawing.Point(19, 230);
+			this.btnStaff.Location = new System.Drawing.Point(19, 334);
 			this.btnStaff.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnStaff.Name = "btnStaff";
 			this.btnStaff.Size = new System.Drawing.Size(213, 48);
@@ -368,7 +393,7 @@
 			this.btnPosition.IconColor = System.Drawing.Color.White;
 			this.btnPosition.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnPosition.IconSize = 24;
-			this.btnPosition.Location = new System.Drawing.Point(19, 282);
+			this.btnPosition.Location = new System.Drawing.Point(19, 386);
 			this.btnPosition.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.btnPosition.Name = "btnPosition";
 			this.btnPosition.Size = new System.Drawing.Size(213, 48);
@@ -523,6 +548,7 @@
 			// contentPanel
 			// 
 			this.contentPanel.Controls.Add(this.placeholderPanel);
+			this.contentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.contentPanel.Location = new System.Drawing.Point(240, 130);
 			this.contentPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.contentPanel.Name = "contentPanel";
@@ -532,18 +558,16 @@
 			// 
 			// placeholderPanel
 			// 
-			this.placeholderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.placeholderPanel.BackColor = System.Drawing.Color.White;
 			this.placeholderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.placeholderPanel.Controls.Add(this.lblPlaceholderHint);
 			this.placeholderPanel.Controls.Add(this.lblPlaceholderTitle);
-			this.placeholderPanel.Location = new System.Drawing.Point(-2, 0);
+			this.placeholderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.placeholderPanel.Location = new System.Drawing.Point(32, 32);
 			this.placeholderPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.placeholderPanel.Name = "placeholderPanel";
 			this.placeholderPanel.Padding = new System.Windows.Forms.Padding(32);
-			this.placeholderPanel.Size = new System.Drawing.Size(1127, 600);
+			this.placeholderPanel.Size = new System.Drawing.Size(1061, 536);
 			this.placeholderPanel.TabIndex = 0;
 			// 
 			// lblPlaceholderHint
@@ -553,9 +577,9 @@
 			this.lblPlaceholderHint.ForeColor = System.Drawing.Color.DimGray;
 			this.lblPlaceholderHint.Location = new System.Drawing.Point(37, 78);
 			this.lblPlaceholderHint.Name = "lblPlaceholderHint";
-			this.lblPlaceholderHint.Size = new System.Drawing.Size(590, 23);
+			this.lblPlaceholderHint.Size = new System.Drawing.Size(20, 23);
 			this.lblPlaceholderHint.TabIndex = 1;
-			this.lblPlaceholderHint.Text = "Khu vực này tạm thời để trống. Bạn có thể tiếp tục phát triển các màn hình.";
+			this.lblPlaceholderHint.Text = "  ";
 			// 
 			// lblPlaceholderTitle
 			// 

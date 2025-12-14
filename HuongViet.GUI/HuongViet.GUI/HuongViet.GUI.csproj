@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.Sharp, Version=6.6.0.0, Culture=neutral, PublicKeyToken=d16d1e4e568ec10f, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.Sharp.6.6.0\lib\net48\FontAwesome.Sharp.dll</HintPath>
     </Reference>
@@ -86,6 +89,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -95,7 +99,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -106,17 +109,17 @@
     <Compile Include="FrmCreateCustomer.Designer.cs">
       <DependentUpon>FrmCreateCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmBestSellingReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBestSellingReport.Designer.cs">
+      <DependentUpon>FrmBestSellingReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmCreateReservation.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmCreateReservation.Designer.cs">
       <DependentUpon>FrmCreateReservation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
@@ -156,20 +159,14 @@
     <Compile Include="FrmReservation.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmRevenueReport.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FrmReservation.Designer.cs">
       <DependentUpon>FrmReservation.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmRevenueReport.Designer.cs">
-      <DependentUpon>FrmRevenueReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmService.cs">
+    <Compile Include="FrmRevenueReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmService.Designer.cs">
-      <DependentUpon>FrmService.cs</DependentUpon>
+    <Compile Include="FrmRevenueReport.Designer.cs">
+      <DependentUpon>FrmRevenueReport.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmPosition.cs">
       <SubType>Form</SubType>
@@ -201,12 +198,6 @@
     <Compile Include="FrmRole.Designer.cs">
       <DependentUpon>FrmRole.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmBestSellingReport.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmBestSellingReport.Designer.cs">
-      <DependentUpon>FrmBestSellingReport.cs</DependentUpon>
-    </Compile>
     <Compile Include="FrmPermissionSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,24 +209,6 @@
     </Compile>
     <Compile Include="FrmTable.Designer.cs">
       <DependentUpon>FrmTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmFloorManagement.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmFloorManagement.Designer.cs">
-      <DependentUpon>FrmFloorManagement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmRoomManagement.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAreaManagement.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmAreaManagement.Designer.cs">
-      <DependentUpon>FrmAreaManagement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmRoomManagement.Designer.cs">
-      <DependentUpon>FrmRoomManagement.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmPOS.cs">
       <SubType>Form</SubType>
@@ -252,17 +225,11 @@
     <Compile Include="SessionManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FrmAreaManagement.resx">
-      <DependentUpon>FrmAreaManagement.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmBestSellingReport.resx">
       <DependentUpon>FrmBestSellingReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCategory.resx">
       <DependentUpon>FrmCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
@@ -276,12 +243,8 @@
     <EmbeddedResource Include="FrmItem.resx">
       <DependentUpon>FrmItem.cs</DependentUpon>
     </EmbeddedResource>
-    <!-- FrmReport.resx removed -->
     <EmbeddedResource Include="FrmRevenueReport.resx">
       <DependentUpon>FrmRevenueReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmService.resx">
-      <DependentUpon>FrmService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPosition.resx">
       <DependentUpon>FrmPosition.cs</DependentUpon>
@@ -300,12 +263,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmTable.resx">
       <DependentUpon>FrmTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmFloorManagement.resx">
-      <DependentUpon>FrmFloorManagement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FrmRoomManagement.resx">
-      <DependentUpon>FrmRoomManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmPOS.resx">
       <DependentUpon>FrmPOS.cs</DependentUpon>
@@ -340,7 +297,7 @@
       <Name>HuongViet.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\HuongViet.DAL\HuongViet.DAL.csproj">
-      <Project>{8AEAE8C5-1387-469D-9AC8-A8659BA7DA74}</Project>
+      <Project>{8aeae8c5-1387-469d-9ac8-a8659ba7da74}</Project>
       <Name>HuongViet.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\HuongViet.Models\HuongViet.Models.csproj">

@@ -47,6 +47,10 @@ namespace HuongViet.GUI
             dgvRoles.AllowUserToDeleteRows = false;
             dgvRoles.ReadOnly = true;
             dgvRoles.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            var cellFont = new Font("Times New Roman", 12F, FontStyle.Regular);
+            dgvRoles.DefaultCellStyle.Font = cellFont;
+            dgvRoles.ColumnHeadersDefaultCellStyle.Font = cellFont;
         }
 
         private void SetupPagination()
@@ -83,6 +87,20 @@ namespace HuongViet.GUI
 
                 var result = roleBLL.SearchRoles(criteria);
                 roles = result.Data ?? new List<Role>();
+
+                // Ensure permission counts are loaded for display
+                foreach (var r in roles)
+                {
+                    try
+                    {
+                        r.Permissions = roleBLL.GetRolePermissions(r.RoleID);
+                    }
+                    catch
+                    {
+                        r.Permissions = new List<Permission>();
+                    }
+                }
+
                 totalRecords = result.TotalRecords;
                 totalPages = result.TotalPages;
 
@@ -158,22 +176,26 @@ namespace HuongViet.GUI
             btnLastPage.Enabled = canGoForward;
         }
 
-        private void ClearForm()
+        private void ClearForm(bool resetEditingState = true)
         {
             txtRoleName.Clear();
             txtRoleCode.Clear();
             selectedPermissions = new List<Permission>();
             UpdatePermissionDisplay();
             selectedRole = null;
-            isEditing = false;
 
-            btnAdd.Enabled = true;
-            btnEdit.Enabled = false;
-            btnDelete.Enabled = false;
-            btnSave.Enabled = false;
-            btnCancel.Enabled = false;
+            if (resetEditingState)
+            {
+                isEditing = false;
 
-            EnableEditMode(false);
+                btnAdd.Enabled = true;
+                btnEdit.Enabled = false;
+                btnDelete.Enabled = false;
+                btnSave.Enabled = false;
+                btnCancel.Enabled = false;
+
+                EnableEditMode(false);
+            }
         }
 
         private void EnableEditMode(bool enable)
@@ -263,8 +285,12 @@ namespace HuongViet.GUI
             selectedRole = null;
             isEditing = true;
             selectedPermissions = new List<Permission>();
-            ClearForm();
+            ClearForm(resetEditingState: false);
             EnableEditMode(true);
+            btnAdd.Enabled = false;
+            btnEdit.Enabled = false;
+            btnDelete.Enabled = false;
+            btnCancel.Enabled = true;
             ValidateRoleFormAndEnableSave(); // Validate sau khi enable
             txtRoleName.Focus();
         }
@@ -275,6 +301,10 @@ namespace HuongViet.GUI
             {
                 isEditing = true;
                 EnableEditMode(true);
+                btnAdd.Enabled = false;
+                btnEdit.Enabled = false;
+                btnDelete.Enabled = false;
+                btnCancel.Enabled = true;
                 ValidateRoleFormAndEnableSave(); // Validate sau khi enable
                 txtRoleName.Focus();
                 txtRoleName.SelectAll();
@@ -382,6 +412,11 @@ namespace HuongViet.GUI
             }
 
             isEditing = false;
+            btnAdd.Enabled = true;
+            btnEdit.Enabled = selectedRole != null;
+            btnDelete.Enabled = selectedRole != null;
+            btnSave.Enabled = false;
+            btnCancel.Enabled = false;
             EnableEditMode(false);
         }
 
@@ -606,6 +641,11 @@ namespace HuongViet.GUI
                 base.OnFormClosed(e);
             }
         }
-    }
+
+		private void lblPageSize_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -55,42 +56,35 @@ namespace HuongViet.GUI
         {
             if (this.WindowState == FormWindowState.Minimized) return;
 
-            // Resize pnlMain to fill form
             pnlMain.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
-            
-            // Resize pnlHeader
+
             pnlHeader.Width = this.ClientSize.Width - 20;
             pnlFilter.Width = pnlHeader.Width;
-            
-            // Resize pnlContent
-            pnlContent.Width = this.ClientSize.Width - 320; // Leave space for form panel
-            pnlContent.Height = this.ClientSize.Height - 116; // Header height + margins
-            
-            // Resize dgvServices
+
+            int formPanelWidth = pnlForm.Width;
+            int contentHorizontalGap = 25;
+            pnlContent.Width = this.ClientSize.Width - formPanelWidth - contentHorizontalGap;
+            pnlContent.Height = this.ClientSize.Height - 116;
+
             dgvServices.Width = pnlContent.Width;
-            dgvServices.Height = pnlContent.Height - 196; // Price history + paging height
-            
-            // Resize pnlPriceHistory
+            dgvServices.Height = pnlContent.Height - pnlPriceHistory.Height - pnlPaging.Height;
+
             pnlPriceHistory.Width = pnlContent.Width;
             pnlPriceHistory.Location = new Point(0, dgvServices.Height);
             pnlPriceHistoryHeader.Width = pnlPriceHistory.Width;
             dgvPriceHistory.Width = pnlPriceHistory.Width;
-            btnRestorePrice.Location = new Point(pnlPriceHistory.Width - 110, 4);
-            
-            // Resize pnlPaging
+            btnRestorePrice.Location = new Point(pnlPriceHistory.Width - btnRestorePrice.Width - 20, btnRestorePrice.Location.Y);
+
             pnlPaging.Width = pnlContent.Width;
-            pnlPaging.Location = new Point(0, pnlContent.Height - 42);
-            
-            // Resize pnlForm
-            pnlForm.Location = new Point(this.ClientSize.Width - 310, 106);
+            pnlPaging.Location = new Point(0, pnlContent.Height - pnlPaging.Height);
+
+            pnlForm.Location = new Point(this.ClientSize.Width - formPanelWidth - 8, 106);
             pnlForm.Height = this.ClientSize.Height - 116;
-            
-            // Resize grpServiceInfo
+
             grpServiceInfo.Width = pnlForm.Width - 20;
-            grpServiceInfo.Height = pnlForm.Height - 100;
-            
-            // Resize pnlButtons
-            pnlButtons.Location = new Point(10, pnlForm.Height - 90);
+            grpServiceInfo.Height = pnlForm.Height - pnlButtons.Height - 25;
+
+            pnlButtons.Location = new Point(10, pnlForm.Height - pnlButtons.Height - 10);
             pnlButtons.Width = pnlForm.Width - 20;
         }
 
@@ -183,7 +177,7 @@ namespace HuongViet.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách thể loại: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách danh mục: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -271,7 +265,7 @@ namespace HuongViet.GUI
                 {
                     ItemID = i.ItemID,
                     ItemName = i.ItemName,
-                    ItemPrice = i.ItemPrice.ToString("N0"),
+                    ItemPrice = i.ItemPrice,
                     CateName = i.Category?.CateName ?? "",
                     UnitName = i.Unit?.UnitName ?? "",
                     IsActive = i.IsActive ? "Có" : "Không"
@@ -279,22 +273,26 @@ namespace HuongViet.GUI
 
                 dgvServices.DataSource = displayData;
                 
-                if (dgvServices.Columns.Count > 0)
-                {
-                    dgvServices.Columns["ItemID"].HeaderText = "Mã dịch vụ";
-                    dgvServices.Columns["ItemName"].HeaderText = "Tên dịch vụ";
-                    dgvServices.Columns["ItemPrice"].HeaderText = "Giá";
-                    dgvServices.Columns["CateName"].HeaderText = "Thể loại";
-                    dgvServices.Columns["UnitName"].HeaderText = "Đơn vị";
-                    dgvServices.Columns["IsActive"].HeaderText = "Hoạt động";
-                    
-                    dgvServices.Columns["ItemID"].FillWeight = 15;
-                    dgvServices.Columns["ItemName"].FillWeight = 30;
-                    dgvServices.Columns["ItemPrice"].FillWeight = 15;
-                    dgvServices.Columns["CateName"].FillWeight = 20;
-                    dgvServices.Columns["UnitName"].FillWeight = 12;
-                    dgvServices.Columns["IsActive"].FillWeight = 8;
-                }
+                    if (dgvServices.Columns.Count > 0)
+                    {
+                        dgvServices.Columns["ItemID"].HeaderText = "Mã dịch vụ";
+                        dgvServices.Columns["ItemName"].HeaderText = "Tên dịch vụ";
+                        dgvServices.Columns["ItemPrice"].HeaderText = "Giá";
+                        dgvServices.Columns["CateName"].HeaderText = "Danh mục";
+                        dgvServices.Columns["UnitName"].HeaderText = "Đơn vị";
+                        dgvServices.Columns["IsActive"].HeaderText = "Hoạt động";
+						
+                        dgvServices.Columns["ItemID"].FillWeight = 15;
+                        dgvServices.Columns["ItemName"].FillWeight = 30;
+                        dgvServices.Columns["ItemPrice"].FillWeight = 15;
+                        dgvServices.Columns["CateName"].FillWeight = 20;
+                        dgvServices.Columns["UnitName"].FillWeight = 12;
+                        dgvServices.Columns["IsActive"].FillWeight = 8;
+
+                        var priceCol = dgvServices.Columns["ItemPrice"];
+                        priceCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                        priceCol.DefaultCellStyle.Format = "N0";
+                    }
             }
         }
 
@@ -373,7 +371,7 @@ namespace HuongViet.GUI
                 if (selectedService != null)
                 {
                     txtServiceName.Text = selectedService.ItemName;
-                    txtServicePrice.Text = selectedService.ItemPrice.ToString();
+                    txtServicePrice.Text = selectedService.ItemPrice.ToString("N0");
                     txtDescription.Text = selectedService.ItemDescription ?? string.Empty;
                     chkIsActive.Checked = selectedService.IsActive;
                     
@@ -483,7 +481,7 @@ namespace HuongViet.GUI
                 }
 
                 decimal price;
-                if (!decimal.TryParse(txtServicePrice.Text, out price) || price < 0)
+                if (!decimal.TryParse(txtServicePrice.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out price) || price < 0)
                 {
                     MessageBox.Show("Giá dịch vụ không hợp lệ!", "Lỗi nhập liệu", 
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -493,7 +491,7 @@ namespace HuongViet.GUI
 
                 if (cmbCategory.SelectedValue == null)
                 {
-                    MessageBox.Show("Vui lòng chọn thể loại!", "Lỗi nhập liệu", 
+                    MessageBox.Show("Vui lòng chọn danh mục!", "Lỗi nhập liệu", 
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -608,7 +606,7 @@ namespace HuongViet.GUI
                 // Filter price from
                 if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text))
                 {
-                    if (decimal.TryParse(txtPriceFrom.Text, out decimal priceFrom) && priceFrom >= 0)
+                    if (decimal.TryParse(txtPriceFrom.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal priceFrom) && priceFrom >= 0)
                     {
                         currentPriceFrom = priceFrom;
                     }
@@ -627,7 +625,7 @@ namespace HuongViet.GUI
                 // Filter price to
                 if (!string.IsNullOrWhiteSpace(txtPriceTo.Text))
                 {
-                    if (decimal.TryParse(txtPriceTo.Text, out decimal priceTo) && priceTo >= 0)
+                    if (decimal.TryParse(txtPriceTo.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal priceTo) && priceTo >= 0)
                     {
                         currentPriceTo = priceTo;
                     }
@@ -833,27 +831,31 @@ namespace HuongViet.GUI
         private void BindPriceHistoryDataGridView(List<ItemPrice> priceHistory)
         {
             dgvPriceHistory.DataSource = null;
-            
+			
             if (priceHistory != null && priceHistory.Count > 0)
             {
                 var displayData = priceHistory.Select(p => new
                 {
                     PriceUpdateDate = p.PriceUpdateDate.ToString("dd/MM/yyyy HH:mm:ss"),
-                    Price = p.Price.ToString("N0"),
+                    Price = p.Price,
                     CreatedAt = p.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")
                 }).ToList();
 
                 dgvPriceHistory.DataSource = displayData;
-                
+				
                 if (dgvPriceHistory.Columns.Count > 0)
                 {
                     dgvPriceHistory.Columns["PriceUpdateDate"].HeaderText = "Ngày cập nhật";
                     dgvPriceHistory.Columns["Price"].HeaderText = "Giá";
                     dgvPriceHistory.Columns["CreatedAt"].HeaderText = "Ngày tạo bản ghi";
-                    
+					
                     dgvPriceHistory.Columns["PriceUpdateDate"].FillWeight = 35;
                     dgvPriceHistory.Columns["Price"].FillWeight = 30;
                     dgvPriceHistory.Columns["CreatedAt"].FillWeight = 35;
+
+                    var priceCol = dgvPriceHistory.Columns["Price"];
+                    priceCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    priceCol.DefaultCellStyle.Format = "N0";
                 }
             }
         }
@@ -906,7 +908,7 @@ namespace HuongViet.GUI
                         selectedService = itemBLL.GetById(selectedService.ItemID);
                         if (selectedService != null)
                         {
-                            txtServicePrice.Text = selectedService.ItemPrice.ToString();
+                            txtServicePrice.Text = selectedService.ItemPrice.ToString("N0");
                             LoadPriceHistory(selectedService.ItemID);
                         }
                     }
@@ -969,6 +971,33 @@ namespace HuongViet.GUI
         private void txtPriceTo_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtPriceFrom_Leave(object sender, EventArgs e)
+        {
+            FormatPriceTextBox(txtPriceFrom);
+        }
+
+        private void txtPriceTo_Leave(object sender, EventArgs e)
+        {
+            FormatPriceTextBox(txtPriceTo);
+        }
+
+        private void txtServicePrice_Leave(object sender, EventArgs e)
+        {
+            FormatPriceTextBox(txtServicePrice);
+        }
+
+        private void FormatPriceTextBox(TextBox textBox)
+        {
+            if (textBox == null) return;
+            if (string.IsNullOrWhiteSpace(textBox.Text)) return;
+
+            if (decimal.TryParse(textBox.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal value))
+            {
+                textBox.Text = value.ToString("N0");
+                textBox.SelectionStart = textBox.Text.Length;
+            }
         }
 
         private void pnlPriceHistoryHeader_Paint(object sender, PaintEventArgs e)
