@@ -24,6 +24,7 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Label lblCustomerName;
         private System.Windows.Forms.Label lblCustomerPhone;
         private System.Windows.Forms.Button btnSearchCustomer;
+        private System.Windows.Forms.Button btnNewCustomer;
         private System.Windows.Forms.Button btnSaveOrder;
         private System.Windows.Forms.Button btnPayment;
         private System.Windows.Forms.Panel pnlOrderHeader;
@@ -65,6 +66,7 @@ namespace HuongViet.GUI
             this.txtCustomerPhone = new System.Windows.Forms.TextBox();
             this.txtCustomerName = new System.Windows.Forms.TextBox();
             this.btnSearchCustomer = new System.Windows.Forms.Button();
+            this.btnNewCustomer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -265,6 +267,7 @@ namespace HuongViet.GUI
             this.pnlOrderFooter.Controls.Add(this.lblCustomerName);
             this.pnlOrderFooter.Controls.Add(this.txtCustomerPhone);
             this.pnlOrderFooter.Controls.Add(this.txtCustomerName);
+            this.pnlOrderFooter.Controls.Add(this.btnNewCustomer);
             this.pnlOrderFooter.Controls.Add(this.btnSearchCustomer);
             this.pnlOrderFooter.Location = new System.Drawing.Point(0, 240);
             this.pnlOrderFooter.Name = "pnlOrderFooter";
@@ -346,6 +349,19 @@ namespace HuongViet.GUI
             this.btnSearchCustomer.Text = "Tìm khách hàng";
             this.btnSearchCustomer.UseVisualStyleBackColor = true;
             this.btnSearchCustomer.Click += new System.EventHandler(this.BtnSearchCustomer_Click);
+            // 
+            // btnNewCustomer
+            // 
+            this.btnNewCustomer.BackColor = System.Drawing.Color.Green;
+            this.btnNewCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
+            this.btnNewCustomer.ForeColor = System.Drawing.Color.White;
+            this.btnNewCustomer.Location = new System.Drawing.Point(670, 18);
+            this.btnNewCustomer.Name = "btnNewCustomer";
+            this.btnNewCustomer.Size = new System.Drawing.Size(120, 25);
+            this.btnNewCustomer.TabIndex = 8;
+            this.btnNewCustomer.Text = "Khách hàng mới";
+            this.btnNewCustomer.UseVisualStyleBackColor = false;
+            this.btnNewCustomer.Click += new System.EventHandler(this.BtnNewCustomer_Click);
             // 
             // FrmPOS
             // 

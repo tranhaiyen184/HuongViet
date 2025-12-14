@@ -876,5 +876,32 @@ namespace HuongViet.GUI
                 MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void BtnNewCustomer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var createCustomerForm = new FrmCreateCustomer())
+                {
+                    if (createCustomerForm.ShowDialog() == DialogResult.OK)
+                    {
+                        if (createCustomerForm.CreatedCustomer != null)
+                        {
+                            var customer = createCustomerForm.CreatedCustomer;
+                            txtCustomerName.Text = customer.CustomerName;
+                            txtCustomerPhone.Text = customer.CustomerPhoneNum;
+                            
+                            MessageBox.Show($"Đã tạo khách hàng mới: {customer.CustomerName}", "Thành công", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tạo khách hàng mới: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
