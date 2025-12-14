@@ -149,6 +149,10 @@
       <DependentUpon>FrmItem.cs</DependentUpon>
     </Compile>
     <!-- FrmReport removed -->
+    <Compile Include="FrmReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReceipt.Designer.cs" />
     <Compile Include="FrmReservation.cs">
       <SubType>Form</SubType>
     </Compile>

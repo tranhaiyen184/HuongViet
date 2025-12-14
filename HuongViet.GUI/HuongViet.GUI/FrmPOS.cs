@@ -1020,6 +1020,19 @@ namespace HuongViet.GUI
                     {
                         MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
+                        // Get the order with details for receipt
+                        var orderBLL = new OrderBLL();
+                        var completedOrder = orderBLL.GetById(orderId, true);
+                        
+                        if (completedOrder != null)
+                        {
+                            // Show receipt preview
+                            using (var receiptForm = new FrmReceipt(completedOrder))
+                            {
+                                receiptForm.ShowPreview();
+                            }
+                        }
+                        
                         // Clear voucher and customer money fields
                         currentVoucher = null;
                         txbVoucher.Text = "";
