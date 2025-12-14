@@ -23,5 +23,13 @@ namespace HuongViet.BLL
 
             _repo.BackupTo(destinationPath);
         }
+
+        public void RestoreDatabase(string backupFilePath)
+        {
+            if (string.IsNullOrWhiteSpace(backupFilePath))
+                throw new ArgumentException("Backup file path is required.");
+
+            _repo.RestoreFrom(backupFilePath);
+        }
     }
 }
