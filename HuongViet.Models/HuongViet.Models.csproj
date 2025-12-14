@@ -53,6 +53,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
     <Compile Include="PagedResult.cs" />
+    <Compile Include="PermissionConstants.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="ReportingBestSellingItem.cs" />
     <Compile Include="Reservation.cs" />

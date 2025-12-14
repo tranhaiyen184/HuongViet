@@ -2,6 +2,8 @@ using HuongViet.DAL;
 using HuongViet.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace HuongViet.BLL
 {
@@ -76,12 +78,19 @@ namespace HuongViet.BLL
                     throw new Exception("Tên đăng nhập đã tồn tại!");
                 }
 
+                // Check if phone already exists
+                if (!string.IsNullOrWhiteSpace(user.PhoneNumber) && userDAL.IsPhoneExists(user.PhoneNumber))
+                {
+                    throw new Exception("số điện thoại này đã được sử dụng");
+                }
+
                 // Generate ID if not provided
                 if (string.IsNullOrWhiteSpace(user.UserID))
                 {
                     user.UserID = GenerateUserId();
                 }
 
+                user.Password = HashPasswordIfNeeded(user.Password);
                 user.CreatedAt = DateTime.Now;
                 user.UpdatedAt = DateTime.Now;
 
@@ -121,6 +130,13 @@ namespace HuongViet.BLL
                     throw new Exception("Tên đăng nhập đã tồn tại!");
                 }
 
+                // Check if phone already exists (excluding current user)
+                if (!string.IsNullOrWhiteSpace(user.PhoneNumber) && userDAL.IsPhoneExists(user.PhoneNumber, user.UserID))
+                {
+                    throw new Exception("số điện thoại này đã được sử dụng");
+                }
+
+                user.Password = HashPasswordIfNeeded(user.Password);
                 user.UpdatedAt = DateTime.Now;
 
                 return userDAL.Update(user);
@@ -269,6 +285,11 @@ namespace HuongViet.BLL
             }
         }
 
+        public bool IsPhoneExists(string phoneNumber, string excludeUserId = null)
+        {
+            return userDAL.IsPhoneExists(phoneNumber, excludeUserId);
+        }
+
         #region Private Methods
 
         /// <summary>
@@ -286,6 +307,19 @@ namespace HuongViet.BLL
 
             if (string.IsNullOrWhiteSpace(user.LastName))
                 return "Vui lòng nhập họ!";
+
+            if (string.IsNullOrWhiteSpace(user.PhoneNumber))
+                return "Vui lòng nhập số điện thoại!";
+
+            var phone = user.PhoneNumber.Trim();
+            if (!phone.StartsWith("0"))
+                return "Số điện thoại phải bắt đầu bằng số 0!";
+
+            if (phone.Length < 9 || phone.Length > 15)
+                return "Số điện thoại phải từ 9 đến 15 ký tự!";
+
+            if (!phone.All(char.IsDigit))
+                return "Số điện thoại chỉ được chứa chữ số!";
 
             if (string.IsNullOrWhiteSpace(user.UserName))
                 return "Vui lòng nhập tên đăng nhập!";
@@ -325,6 +359,24 @@ namespace HuongViet.BLL
         private string GenerateUserId()
         {
             return "USER" + DateTime.Now.ToString("yyyyMMddHHmmss");
+        }
+
+        private string HashPasswordIfNeeded(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                return password;
+            }
+
+            var trimmed = password.Trim();
+
+            // Nếu đã là BCrypt hash thì giữ nguyên để tránh double hash
+            if (trimmed.StartsWith("$2"))
+            {
+                return trimmed;
+            }
+
+            return BCryptNet.HashPassword(trimmed);
         }
 
         #endregion

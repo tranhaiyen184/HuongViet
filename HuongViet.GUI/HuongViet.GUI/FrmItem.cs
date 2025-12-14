@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -34,6 +35,9 @@ namespace HuongViet.GUI
         private decimal? currentPriceFrom = null;
         private decimal? currentPriceTo = null;
 
+        // Prevent auto-filter from firing during programmatic text changes
+        private bool suppressAutoFilter = false;
+
         public FrmItem()
         {
             InitializeComponent();
@@ -57,7 +61,41 @@ namespace HuongViet.GUI
             SetupPriceHistoryDataGridView();
             SetupPagination();
             SetupFilters();
+            AlignPriceInputs();
+            WirePriceFormattingHandlers();
             ClearForm();
+        }
+
+        private void AlignPriceInputs()
+        {
+            txtItemPrice.TextAlign = HorizontalAlignment.Right;
+            txtPriceFrom.TextAlign = HorizontalAlignment.Right;
+            txtPriceTo.TextAlign = HorizontalAlignment.Right;
+        }
+
+        private void WirePriceFormattingHandlers()
+        {
+            txtPriceFrom.Leave += txtPriceFrom_Leave;
+            txtPriceTo.Leave += txtPriceTo_Leave;
+        }
+
+        private void FormatPriceTextBox(TextBox textBox)
+        {
+            if (textBox == null)
+            {
+                return;
+            }
+
+            var raw = textBox.Text.Trim();
+            if (string.IsNullOrEmpty(raw))
+            {
+                return;
+            }
+
+            if (decimal.TryParse(raw, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal value) && value >= 0)
+            {
+                textBox.Text = value.ToString("N0");
+            }
         }
 
         private void SetupDataGridView()
@@ -146,7 +184,7 @@ namespace HuongViet.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách thể loại: {ex.Message}", 
+                MessageBox.Show($"Lỗi khi tải danh sách danh mục: {ex.Message}", 
                     "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -234,7 +272,7 @@ namespace HuongViet.GUI
                 {
                     ItemID = i.ItemID,
                     ItemName = i.ItemName,
-                    ItemPrice = i.ItemPrice.ToString("N0"),
+                    ItemPrice = i.ItemPrice,
                     CateName = i.Category?.CateName ?? "",
                     UnitName = i.Unit?.UnitName ?? "",
                     ItemType = GetItemTypeString(i.ItemType),
@@ -248,7 +286,7 @@ namespace HuongViet.GUI
                     dgvItems.Columns["ItemID"].HeaderText = "Mã món";
                     dgvItems.Columns["ItemName"].HeaderText = "Tên món";
                     dgvItems.Columns["ItemPrice"].HeaderText = "Giá";
-                    dgvItems.Columns["CateName"].HeaderText = "Thể loại";
+                    dgvItems.Columns["CateName"].HeaderText = "Danh mục";
                     dgvItems.Columns["UnitName"].HeaderText = "Đơn vị";
                     dgvItems.Columns["ItemType"].HeaderText = "Loại món";
                     dgvItems.Columns["IsActive"].HeaderText = "Hoạt động";
@@ -260,6 +298,11 @@ namespace HuongViet.GUI
                     dgvItems.Columns["UnitName"].FillWeight = 10;
                     dgvItems.Columns["ItemType"].FillWeight = 12;
                     dgvItems.Columns["IsActive"].FillWeight = 8;
+
+                    // Align and format money to the right with separators
+                    var priceCol = dgvItems.Columns["ItemPrice"];
+                    priceCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    priceCol.DefaultCellStyle.Format = "N0";
                 }
             }
         }
@@ -371,7 +414,7 @@ namespace HuongViet.GUI
                 if (selectedItem != null)
                 {
                     txtItemName.Text = selectedItem.ItemName;
-                    txtItemPrice.Text = selectedItem.ItemPrice.ToString();
+                    txtItemPrice.Text = selectedItem.ItemPrice.ToString("N0");
                     txtDescription.Text = selectedItem.ItemDescription ?? string.Empty;
                     chkIsActive.Checked = selectedItem.IsActive;
                     
@@ -484,7 +527,7 @@ namespace HuongViet.GUI
                 }
 
                 decimal price;
-                if (!decimal.TryParse(txtItemPrice.Text, out price) || price < 0)
+                if (!decimal.TryParse(txtItemPrice.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out price) || price < 0)
                 {
                     MessageBox.Show("Giá món không hợp lệ!", "Lỗi nhập liệu", 
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -494,7 +537,7 @@ namespace HuongViet.GUI
 
                 if (cmbCategory.SelectedValue == null)
                 {
-                    MessageBox.Show("Vui lòng chọn thể loại!", "Lỗi nhập liệu", 
+                    MessageBox.Show("Vui lòng chọn danh mục!", "Lỗi nhập liệu", 
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -609,7 +652,7 @@ namespace HuongViet.GUI
                 // Filter price from
                 if (!string.IsNullOrWhiteSpace(txtPriceFrom.Text))
                 {
-                    if (decimal.TryParse(txtPriceFrom.Text, out decimal priceFrom) && priceFrom >= 0)
+                    if (decimal.TryParse(txtPriceFrom.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal priceFrom) && priceFrom >= 0)
                     {
                         currentPriceFrom = priceFrom;
                     }
@@ -628,7 +671,7 @@ namespace HuongViet.GUI
                 // Filter price to
                 if (!string.IsNullOrWhiteSpace(txtPriceTo.Text))
                 {
-                    if (decimal.TryParse(txtPriceTo.Text, out decimal priceTo) && priceTo >= 0)
+                    if (decimal.TryParse(txtPriceTo.Text, NumberStyles.AllowThousands | NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out decimal priceTo) && priceTo >= 0)
                     {
                         currentPriceTo = priceTo;
                     }
@@ -663,6 +706,8 @@ namespace HuongViet.GUI
 
         private void ClearFilters()
         {
+            suppressAutoFilter = true;
+
             txtSearchItem.Clear();
             cmbFilterCategory.SelectedIndex = 0;
             txtPriceFrom.Clear();
@@ -673,6 +718,8 @@ namespace HuongViet.GUI
             currentItemType = null;
             currentPriceFrom = null;
             currentPriceTo = null;
+
+            suppressAutoFilter = false;
             
             currentPage = 1;
             LoadItemsWithPaging();
@@ -866,7 +913,7 @@ namespace HuongViet.GUI
                 var displayData = priceHistory.Select(p => new
                 {
                     PriceUpdateDate = p.PriceUpdateDate.ToString("dd/MM/yyyy HH:mm:ss"),
-                    Price = p.Price.ToString("N0"),
+                    Price = p.Price,
                     CreatedAt = p.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")
                 }).ToList();
 
@@ -881,6 +928,11 @@ namespace HuongViet.GUI
                     dgvPriceHistory.Columns["PriceUpdateDate"].FillWeight = 35;
                     dgvPriceHistory.Columns["Price"].FillWeight = 30;
                     dgvPriceHistory.Columns["CreatedAt"].FillWeight = 35;
+
+                    // Align and format money to the right with separators
+                    var priceCol = dgvPriceHistory.Columns["Price"];
+                    priceCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    priceCol.DefaultCellStyle.Format = "N0";
                 }
             }
         }
@@ -988,9 +1040,27 @@ namespace HuongViet.GUI
 
         }
 
+        private void txtPriceFrom_Leave(object sender, EventArgs e)
+        {
+            FormatPriceTextBox(txtPriceFrom);
+        }
+
+        private void txtPriceTo_Leave(object sender, EventArgs e)
+        {
+            FormatPriceTextBox(txtPriceTo);
+        }
+
         private void txtSearchItem_TextChanged(object sender, EventArgs e)
         {
+            if (suppressAutoFilter)
+            {
+                return;
+            }
 
+            currentSearchTerm = txtSearchItem.Text.Trim();
+            currentPage = 1;
+            LoadItemsWithPaging();
+            ClearForm();
         }
 
         private void cmbFilterCategory_SelectedIndexChanged(object sender, EventArgs e)

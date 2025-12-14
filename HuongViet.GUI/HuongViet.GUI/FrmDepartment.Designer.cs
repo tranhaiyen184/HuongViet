@@ -1,3 +1,5 @@
+using FontAwesome.Sharp;
+
 namespace HuongViet.GUI
 {
     partial class FrmDepartment
@@ -44,19 +46,19 @@ namespace HuongViet.GUI
 			this.lblPageSize = new System.Windows.Forms.Label();
 			this.pnlForm = new System.Windows.Forms.Panel();
 			this.grpDepartmentInfo = new System.Windows.Forms.GroupBox();
+			this.btnCancel = new FontAwesome.Sharp.IconButton();
+			this.btnSave = new FontAwesome.Sharp.IconButton();
 			this.txtDepartmentName = new System.Windows.Forms.TextBox();
 			this.lblDepartmentName = new System.Windows.Forms.Label();
 			this.pnlButtons = new System.Windows.Forms.Panel();
-			this.btnCancel = new System.Windows.Forms.Button();
-			this.btnSave = new System.Windows.Forms.Button();
-			this.btnDelete = new System.Windows.Forms.Button();
-			this.btnEdit = new System.Windows.Forms.Button();
-			this.btnAdd = new System.Windows.Forms.Button();
+			this.btnDelete = new FontAwesome.Sharp.IconButton();
+			this.btnEdit = new FontAwesome.Sharp.IconButton();
+			this.btnAdd = new FontAwesome.Sharp.IconButton();
 			this.pnlHeader = new System.Windows.Forms.Panel();
 			this.pnlSearch = new System.Windows.Forms.Panel();
 			this.lblSearch = new System.Windows.Forms.Label();
-			this.btnRefresh = new System.Windows.Forms.Button();
-			this.btnSearch = new System.Windows.Forms.Button();
+			this.btnRefresh = new FontAwesome.Sharp.IconButton();
+			this.btnSearch = new FontAwesome.Sharp.IconButton();
 			this.txtSearch = new System.Windows.Forms.TextBox();
 			this.pnlMain.SuspendLayout();
 			this.pnlContent.SuspendLayout();
@@ -75,7 +77,7 @@ namespace HuongViet.GUI
 			this.pnlMain.Controls.Add(this.pnlForm);
 			this.pnlMain.Controls.Add(this.pnlHeader);
 			this.pnlMain.Location = new System.Drawing.Point(0, 0);
-			this.pnlMain.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlMain.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlMain.Name = "pnlMain";
 			this.pnlMain.Size = new System.Drawing.Size(1920, 1081);
 			this.pnlMain.TabIndex = 0;
@@ -84,10 +86,10 @@ namespace HuongViet.GUI
 			// 
 			this.pnlContent.Controls.Add(this.dgvDepartments);
 			this.pnlContent.Controls.Add(this.pnlPaging);
-			this.pnlContent.Location = new System.Drawing.Point(13, 130);
-			this.pnlContent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlContent.Location = new System.Drawing.Point(13, 105);
+			this.pnlContent.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlContent.Name = "pnlContent";
-			this.pnlContent.Size = new System.Drawing.Size(1480, 938);
+			this.pnlContent.Size = new System.Drawing.Size(1328, 963);
 			this.pnlContent.TabIndex = 2;
 			// 
 			// dgvDepartments
@@ -115,8 +117,8 @@ namespace HuongViet.GUI
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dgvDepartments.DefaultCellStyle = dataGridViewCellStyle2;
-			this.dgvDepartments.Location = new System.Drawing.Point(0, 0);
-			this.dgvDepartments.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.dgvDepartments.Location = new System.Drawing.Point(4, 4);
+			this.dgvDepartments.Margin = new System.Windows.Forms.Padding(4);
 			this.dgvDepartments.MultiSelect = false;
 			this.dgvDepartments.Name = "dgvDepartments";
 			this.dgvDepartments.ReadOnly = true;
@@ -131,7 +133,7 @@ namespace HuongViet.GUI
 			this.dgvDepartments.RowHeadersVisible = false;
 			this.dgvDepartments.RowHeadersWidth = 51;
 			this.dgvDepartments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.dgvDepartments.Size = new System.Drawing.Size(1476, 874);
+			this.dgvDepartments.Size = new System.Drawing.Size(1321, 741);
 			this.dgvDepartments.TabIndex = 0;
 			this.dgvDepartments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDepartments_CellContentClick);
 			this.dgvDepartments.SelectionChanged += new System.EventHandler(this.dgvDepartments_SelectionChanged);
@@ -145,17 +147,17 @@ namespace HuongViet.GUI
 			this.pnlPaging.Controls.Add(this.lblPageInfo);
 			this.pnlPaging.Controls.Add(this.cmbPageSize);
 			this.pnlPaging.Controls.Add(this.lblPageSize);
-			this.pnlPaging.Location = new System.Drawing.Point(0, 886);
-			this.pnlPaging.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlPaging.Location = new System.Drawing.Point(4, 763);
+			this.pnlPaging.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlPaging.Name = "pnlPaging";
-			this.pnlPaging.Size = new System.Drawing.Size(1480, 52);
+			this.pnlPaging.Size = new System.Drawing.Size(1324, 61);
 			this.pnlPaging.TabIndex = 1;
 			// 
 			// btnFirstPage
 			// 
 			this.btnFirstPage.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnFirstPage.Location = new System.Drawing.Point(15, 7);
-			this.btnFirstPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnFirstPage.Margin = new System.Windows.Forms.Padding(4);
 			this.btnFirstPage.Name = "btnFirstPage";
 			this.btnFirstPage.Size = new System.Drawing.Size(45, 36);
 			this.btnFirstPage.TabIndex = 0;
@@ -167,7 +169,7 @@ namespace HuongViet.GUI
 			// 
 			this.btnPrevPage.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnPrevPage.Location = new System.Drawing.Point(65, 7);
-			this.btnPrevPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnPrevPage.Margin = new System.Windows.Forms.Padding(4);
 			this.btnPrevPage.Name = "btnPrevPage";
 			this.btnPrevPage.Size = new System.Drawing.Size(45, 36);
 			this.btnPrevPage.TabIndex = 1;
@@ -179,7 +181,7 @@ namespace HuongViet.GUI
 			// 
 			this.btnNextPage.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnNextPage.Location = new System.Drawing.Point(115, 7);
-			this.btnNextPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnNextPage.Margin = new System.Windows.Forms.Padding(4);
 			this.btnNextPage.Name = "btnNextPage";
 			this.btnNextPage.Size = new System.Drawing.Size(45, 36);
 			this.btnNextPage.TabIndex = 2;
@@ -191,7 +193,7 @@ namespace HuongViet.GUI
 			// 
 			this.btnLastPage.Font = new System.Drawing.Font("Segoe UI", 12F);
 			this.btnLastPage.Location = new System.Drawing.Point(165, 7);
-			this.btnLastPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnLastPage.Margin = new System.Windows.Forms.Padding(4);
 			this.btnLastPage.Name = "btnLastPage";
 			this.btnLastPage.Size = new System.Drawing.Size(45, 36);
 			this.btnLastPage.TabIndex = 3;
@@ -203,7 +205,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblPageInfo.AutoSize = true;
 			this.lblPageInfo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPageInfo.Location = new System.Drawing.Point(349, 16);
+			this.lblPageInfo.Location = new System.Drawing.Point(553, 17);
 			this.lblPageInfo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPageInfo.Name = "lblPageInfo";
 			this.lblPageInfo.Size = new System.Drawing.Size(181, 22);
@@ -221,8 +223,8 @@ namespace HuongViet.GUI
             "20",
             "50",
             "100"});
-			this.cmbPageSize.Location = new System.Drawing.Point(749, 14);
-			this.cmbPageSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.cmbPageSize.Location = new System.Drawing.Point(1258, 14);
+			this.cmbPageSize.Margin = new System.Windows.Forms.Padding(4);
 			this.cmbPageSize.Name = "cmbPageSize";
 			this.cmbPageSize.Size = new System.Drawing.Size(60, 30);
 			this.cmbPageSize.TabIndex = 5;
@@ -232,7 +234,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblPageSize.AutoSize = true;
 			this.lblPageSize.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPageSize.Location = new System.Drawing.Point(620, 16);
+			this.lblPageSize.Location = new System.Drawing.Point(1091, 17);
 			this.lblPageSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblPageSize.Name = "lblPageSize";
 			this.lblPageSize.Size = new System.Drawing.Size(140, 22);
@@ -243,34 +245,72 @@ namespace HuongViet.GUI
 			// 
 			this.pnlForm.Controls.Add(this.grpDepartmentInfo);
 			this.pnlForm.Controls.Add(this.pnlButtons);
-			this.pnlForm.Location = new System.Drawing.Point(1507, 130);
-			this.pnlForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlForm.Location = new System.Drawing.Point(1348, 105);
+			this.pnlForm.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlForm.Name = "pnlForm";
-			this.pnlForm.Size = new System.Drawing.Size(400, 938);
+			this.pnlForm.Size = new System.Drawing.Size(558, 938);
 			this.pnlForm.TabIndex = 1;
 			// 
 			// grpDepartmentInfo
 			// 
+			this.grpDepartmentInfo.Controls.Add(this.btnCancel);
+			this.grpDepartmentInfo.Controls.Add(this.btnSave);
 			this.grpDepartmentInfo.Controls.Add(this.txtDepartmentName);
 			this.grpDepartmentInfo.Controls.Add(this.lblDepartmentName);
 			this.grpDepartmentInfo.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.grpDepartmentInfo.Location = new System.Drawing.Point(13, 12);
-			this.grpDepartmentInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.grpDepartmentInfo.Location = new System.Drawing.Point(13, 4);
+			this.grpDepartmentInfo.Margin = new System.Windows.Forms.Padding(4);
 			this.grpDepartmentInfo.Name = "grpDepartmentInfo";
 			this.grpDepartmentInfo.Padding = new System.Windows.Forms.Padding(20, 18, 20, 18);
-			this.grpDepartmentInfo.Size = new System.Drawing.Size(373, 149);
+			this.grpDepartmentInfo.Size = new System.Drawing.Size(527, 263);
 			this.grpDepartmentInfo.TabIndex = 1;
 			this.grpDepartmentInfo.TabStop = false;
 			this.grpDepartmentInfo.Text = "Thông tin phòng ban";
 			// 
+			// btnCancel
+			// 
+			this.btnCancel.Enabled = false;
+			this.btnCancel.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnCancel.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
+			this.btnCancel.IconColor = System.Drawing.Color.Black;
+			this.btnCancel.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnCancel.IconSize = 22;
+			this.btnCancel.Location = new System.Drawing.Point(146, 176);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(167, 49);
+			this.btnCancel.TabIndex = 4;
+			this.btnCancel.Text = "Hủy";
+			this.btnCancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.Enabled = false;
+			this.btnSave.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnSave.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
+			this.btnSave.IconColor = System.Drawing.Color.Black;
+			this.btnSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnSave.IconSize = 22;
+			this.btnSave.Location = new System.Drawing.Point(337, 176);
+			this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(167, 49);
+			this.btnSave.TabIndex = 3;
+			this.btnSave.Text = "Lưu";
+			this.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
 			// txtDepartmentName
 			// 
 			this.txtDepartmentName.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDepartmentName.Location = new System.Drawing.Point(24, 74);
-			this.txtDepartmentName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtDepartmentName.Location = new System.Drawing.Point(24, 110);
+			this.txtDepartmentName.Margin = new System.Windows.Forms.Padding(4);
 			this.txtDepartmentName.MaxLength = 30;
 			this.txtDepartmentName.Name = "txtDepartmentName";
-			this.txtDepartmentName.Size = new System.Drawing.Size(324, 38);
+			this.txtDepartmentName.Size = new System.Drawing.Size(479, 38);
 			this.txtDepartmentName.TabIndex = 1;
 			this.txtDepartmentName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDepartmentName_KeyPress);
 			// 
@@ -278,7 +318,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblDepartmentName.AutoSize = true;
 			this.lblDepartmentName.Font = new System.Drawing.Font("Times New Roman", 14F);
-			this.lblDepartmentName.Location = new System.Drawing.Point(24, 43);
+			this.lblDepartmentName.Location = new System.Drawing.Point(24, 57);
 			this.lblDepartmentName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblDepartmentName.Name = "lblDepartmentName";
 			this.lblDepartmentName.Size = new System.Drawing.Size(161, 27);
@@ -287,78 +327,65 @@ namespace HuongViet.GUI
 			// 
 			// pnlButtons
 			// 
-			this.pnlButtons.Controls.Add(this.btnCancel);
-			this.pnlButtons.Controls.Add(this.btnSave);
 			this.pnlButtons.Controls.Add(this.btnDelete);
 			this.pnlButtons.Controls.Add(this.btnEdit);
 			this.pnlButtons.Controls.Add(this.btnAdd);
-			this.pnlButtons.Location = new System.Drawing.Point(13, 169);
-			this.pnlButtons.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlButtons.Location = new System.Drawing.Point(13, 300);
+			this.pnlButtons.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlButtons.Name = "pnlButtons";
-			this.pnlButtons.Size = new System.Drawing.Size(373, 123);
+			this.pnlButtons.Size = new System.Drawing.Size(527, 95);
 			this.pnlButtons.TabIndex = 0;
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.Enabled = false;
-			this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.btnCancel.Location = new System.Drawing.Point(193, 60);
-			this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(156, 49);
-			this.btnCancel.TabIndex = 4;
-			this.btnCancel.Text = "Hủy";
-			this.btnCancel.UseVisualStyleBackColor = true;
-			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-			// 
-			// btnSave
-			// 
-			this.btnSave.Enabled = false;
-			this.btnSave.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.btnSave.Location = new System.Drawing.Point(24, 60);
-			this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(156, 49);
-			this.btnSave.TabIndex = 3;
-			this.btnSave.Text = "Lưu";
-			this.btnSave.UseVisualStyleBackColor = true;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// btnDelete
 			// 
 			this.btnDelete.Enabled = false;
-			this.btnDelete.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.btnDelete.Location = new System.Drawing.Point(245, 14);
-			this.btnDelete.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnDelete.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnDelete.IconChar = FontAwesome.Sharp.IconChar.TrashAlt;
+			this.btnDelete.IconColor = System.Drawing.Color.Black;
+			this.btnDelete.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnDelete.IconSize = 22;
+			this.btnDelete.Location = new System.Drawing.Point(356, 14);
+			this.btnDelete.Margin = new System.Windows.Forms.Padding(4);
 			this.btnDelete.Name = "btnDelete";
-			this.btnDelete.Size = new System.Drawing.Size(104, 39);
+			this.btnDelete.Size = new System.Drawing.Size(167, 46);
 			this.btnDelete.TabIndex = 2;
 			this.btnDelete.Text = "Xóa";
+			this.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnDelete.UseVisualStyleBackColor = true;
 			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
 			// btnEdit
 			// 
 			this.btnEdit.Enabled = false;
-			this.btnEdit.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.btnEdit.Location = new System.Drawing.Point(135, 14);
-			this.btnEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnEdit.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnEdit.IconChar = FontAwesome.Sharp.IconChar.Edit;
+			this.btnEdit.IconColor = System.Drawing.Color.Black;
+			this.btnEdit.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnEdit.IconSize = 22;
+			this.btnEdit.Location = new System.Drawing.Point(180, 14);
+			this.btnEdit.Margin = new System.Windows.Forms.Padding(4);
 			this.btnEdit.Name = "btnEdit";
-			this.btnEdit.Size = new System.Drawing.Size(104, 39);
+			this.btnEdit.Size = new System.Drawing.Size(167, 46);
 			this.btnEdit.TabIndex = 1;
 			this.btnEdit.Text = "Sửa";
+			this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnEdit.UseVisualStyleBackColor = true;
 			this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
 			// 
 			// btnAdd
 			// 
-			this.btnAdd.Font = new System.Drawing.Font("Segoe UI", 12F);
-			this.btnAdd.Location = new System.Drawing.Point(24, 14);
-			this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnAdd.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnAdd.IconChar = FontAwesome.Sharp.IconChar.PlusCircle;
+			this.btnAdd.IconColor = System.Drawing.Color.Black;
+			this.btnAdd.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnAdd.IconSize = 22;
+			this.btnAdd.Location = new System.Drawing.Point(4, 14);
+			this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
 			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.Size = new System.Drawing.Size(104, 39);
+			this.btnAdd.Size = new System.Drawing.Size(167, 46);
 			this.btnAdd.TabIndex = 0;
 			this.btnAdd.Text = "Thêm";
+			this.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnAdd.UseVisualStyleBackColor = true;
 			this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
 			// 
@@ -366,9 +393,9 @@ namespace HuongViet.GUI
 			// 
 			this.pnlHeader.Controls.Add(this.pnlSearch);
 			this.pnlHeader.Location = new System.Drawing.Point(13, 12);
-			this.pnlHeader.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlHeader.Name = "pnlHeader";
-			this.pnlHeader.Size = new System.Drawing.Size(1893, 106);
+			this.pnlHeader.Size = new System.Drawing.Size(1893, 85);
 			this.pnlHeader.TabIndex = 0;
 			// 
 			// pnlSearch
@@ -378,9 +405,9 @@ namespace HuongViet.GUI
 			this.pnlSearch.Controls.Add(this.btnSearch);
 			this.pnlSearch.Controls.Add(this.txtSearch);
 			this.pnlSearch.Location = new System.Drawing.Point(0, 0);
-			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSearch.Name = "pnlSearch";
-			this.pnlSearch.Size = new System.Drawing.Size(1893, 106);
+			this.pnlSearch.Size = new System.Drawing.Size(1893, 82);
 			this.pnlSearch.TabIndex = 1;
 			this.pnlSearch.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSearch_Paint);
 			// 
@@ -388,7 +415,7 @@ namespace HuongViet.GUI
 			// 
 			this.lblSearch.AutoSize = true;
 			this.lblSearch.Font = new System.Drawing.Font("Times New Roman", 14F);
-			this.lblSearch.Location = new System.Drawing.Point(20, 55);
+			this.lblSearch.Location = new System.Drawing.Point(20, 31);
 			this.lblSearch.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblSearch.Name = "lblSearch";
 			this.lblSearch.Size = new System.Drawing.Size(109, 27);
@@ -398,34 +425,44 @@ namespace HuongViet.GUI
 			// btnRefresh
 			// 
 			this.btnRefresh.Font = new System.Drawing.Font("Times New Roman", 14F);
-			this.btnRefresh.Location = new System.Drawing.Point(1685, 49);
-			this.btnRefresh.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnRefresh.IconChar = FontAwesome.Sharp.IconChar.Sync;
+			this.btnRefresh.IconColor = System.Drawing.Color.Black;
+			this.btnRefresh.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnRefresh.IconSize = 24;
+			this.btnRefresh.Location = new System.Drawing.Point(1625, 18);
+			this.btnRefresh.Margin = new System.Windows.Forms.Padding(4);
 			this.btnRefresh.Name = "btnRefresh";
-			this.btnRefresh.Size = new System.Drawing.Size(147, 47);
+			this.btnRefresh.Size = new System.Drawing.Size(196, 53);
 			this.btnRefresh.TabIndex = 3;
 			this.btnRefresh.Text = "Làm mới";
+			this.btnRefresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnRefresh.UseVisualStyleBackColor = true;
 			this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
 			// 
 			// btnSearch
 			// 
 			this.btnSearch.Font = new System.Drawing.Font("Times New Roman", 14F);
-			this.btnSearch.Location = new System.Drawing.Point(1507, 49);
-			this.btnSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.btnSearch.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlass;
+			this.btnSearch.IconColor = System.Drawing.Color.Black;
+			this.btnSearch.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			this.btnSearch.IconSize = 24;
+			this.btnSearch.Location = new System.Drawing.Point(1406, 15);
+			this.btnSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.btnSearch.Name = "btnSearch";
-			this.btnSearch.Size = new System.Drawing.Size(147, 47);
+			this.btnSearch.Size = new System.Drawing.Size(196, 53);
 			this.btnSearch.TabIndex = 2;
 			this.btnSearch.Text = "Tìm kiếm";
+			this.btnSearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.btnSearch.UseVisualStyleBackColor = true;
 			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
 			// txtSearch
 			// 
 			this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 16F);
-			this.txtSearch.Location = new System.Drawing.Point(145, 49);
-			this.txtSearch.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.txtSearch.Location = new System.Drawing.Point(165, 25);
+			this.txtSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.txtSearch.Name = "txtSearch";
-			this.txtSearch.Size = new System.Drawing.Size(1333, 43);
+			this.txtSearch.Size = new System.Drawing.Size(1163, 43);
 			this.txtSearch.TabIndex = 1;
 			this.txtSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSearch_KeyPress);
 			// 
@@ -433,10 +470,10 @@ namespace HuongViet.GUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1920, 1081);
+			this.ClientSize = new System.Drawing.Size(1920, 1055);
 			this.Controls.Add(this.pnlMain);
 			this.KeyPreview = true;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "FrmDepartment";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Quản lý phòng ban";
@@ -462,9 +499,9 @@ namespace HuongViet.GUI
         #endregion
 
         private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Panel pnlSearch;
-        private System.Windows.Forms.Button btnSearch;
+		private System.Windows.Forms.Panel pnlHeader;
+		private System.Windows.Forms.Panel pnlSearch;
+		private FontAwesome.Sharp.IconButton btnSearch;
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label lblSearch;
         private System.Windows.Forms.Panel pnlContent;
@@ -474,12 +511,12 @@ namespace HuongViet.GUI
         private System.Windows.Forms.TextBox txtDepartmentName;
         private System.Windows.Forms.Label lblDepartmentName;
         private System.Windows.Forms.Panel pnlButtons;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnRefresh;
+		private FontAwesome.Sharp.IconButton btnCancel;
+		private FontAwesome.Sharp.IconButton btnSave;
+		private FontAwesome.Sharp.IconButton btnDelete;
+		private FontAwesome.Sharp.IconButton btnEdit;
+		private FontAwesome.Sharp.IconButton btnAdd;
+		private FontAwesome.Sharp.IconButton btnRefresh;
         private System.Windows.Forms.Panel pnlPaging;
         private System.Windows.Forms.Button btnFirstPage;
         private System.Windows.Forms.Button btnPrevPage;
@@ -487,6 +524,6 @@ namespace HuongViet.GUI
         private System.Windows.Forms.Button btnLastPage;
         private System.Windows.Forms.Label lblPageInfo;
         private System.Windows.Forms.ComboBox cmbPageSize;
-        private System.Windows.Forms.Label lblPageSize;
+		private System.Windows.Forms.Label lblPageSize;
 	}
 }

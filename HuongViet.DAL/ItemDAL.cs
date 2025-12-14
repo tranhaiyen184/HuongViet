@@ -503,7 +503,7 @@ namespace HuongViet.DAL
                     parameters.Add(new MySqlParameter("@searchTerm", $"%{criteria.SearchTerm}%"));
                 }
 
-                // Filter theo thể loại
+                // Filter theo danh mục
                 if (!string.IsNullOrEmpty(categoryId))
                 {
                     conditions.Add("i.CateID = @categoryId");
