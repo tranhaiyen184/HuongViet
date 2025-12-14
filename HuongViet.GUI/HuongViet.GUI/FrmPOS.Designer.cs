@@ -52,6 +52,20 @@ namespace HuongViet.GUI
             this.pnlRight = new System.Windows.Forms.Panel();
             this.tabControlMenu = new System.Windows.Forms.TabControl();
             this.tabPageMenu = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanelOrderSummary = new System.Windows.Forms.TableLayoutPanel();
+            this.lblOrderSummary = new System.Windows.Forms.Label();
+            this.labelTotalAmount = new System.Windows.Forms.Label();
+            this.lblTotalAmount = new System.Windows.Forms.Label();
+            this.lblGrandTotal = new System.Windows.Forms.Label();
+            this.lblDiscount = new System.Windows.Forms.Label();
+            this.lblVoucher = new System.Windows.Forms.Label();
+            this.lblCustomerMoney = new System.Windows.Forms.Label();
+            this.lblChange = new System.Windows.Forms.Label();
+            this.txbVoucher = new System.Windows.Forms.TextBox();
+            this.txbCustomerMoney = new System.Windows.Forms.TextBox();
+            this.lblDiscountAmount = new System.Windows.Forms.Label();
+            this.lblGrandTotalAmount = new System.Windows.Forms.Label();
+            this.lblChangeAmount = new System.Windows.Forms.Label();
             this.flowLayoutItems = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlOrderHeader = new System.Windows.Forms.Panel();
             this.lblTableInfo = new System.Windows.Forms.Label();
@@ -60,13 +74,12 @@ namespace HuongViet.GUI
             this.pnlOrderFooter = new System.Windows.Forms.Panel();
             this.btnPayment = new System.Windows.Forms.Button();
             this.btnSaveOrder = new System.Windows.Forms.Button();
-            this.lblTotalAmount = new System.Windows.Forms.Label();
             this.lblCustomerPhone = new System.Windows.Forms.Label();
             this.lblCustomerName = new System.Windows.Forms.Label();
             this.txtCustomerPhone = new System.Windows.Forms.TextBox();
             this.txtCustomerName = new System.Windows.Forms.TextBox();
-            this.btnSearchCustomer = new System.Windows.Forms.Button();
             this.btnNewCustomer = new System.Windows.Forms.Button();
+            this.btnSearchCustomer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -78,6 +91,7 @@ namespace HuongViet.GUI
             this.pnlRight.SuspendLayout();
             this.tabControlMenu.SuspendLayout();
             this.tabPageMenu.SuspendLayout();
+            this.tableLayoutPanelOrderSummary.SuspendLayout();
             this.pnlOrderHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.pnlOrderFooter.SuspendLayout();
@@ -128,10 +142,10 @@ namespace HuongViet.GUI
             this.tabPageTables.Controls.Add(this.lblTableCount);
             this.tabPageTables.Controls.Add(this.flowLayoutTables);
             this.tabPageTables.Controls.Add(this.dgvTables);
-            this.tabPageTables.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTables.Location = new System.Drawing.Point(4, 25);
             this.tabPageTables.Name = "tabPageTables";
             this.tabPageTables.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTables.Size = new System.Drawing.Size(392, 474);
+            this.tabPageTables.Size = new System.Drawing.Size(392, 471);
             this.tabPageTables.TabIndex = 0;
             this.tabPageTables.Text = "PHÒNG / BÀN";
             this.tabPageTables.UseVisualStyleBackColor = true;
@@ -143,7 +157,7 @@ namespace HuongViet.GUI
             this.cmbAreaFilter.FormattingEnabled = true;
             this.cmbAreaFilter.Location = new System.Drawing.Point(3, 3);
             this.cmbAreaFilter.Name = "cmbAreaFilter";
-            this.cmbAreaFilter.Size = new System.Drawing.Size(386, 24);
+            this.cmbAreaFilter.Size = new System.Drawing.Size(386, 28);
             this.cmbAreaFilter.TabIndex = 1;
             // 
             // lblTableCount
@@ -152,7 +166,7 @@ namespace HuongViet.GUI
             this.lblTableCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblTableCount.Location = new System.Drawing.Point(3, 448);
             this.lblTableCount.Name = "lblTableCount";
-            this.lblTableCount.Size = new System.Drawing.Size(44, 17);
+            this.lblTableCount.Size = new System.Drawing.Size(50, 20);
             this.lblTableCount.TabIndex = 0;
             this.lblTableCount.Text = "0 bàn";
             // 
@@ -201,20 +215,178 @@ namespace HuongViet.GUI
             // 
             // tabPageMenu
             // 
+            this.tabPageMenu.Controls.Add(this.tableLayoutPanelOrderSummary);
             this.tabPageMenu.Controls.Add(this.flowLayoutItems);
-            this.tabPageMenu.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMenu.Location = new System.Drawing.Point(4, 25);
             this.tabPageMenu.Name = "tabPageMenu";
             this.tabPageMenu.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMenu.Size = new System.Drawing.Size(992, 474);
+            this.tabPageMenu.Size = new System.Drawing.Size(992, 471);
             this.tabPageMenu.TabIndex = 0;
             this.tabPageMenu.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanelOrderSummary
+            // 
+            this.tableLayoutPanelOrderSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelOrderSummary.ColumnCount = 2;
+            this.tableLayoutPanelOrderSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
+            this.tableLayoutPanelOrderSummary.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblOrderSummary, 0, 0);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.labelTotalAmount, 0, 1);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblTotalAmount, 1, 1);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblGrandTotal, 0, 4);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblDiscount, 0, 3);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblVoucher, 0, 2);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblCustomerMoney, 0, 5);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblChange, 0, 6);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.txbVoucher, 1, 2);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.txbCustomerMoney, 1, 5);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblDiscountAmount, 1, 3);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblGrandTotalAmount, 1, 4);
+            this.tableLayoutPanelOrderSummary.Controls.Add(this.lblChangeAmount, 1, 6);
+            this.tableLayoutPanelOrderSummary.Location = new System.Drawing.Point(600, 6);
+            this.tableLayoutPanelOrderSummary.Name = "tableLayoutPanelOrderSummary";
+            this.tableLayoutPanelOrderSummary.RowCount = 7;
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelOrderSummary.Size = new System.Drawing.Size(386, 459);
+            this.tableLayoutPanelOrderSummary.TabIndex = 1;
+            // 
+            // lblOrderSummary
+            // 
+            this.lblOrderSummary.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblOrderSummary.AutoSize = true;
+            this.tableLayoutPanelOrderSummary.SetColumnSpan(this.lblOrderSummary, 2);
+            this.lblOrderSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOrderSummary.Location = new System.Drawing.Point(69, 14);
+            this.lblOrderSummary.Name = "lblOrderSummary";
+            this.lblOrderSummary.Size = new System.Drawing.Size(248, 29);
+            this.lblOrderSummary.TabIndex = 0;
+            this.lblOrderSummary.Text = "Hoá đơn Thanh toán";
+            this.lblOrderSummary.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelTotalAmount
+            // 
+            this.labelTotalAmount.AutoSize = true;
+            this.labelTotalAmount.Location = new System.Drawing.Point(3, 58);
+            this.labelTotalAmount.Name = "labelTotalAmount";
+            this.labelTotalAmount.Size = new System.Drawing.Size(68, 20);
+            this.labelTotalAmount.TabIndex = 1;
+            this.labelTotalAmount.Text = "Thành tiền";
+            this.labelTotalAmount.UseCompatibleTextRendering = true;
+            this.labelTotalAmount.Click += new System.EventHandler(this.labelTotalAmount_Click);
+            // 
+            // lblTotalAmount
+            // 
+            this.lblTotalAmount.AutoSize = true;
+            this.lblTotalAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblTotalAmount.Location = new System.Drawing.Point(197, 58);
+            this.lblTotalAmount.Name = "lblTotalAmount";
+            this.lblTotalAmount.Size = new System.Drawing.Size(24, 25);
+            this.lblTotalAmount.TabIndex = 5;
+            this.lblTotalAmount.Text = "0";
+            // 
+            // lblGrandTotal
+            // 
+            this.lblGrandTotal.AutoSize = true;
+            this.lblGrandTotal.Location = new System.Drawing.Point(3, 178);
+            this.lblGrandTotal.Name = "lblGrandTotal";
+            this.lblGrandTotal.Size = new System.Drawing.Size(63, 16);
+            this.lblGrandTotal.TabIndex = 7;
+            this.lblGrandTotal.Text = "Tổng tiền";
+            // 
+            // lblDiscount
+            // 
+            this.lblDiscount.AutoSize = true;
+            this.lblDiscount.Location = new System.Drawing.Point(3, 138);
+            this.lblDiscount.Name = "lblDiscount";
+            this.lblDiscount.Size = new System.Drawing.Size(61, 16);
+            this.lblDiscount.TabIndex = 6;
+            this.lblDiscount.Text = "Giảm giá";
+            // 
+            // lblVoucher
+            // 
+            this.lblVoucher.AutoSize = true;
+            this.lblVoucher.Location = new System.Drawing.Point(3, 98);
+            this.lblVoucher.Name = "lblVoucher";
+            this.lblVoucher.Size = new System.Drawing.Size(80, 16);
+            this.lblVoucher.TabIndex = 8;
+            this.lblVoucher.Text = "Mã voucher:";
+            // 
+            // lblCustomerMoney
+            // 
+            this.lblCustomerMoney.AutoSize = true;
+            this.lblCustomerMoney.Location = new System.Drawing.Point(3, 218);
+            this.lblCustomerMoney.Name = "lblCustomerMoney";
+            this.lblCustomerMoney.Size = new System.Drawing.Size(65, 16);
+            this.lblCustomerMoney.TabIndex = 9;
+            this.lblCustomerMoney.Text = "Khách gửi";
+            // 
+            // lblChange
+            // 
+            this.lblChange.AutoSize = true;
+            this.lblChange.Location = new System.Drawing.Point(3, 258);
+            this.lblChange.Name = "lblChange";
+            this.lblChange.Size = new System.Drawing.Size(65, 16);
+            this.lblChange.TabIndex = 10;
+            this.lblChange.Text = "Tiền thừa:";
+            // 
+            // txbVoucher
+            // 
+            this.txbVoucher.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbVoucher.Location = new System.Drawing.Point(197, 101);
+            this.txbVoucher.Name = "txbVoucher";
+            this.txbVoucher.Size = new System.Drawing.Size(186, 30);
+            this.txbVoucher.TabIndex = 11;
+            // 
+            // txbCustomerMoney
+            // 
+            this.txbCustomerMoney.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txbCustomerMoney.Location = new System.Drawing.Point(197, 221);
+            this.txbCustomerMoney.Name = "txbCustomerMoney";
+            this.txbCustomerMoney.Size = new System.Drawing.Size(186, 30);
+            this.txbCustomerMoney.TabIndex = 12;
+            // 
+            // lblDiscountAmount
+            // 
+            this.lblDiscountAmount.AutoSize = true;
+            this.lblDiscountAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDiscountAmount.Location = new System.Drawing.Point(197, 138);
+            this.lblDiscountAmount.Name = "lblDiscountAmount";
+            this.lblDiscountAmount.Size = new System.Drawing.Size(127, 25);
+            this.lblDiscountAmount.TabIndex = 13;
+            this.lblDiscountAmount.Text = "0.000 (-0%)";
+            // 
+            // lblGrandTotalAmount
+            // 
+            this.lblGrandTotalAmount.AutoSize = true;
+            this.lblGrandTotalAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGrandTotalAmount.Location = new System.Drawing.Point(197, 178);
+            this.lblGrandTotalAmount.Name = "lblGrandTotalAmount";
+            this.lblGrandTotalAmount.Size = new System.Drawing.Size(66, 25);
+            this.lblGrandTotalAmount.TabIndex = 14;
+            this.lblGrandTotalAmount.Text = "0.000";
+            // 
+            // lblChangeAmount
+            // 
+            this.lblChangeAmount.AutoSize = true;
+            this.lblChangeAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChangeAmount.Location = new System.Drawing.Point(197, 258);
+            this.lblChangeAmount.Name = "lblChangeAmount";
+            this.lblChangeAmount.Size = new System.Drawing.Size(66, 25);
+            this.lblChangeAmount.TabIndex = 15;
+            this.lblChangeAmount.Text = "0.000";
             // 
             // flowLayoutItems
             // 
             this.flowLayoutItems.AutoScroll = true;
             this.flowLayoutItems.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutItems.Name = "flowLayoutItems";
-            this.flowLayoutItems.Size = new System.Drawing.Size(986, 465);
+            this.flowLayoutItems.Size = new System.Drawing.Size(591, 465);
             this.flowLayoutItems.TabIndex = 0;
             // 
             // pnlOrderHeader
@@ -232,7 +404,7 @@ namespace HuongViet.GUI
             this.lblTableInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.lblTableInfo.Location = new System.Drawing.Point(10, 10);
             this.lblTableInfo.Name = "lblTableInfo";
-            this.lblTableInfo.Size = new System.Drawing.Size(117, 17);
+            this.lblTableInfo.Size = new System.Drawing.Size(134, 20);
             this.lblTableInfo.TabIndex = 1;
             this.lblTableInfo.Text = "Chưa chọn bàn";
             // 
@@ -242,7 +414,7 @@ namespace HuongViet.GUI
             this.lblDateTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.lblDateTime.Location = new System.Drawing.Point(1250, 10);
             this.lblDateTime.Name = "lblDateTime";
-            this.lblDateTime.Size = new System.Drawing.Size(120, 17);
+            this.lblDateTime.Size = new System.Drawing.Size(137, 20);
             this.lblDateTime.TabIndex = 0;
             this.lblDateTime.Text = "20/07/2022 18:17";
             // 
@@ -262,7 +434,6 @@ namespace HuongViet.GUI
             // 
             this.pnlOrderFooter.Controls.Add(this.btnPayment);
             this.pnlOrderFooter.Controls.Add(this.btnSaveOrder);
-            this.pnlOrderFooter.Controls.Add(this.lblTotalAmount);
             this.pnlOrderFooter.Controls.Add(this.lblCustomerPhone);
             this.pnlOrderFooter.Controls.Add(this.lblCustomerName);
             this.pnlOrderFooter.Controls.Add(this.txtCustomerPhone);
@@ -298,22 +469,12 @@ namespace HuongViet.GUI
             this.btnSaveOrder.UseVisualStyleBackColor = true;
             this.btnSaveOrder.Click += new System.EventHandler(this.BtnSaveOrder_Click);
             // 
-            // lblTotalAmount
-            // 
-            this.lblTotalAmount.AutoSize = true;
-            this.lblTotalAmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTotalAmount.Location = new System.Drawing.Point(849, 23);
-            this.lblTotalAmount.Name = "lblTotalAmount";
-            this.lblTotalAmount.Size = new System.Drawing.Size(19, 20);
-            this.lblTotalAmount.TabIndex = 5;
-            this.lblTotalAmount.Text = "0";
-            // 
             // lblCustomerPhone
             // 
             this.lblCustomerPhone.AutoSize = true;
             this.lblCustomerPhone.Location = new System.Drawing.Point(300, 23);
             this.lblCustomerPhone.Name = "lblCustomerPhone";
-            this.lblCustomerPhone.Size = new System.Drawing.Size(73, 13);
+            this.lblCustomerPhone.Size = new System.Drawing.Size(88, 16);
             this.lblCustomerPhone.TabIndex = 4;
             this.lblCustomerPhone.Text = "Số điện thoại:";
             // 
@@ -322,7 +483,7 @@ namespace HuongViet.GUI
             this.lblCustomerName.AutoSize = true;
             this.lblCustomerName.Location = new System.Drawing.Point(10, 23);
             this.lblCustomerName.Name = "lblCustomerName";
-            this.lblCustomerName.Size = new System.Drawing.Size(89, 13);
+            this.lblCustomerName.Size = new System.Drawing.Size(106, 16);
             this.lblCustomerName.TabIndex = 3;
             this.lblCustomerName.Text = "Tên khách hàng:";
             // 
@@ -330,25 +491,15 @@ namespace HuongViet.GUI
             // 
             this.txtCustomerPhone.Location = new System.Drawing.Point(400, 20);
             this.txtCustomerPhone.Name = "txtCustomerPhone";
-            this.txtCustomerPhone.Size = new System.Drawing.Size(150, 20);
+            this.txtCustomerPhone.Size = new System.Drawing.Size(150, 22);
             this.txtCustomerPhone.TabIndex = 2;
             // 
             // txtCustomerName
             // 
             this.txtCustomerName.Location = new System.Drawing.Point(120, 20);
             this.txtCustomerName.Name = "txtCustomerName";
-            this.txtCustomerName.Size = new System.Drawing.Size(150, 20);
+            this.txtCustomerName.Size = new System.Drawing.Size(150, 22);
             this.txtCustomerName.TabIndex = 1;
-            // 
-            // btnSearchCustomer
-            // 
-            this.btnSearchCustomer.Location = new System.Drawing.Point(560, 18);
-            this.btnSearchCustomer.Name = "btnSearchCustomer";
-            this.btnSearchCustomer.Size = new System.Drawing.Size(100, 25);
-            this.btnSearchCustomer.TabIndex = 0;
-            this.btnSearchCustomer.Text = "Tìm khách hàng";
-            this.btnSearchCustomer.UseVisualStyleBackColor = true;
-            this.btnSearchCustomer.Click += new System.EventHandler(this.BtnSearchCustomer_Click);
             // 
             // btnNewCustomer
             // 
@@ -362,6 +513,16 @@ namespace HuongViet.GUI
             this.btnNewCustomer.Text = "Khách hàng mới";
             this.btnNewCustomer.UseVisualStyleBackColor = false;
             this.btnNewCustomer.Click += new System.EventHandler(this.BtnNewCustomer_Click);
+            // 
+            // btnSearchCustomer
+            // 
+            this.btnSearchCustomer.Location = new System.Drawing.Point(560, 18);
+            this.btnSearchCustomer.Name = "btnSearchCustomer";
+            this.btnSearchCustomer.Size = new System.Drawing.Size(100, 25);
+            this.btnSearchCustomer.TabIndex = 0;
+            this.btnSearchCustomer.Text = "Tìm khách hàng";
+            this.btnSearchCustomer.UseVisualStyleBackColor = true;
+            this.btnSearchCustomer.Click += new System.EventHandler(this.BtnSearchCustomer_Click);
             // 
             // FrmPOS
             // 
@@ -383,6 +544,8 @@ namespace HuongViet.GUI
             this.pnlRight.ResumeLayout(false);
             this.tabControlMenu.ResumeLayout(false);
             this.tabPageMenu.ResumeLayout(false);
+            this.tableLayoutPanelOrderSummary.ResumeLayout(false);
+            this.tableLayoutPanelOrderSummary.PerformLayout();
             this.pnlOrderHeader.ResumeLayout(false);
             this.pnlOrderHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
@@ -391,5 +554,19 @@ namespace HuongViet.GUI
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelOrderSummary;
+        private System.Windows.Forms.Label lblOrderSummary;
+        private System.Windows.Forms.Label labelTotalAmount;
+        private System.Windows.Forms.Label lblGrandTotal;
+        private System.Windows.Forms.Label lblDiscount;
+        private System.Windows.Forms.Label lblVoucher;
+        private System.Windows.Forms.Label lblCustomerMoney;
+        private System.Windows.Forms.Label lblChange;
+        private System.Windows.Forms.TextBox txbVoucher;
+        private System.Windows.Forms.TextBox txbCustomerMoney;
+        private System.Windows.Forms.Label lblDiscountAmount;
+        private System.Windows.Forms.Label lblGrandTotalAmount;
+        private System.Windows.Forms.Label lblChangeAmount;
     }
 }

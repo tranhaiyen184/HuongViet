@@ -265,6 +265,87 @@ namespace HuongViet.BLL
         }
 
         /// <summary>
+        /// Cập nhật tổng tiền đơn hàng (tổng của tất cả order details)
+        /// </summary>
+        public bool UpdateOrderTotalAmount(string orderId)
+        {
+            try
+            {
+                var order = orderBLL.GetById(orderId, true);
+                if (order == null)
+                {
+                    throw new Exception("Đơn hàng không tồn tại");
+                }
+
+                if (order.OrderDetails == null || order.OrderDetails.Count == 0)
+                {
+                    throw new Exception("Đơn hàng không có chi tiết");
+                }
+
+                // Calculate grand total (sum of all order details)
+                decimal grandTotal = order.OrderDetails.Sum(d => d.TotalAmount);
+
+                // Update order TotalAmount
+                order.TotalAmount = grandTotal;
+                order.UpdatedAt = DateTime.Now;
+                orderBLL.Update(order);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi cập nhật tổng tiền đơn hàng: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Áp dụng voucher discount vào đơn hàng
+        /// </summary>
+        public bool ApplyVoucherDiscount(string orderId, decimal discountPercentage)
+        {
+            try
+            {
+                var order = orderBLL.GetById(orderId, true);
+                if (order == null)
+                {
+                    throw new Exception("Đơn hàng không tồn tại");
+                }
+
+                if (order.OrderDetails == null || order.OrderDetails.Count == 0)
+                {
+                    throw new Exception("Đơn hàng không có chi tiết");
+                }
+
+                // Apply discount percentage to each order detail
+                foreach (var detail in order.OrderDetails)
+                {
+                    detail.Discount = discountPercentage;
+                    // Recalculate TotalAmount with discount
+                    decimal discountAmount = detail.UnitPrice * detail.Quantity * (discountPercentage / 100);
+                    detail.TotalAmount = (detail.UnitPrice * detail.Quantity) - discountAmount;
+                }
+
+                // Calculate grand total (sum of all order details after discount)
+                decimal grandTotal = order.OrderDetails.Sum(d => d.TotalAmount);
+
+                // Delete old order details and insert new ones with discount
+                DeleteOrderDetails(orderId);
+                InsertOrderDetails(orderId, order.OrderDetails.ToList());
+
+                // Update order TotalAmount with grand total
+                order.TotalAmount = grandTotal;
+                order.UpdatedAt = DateTime.Now;
+                orderBLL.Update(order);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Lỗi khi áp dụng voucher: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Thanh toán đơn hàng
         /// </summary>
         public bool ProcessPayment(string orderId, PaymentMethod paymentMethod, string staffId)

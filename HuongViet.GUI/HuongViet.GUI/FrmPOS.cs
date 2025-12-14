@@ -12,6 +12,7 @@ namespace HuongViet.GUI
     {
         private readonly POSBLL posBLL;
         private readonly AuthBLL authBLL;
+        private readonly VoucherBLL voucherBLL;
         
         private List<Area> areas;
         private List<Table> tables;
@@ -19,12 +20,14 @@ namespace HuongViet.GUI
         private List<OrderDetail> currentOrderDetails;
         private Table selectedTable;
         private string currentStaffId;
+        private Voucher currentVoucher;
 
         public FrmPOS()
         {
             InitializeComponent();
             posBLL = new POSBLL();
             authBLL = new AuthBLL();
+            voucherBLL = new VoucherBLL();
             currentOrderDetails = new List<OrderDetail>();
             
             InitializeForm();
@@ -54,9 +57,19 @@ namespace HuongViet.GUI
             this.Resize += FrmPOS_Resize;
             this.Load += FrmPOS_Load;
             
+            // Setup voucher and payment textbox events
+            txbVoucher.Leave += TxbVoucher_Leave;
+            txbCustomerMoney.TextChanged += TxbCustomerMoney_TextChanged;
+            
             lblDateTime.Text = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             lblTotalAmount.Text = "0";
             lblTableInfo.Text = "Chưa chọn bàn";
+            
+            // Initialize voucher and payment fields
+            currentVoucher = null;
+            lblDiscountAmount.Text = "0.000 (-0%)";
+            lblGrandTotalAmount.Text = "0.000";
+            lblChangeAmount.Text = "0.000";
             
             Timer timer = new Timer();
             timer.Interval = 1000;
@@ -530,6 +543,111 @@ namespace HuongViet.GUI
         {
             decimal total = currentOrderDetails.Sum(d => d.TotalAmount);
             lblTotalAmount.Text = total.ToString("N0");
+            UpdateVoucherCalculations();
+        }
+
+        private void UpdateVoucherCalculations()
+        {
+            decimal total = currentOrderDetails.Sum(d => d.TotalAmount);
+            decimal discountAmount = 0;
+            decimal discountPercentage = 0;
+
+            if (currentVoucher != null && voucherBLL.IsVoucherValid(currentVoucher))
+            {
+                discountAmount = voucherBLL.CalculateDiscount(currentVoucher, total);
+                discountPercentage = currentVoucher.Percentage;
+            }
+
+            decimal grandTotal = total - discountAmount;
+
+            // Update discount label: format as "discount amount (- percentage %)"
+            lblDiscountAmount.Text = $"{discountAmount:N0} (-{discountPercentage:N0}%)";
+
+            // Update grand total
+            lblGrandTotalAmount.Text = grandTotal.ToString("N0");
+
+            // Update change if customer money is entered
+            UpdateChange();
+        }
+
+        private void UpdateChange()
+        {
+            // Handle Vietnamese number format: dots are thousand separators, commas are decimal separators
+            string customerMoneyText = txbCustomerMoney.Text.Trim();
+            // Remove dots (thousand separators) and replace comma with dot for decimal parsing
+            customerMoneyText = customerMoneyText.Replace(".", "").Replace(",", ".");
+            
+            if (decimal.TryParse(customerMoneyText, System.Globalization.NumberStyles.Any, 
+                System.Globalization.CultureInfo.InvariantCulture, out decimal customerMoney))
+            {
+                decimal total = currentOrderDetails.Sum(d => d.TotalAmount);
+                decimal discountAmount = 0;
+
+                if (currentVoucher != null && voucherBLL.IsVoucherValid(currentVoucher))
+                {
+                    discountAmount = voucherBLL.CalculateDiscount(currentVoucher, total);
+                }
+
+                decimal grandTotal = total - discountAmount;
+                decimal change = customerMoney - grandTotal;
+                lblChangeAmount.Text = change >= 0 ? change.ToString("N0") : "0";
+            }
+            else
+            {
+                lblChangeAmount.Text = "0.000";
+            }
+        }
+
+        private void TxbVoucher_Leave(object sender, EventArgs e)
+        {
+            string voucherCode = txbVoucher.Text.Trim();
+            
+            if (string.IsNullOrWhiteSpace(voucherCode))
+            {
+                currentVoucher = null;
+                UpdateVoucherCalculations();
+                return;
+            }
+
+            try
+            {
+                currentVoucher = voucherBLL.GetByCode(voucherCode);
+                
+                if (currentVoucher == null)
+                {
+                    MessageBox.Show("Không tìm thấy voucher với mã này.", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txbVoucher.Text = "";
+                    currentVoucher = null;
+                    UpdateVoucherCalculations();
+                    return;
+                }
+
+                if (!voucherBLL.IsVoucherValid(currentVoucher))
+                {
+                    MessageBox.Show("Voucher không hợp lệ hoặc đã hết hạn.", "Thông báo", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txbVoucher.Text = "";
+                    currentVoucher = null;
+                    UpdateVoucherCalculations();
+                    return;
+                }
+
+                UpdateVoucherCalculations();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm voucher: {ex.Message}", "Lỗi", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txbVoucher.Text = "";
+                currentVoucher = null;
+                UpdateVoucherCalculations();
+            }
+        }
+
+        private void TxbCustomerMoney_TextChanged(object sender, EventArgs e)
+        {
+            UpdateChange();
         }
 
         private void CmbAreaFilter_SelectedIndexChanged(object sender, EventArgs e)
@@ -615,6 +733,9 @@ namespace HuongViet.GUI
                     currentOrderDetails.Clear();
                     txtCustomerName.Text = "";
                     txtCustomerPhone.Text = "";
+                    currentVoucher = null;
+                    txbVoucher.Text = "";
+                    txbCustomerMoney.Text = "";
                     RefreshOrderDisplay();
                 }
             }
@@ -861,9 +982,48 @@ namespace HuongViet.GUI
                 
                 if (paymentForm.ShowDialog() == DialogResult.OK && selectedMethod.HasValue)
                 {
-                    if (posBLL.ProcessPayment(selectedTable.CurrentOrderID, selectedMethod.Value, currentStaffId))
+                    string orderId = selectedTable.CurrentOrderID;
+                    
+                    // Apply voucher discount if voucher exists and is valid
+                    if (currentVoucher != null && voucherBLL.IsVoucherValid(currentVoucher))
+                    {
+                        try
+                        {
+                            // Apply discount percentage to order
+                            posBLL.ApplyVoucherDiscount(orderId, currentVoucher.Percentage);
+                            
+                            // Use the voucher (increment usage count)
+                            voucherBLL.UseVoucher(currentVoucher.Code);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Lỗi khi áp dụng voucher: {ex.Message}", "Lỗi", 
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            // Continue with payment even if voucher fails
+                        }
+                    }
+                    else
+                    {
+                        // Even without voucher, ensure order TotalAmount is correct (sum of order details)
+                        try
+                        {
+                            posBLL.UpdateOrderTotalAmount(orderId);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Log but don't block payment
+                            System.Diagnostics.Debug.WriteLine($"Error updating order total: {ex.Message}");
+                        }
+                    }
+                    
+                    if (posBLL.ProcessPayment(orderId, selectedMethod.Value, currentStaffId))
                     {
                         MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        
+                        // Clear voucher and customer money fields
+                        currentVoucher = null;
+                        txbVoucher.Text = "";
+                        txbCustomerMoney.Text = "";
                         
                         LoadTables();
                         
@@ -902,6 +1062,11 @@ namespace HuongViet.GUI
                 MessageBox.Show($"Lỗi khi tạo khách hàng mới: {ex.Message}", "Lỗi", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void labelTotalAmount_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
