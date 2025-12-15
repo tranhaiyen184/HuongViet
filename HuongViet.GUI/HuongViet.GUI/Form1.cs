@@ -23,7 +23,7 @@ namespace HuongViet.GUI
             InitializeComponent();
 
             var repo = new BackupRepository(
-        @"C:\Program Files\MySQL\MySQL Server 9.5\bin\mysqldump.exe",
+		@"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe",
         "huongviet",
         "root",
         "root");
