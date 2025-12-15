@@ -26,9 +26,9 @@ namespace HuongViet.GUI
             printDocument = new PrintDocument();
             printDocument.PrintPage += PrintDocument_PrintPage;
             
-            // Set paper size for receipt (80mm thermal paper or A4)
-            printDocument.DefaultPageSettings.PaperSize = new PaperSize("Receipt", 300, 800);
-            printDocument.DefaultPageSettings.Margins = new Margins(20, 20, 20, 20);
+            // Set paper size for receipt (wider to avoid clipping)
+            printDocument.DefaultPageSettings.PaperSize = new PaperSize("Receipt", 430, 900);
+            printDocument.DefaultPageSettings.Margins = new Margins(15, 15, 20, 20);
         }
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
@@ -37,7 +37,7 @@ namespace HuongViet.GUI
             float leftMargin = e.MarginBounds.Left;
             float width = e.MarginBounds.Width;
             
-            Font titleFont = new Font("Arial", 16, FontStyle.Bold);
+            Font titleFont = new Font("Arial", 15, FontStyle.Bold);
             Font headerFont = new Font("Arial", 10, FontStyle.Bold);
             Font normalFont = new Font("Arial", 9, FontStyle.Regular);
             Font smallFont = new Font("Arial", 8, FontStyle.Regular);
@@ -85,7 +85,8 @@ namespace HuongViet.GUI
                 yPos += normalFont.GetHeight() + 3;
             }
             
-            if (!string.IsNullOrEmpty(order.CustomerPhone))
+            if (!string.IsNullOrEmpty(order.CustomerPhone) && 
+                !string.Equals(order.CustomerName, "Khách vãng lai", StringComparison.OrdinalIgnoreCase))
             {
                 e.Graphics.DrawString($"SĐT: {order.CustomerPhone}", normalFont, Brushes.Black, 
                     new RectangleF(leftMargin, yPos, width, normalFont.GetHeight()), leftFormat);
@@ -192,13 +193,14 @@ namespace HuongViet.GUI
             yPos += 5;
             e.Graphics.DrawLine(Pens.Black, leftMargin, yPos, leftMargin + width, yPos);
             yPos += 10;
-            
-            // Footer
-            e.Graphics.DrawString("Cảm ơn quý khách!", normalFont, Brushes.Black, 
+
+			// Footer
+			
+			e.Graphics.DrawString("Nhà hàng Hương Việt", normalFont, Brushes.Black, 
                 new RectangleF(leftMargin, yPos, width, normalFont.GetHeight()), centerFormat);
             yPos += normalFont.GetHeight() + 3;
             
-            e.Graphics.DrawString("Hẹn gặp lại!", smallFont, Brushes.Black, 
+            e.Graphics.DrawString("Cảm ơn quý khách!", smallFont, Brushes.Black, 
                 new RectangleF(leftMargin, yPos, width, smallFont.GetHeight()), centerFormat);
         }
 

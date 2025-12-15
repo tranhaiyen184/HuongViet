@@ -165,7 +165,7 @@ namespace HuongViet.GUI
 			this.grpAreaInfo.Size = new System.Drawing.Size(873, 335);
 			this.grpAreaInfo.TabIndex = 0;
 			this.grpAreaInfo.TabStop = false;
-			this.grpAreaInfo.Text = "Quản lý khu vực";
+			this.grpAreaInfo.Text = "Thông tin khu vực";
 			// 
 			// pnlAreaButtons
 			// 
@@ -251,7 +251,7 @@ namespace HuongViet.GUI
 			// btnAreaCancel
 			// 
 			this.btnAreaCancel.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaCancel.IconChar = FontAwesome.Sharp.IconChar.TimesCircle;
+			this.btnAreaCancel.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
 			this.btnAreaCancel.IconColor = System.Drawing.Color.Black;
 			this.btnAreaCancel.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnAreaCancel.IconSize = 18;
@@ -268,7 +268,7 @@ namespace HuongViet.GUI
 			// btnAreaSave
 			// 
 			this.btnAreaSave.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnAreaSave.IconChar = FontAwesome.Sharp.IconChar.Save;
+			this.btnAreaSave.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
 			this.btnAreaSave.IconColor = System.Drawing.Color.Black;
 			this.btnAreaSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnAreaSave.IconSize = 18;
@@ -405,7 +405,7 @@ namespace HuongViet.GUI
 			// btnTableSave
 			// 
 			this.btnTableSave.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableSave.IconChar = FontAwesome.Sharp.IconChar.Save;
+			this.btnTableSave.IconChar = FontAwesome.Sharp.IconChar.FloppyDisk;
 			this.btnTableSave.IconColor = System.Drawing.Color.Black;
 			this.btnTableSave.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnTableSave.IconSize = 18;
@@ -446,7 +446,7 @@ namespace HuongViet.GUI
 			// btnTableCancel
 			// 
 			this.btnTableCancel.Font = new System.Drawing.Font("Times New Roman", 12F);
-			this.btnTableCancel.IconChar = FontAwesome.Sharp.IconChar.TimesCircle;
+			this.btnTableCancel.IconChar = FontAwesome.Sharp.IconChar.CircleXmark;
 			this.btnTableCancel.IconColor = System.Drawing.Color.Black;
 			this.btnTableCancel.IconFont = FontAwesome.Sharp.IconFont.Auto;
 			this.btnTableCancel.IconSize = 18;

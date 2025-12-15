@@ -38,11 +38,25 @@ namespace HuongViet.DAL
                     paymentMethod = PaymentMethod.BankTransfer;
             }
 
+            // Xử lý OrderTime: cột có thể là DATETIME hoặc TIME, nếu TIME trả về TimeSpan
+            DateTime orderTimeValue;
+            var rawOrderTime = row["OrderTime"];
+            if (rawOrderTime is TimeSpan ts)
+            {
+                // Kết hợp với OrderDate để có DateTime đầy đủ
+                var orderDate = Convert.ToDateTime(row["OrderDate"]).Date;
+                orderTimeValue = orderDate.Add(ts);
+            }
+            else
+            {
+                orderTimeValue = Convert.ToDateTime(rawOrderTime);
+            }
+
             return new Order
             {
                 OrderID = row["OrderID"].ToString(),
                 OrderDate = Convert.ToDateTime(row["OrderDate"]),
-                OrderTime = Convert.ToDateTime(row["OrderTime"]),
+                OrderTime = orderTimeValue,
                 OrderStatus = orderStatus,
                 OrderNote = row.IsNull("OrderNote") ? null : row["OrderNote"].ToString(),
                 FormOfService = formOfService,

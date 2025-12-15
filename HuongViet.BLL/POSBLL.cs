@@ -170,6 +170,42 @@ namespace HuongViet.BLL
         {
             try
             {
+                bool isTakeaway = formOfService == FormOfService.Takeaway;
+
+                // Allow creating takeaway orders without table assignment
+                if (isTakeaway && string.IsNullOrWhiteSpace(tableId))
+                {
+                    var takeawayOrder = new Order
+                    {
+                        OrderID = orderBLL.GenerateNewOrderID(),
+                        OrderDate = DateTime.Now,
+                        OrderTime = DateTime.Now,
+                        OrderStatus = OrderStatus.Pending,
+                        FormOfService = formOfService,
+                        CustomerID = customerId,
+                        CustomerName = customerName,
+                        CustomerPhone = customerPhone,
+                        TableID = null,
+                        StaffID = staffId,
+                        OrderDetails = orderDetails,
+                        TotalAmount = CalculateTotalAmount(orderDetails),
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    };
+
+                    foreach (var detail in orderDetails)
+                    {
+                        detail.OrderID = takeawayOrder.OrderID;
+                    }
+
+                    if (orderBLL.Insert(takeawayOrder))
+                    {
+                        return takeawayOrder;
+                    }
+
+                    throw new Exception("Không thể tạo đơn hàng mang về");
+                }
+
                 var table = tableBLL.GetTableById(tableId);
                 if (table == null)
                 {
